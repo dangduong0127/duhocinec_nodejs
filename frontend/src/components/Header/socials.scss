@@ -1,0 +1,20 @@
+ul.social-list {
+  list-style: none;
+  display: flex;
+  gap: 5px;
+  margin: 0;
+
+  li {
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    a.social-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+  }
+}

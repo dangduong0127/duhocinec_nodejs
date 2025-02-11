@@ -19,7 +19,7 @@ module.exports = {
         title: "Test title bai viet moi",
         content: "Test title bai viet moi",
         image: "test.jpg",
-        author: 2,
+        author: 1,
         post_types: 1,
         post_status: "publish",
         createdAt: new Date(),

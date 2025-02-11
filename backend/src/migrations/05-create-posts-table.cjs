@@ -39,6 +39,7 @@ module.exports = {
           model: "Users",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       post_types: {
         type: Sequelize.INTEGER,
@@ -46,6 +47,7 @@ module.exports = {
           model: "PostTypes",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       post_status: {
         type: Sequelize.STRING,

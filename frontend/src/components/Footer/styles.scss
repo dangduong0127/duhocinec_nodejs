@@ -1,0 +1,104 @@
+.footer-wrapper {
+  width: 100%;
+  position: relative;
+  background-color: #222;
+  color: #fff;
+}
+
+.section {
+  // padding: 30px 0;
+  background-color: #fff;
+}
+
+.bg {
+  background-size: cover;
+  background-position: center;
+}
+
+.is-border {
+  border-top: 3px solid #b0b0b0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.col {
+  padding: 15px;
+  text-align: left;
+
+  &.text-right {
+    text-align: right;
+  }
+}
+
+.img img {
+  max-width: 100%;
+  height: auto;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: flex-end;
+
+  .icon {
+    margin: 0 5px;
+    font-size: 1.2rem;
+    color: #ccc;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.section-info {
+  background: url("https://duhocinec.com/wp-content/uploads/2024/08/bg-footer-inec1.png")
+    no-repeat center;
+  background-size: cover;
+}
+.section-content {
+  display: flex;
+  justify-content: center;
+}
+.section-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff961e;
+  margin-bottom: 15px;
+}
+
+.info-menu {
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin-bottom: 8px;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #ffeb3b;
+      }
+    }
+  }
+}
+
+.absolute-footer {
+  text-align: center;
+  padding: 10px;
+  background: #111;
+  font-size: 0.9rem;
+  .container {
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

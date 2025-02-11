@@ -13,6 +13,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      path: {
+        type: Sequelize.STRING,
+      },
+      position: {
+        type: Sequelize.INTEGER,
+      },
     });
   },
 

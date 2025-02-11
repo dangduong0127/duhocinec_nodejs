@@ -15,3 +15,16 @@ body {
 .container {
   max-width: 1320px;
 }
+
+.btn-blue-border {
+  text-decoration: none;
+  border: 2px solid #0c65d8;
+  padding: 10px 20px;
+  border-radius: 30px;
+  color: #0c65d8;
+  font-weight: 600;
+}
+
+#root > div > div > div:nth-child(2) > div {
+  display: none;
+}

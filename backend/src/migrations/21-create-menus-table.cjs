@@ -3,35 +3,35 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Forms", {
+    await queryInterface.createTable("SubMenus", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
-      content: {
-        type: Sequelize.TEXT,
-      },
-      author: {
+      parent_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Users",
+          model: "Categories",
           key: "id",
         },
         onDelete: "CASCADE",
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
+      path: {
+        type: Sequelize.STRING,
+      },
+      position: {
+        type: Sequelize.INTEGER,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Forms");
+    await queryInterface.dropTable("SubMenus");
   },
 };

@@ -1,12 +1,17 @@
 // import logo from "./logo.svg";
-import "./App.scss";
-import Header from "./components/Header";
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./Global.scss";
+import HomePage from "./pages/HomePage";
+import Courses from "./pages/Courses";
 function App() {
   return (
-    <div className="App">
-      <Header />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/khoa-hoc" element={<Courses />} />
+        <Route path="/truong" />
+      </Routes>
+    </Router>
   );
 }
 

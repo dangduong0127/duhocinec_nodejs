@@ -13,11 +13,13 @@ module.exports = {
      * }], {});
      */
     return queryInterface.bulkInsert("Categories", [
-      { name: "Course" },
-      { name: "Country" },
-      { name: "School" },
-      { name: "Scholarship" },
-      { name: "News" },
+      { name: "Country", path: "/quoc-gia", position: 0 },
+      { name: "School", path: "/truong", position: 0 },
+      { name: "Workshop", path: "/hoi-thao", position: 0 },
+      { name: "Scholarship", path: "/hoc-bong", position: 0 },
+      { name: "Course", path: "/khoa-hoc", position: 0 },
+      { name: "News", path: "/kham-pha-du-hoc", position: 0 },
+      { name: "Introduce", path: "/gioi-thieu-ve-inec", position: 0 },
     ]);
   },
 

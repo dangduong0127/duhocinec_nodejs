@@ -2,8 +2,8 @@
 // import User from "../models/User.js";
 // const User = require("../models/User.js");
 // const { Sequelize } = require("sequelize");
-const sequelize = require("../config/database");
-const { getAllUsers } = require("../services/userService");
+// const sequelize = require("../config/database");
+const { getAllUsers, handleGetMenues } = require("../services/userService");
 
 const getHomePage = (req, res) => {
   async function getData() {
@@ -16,4 +16,13 @@ const getHomePage = (req, res) => {
   getData();
 };
 
-module.exports = { getHomePage };
+const getMenus = async (req, res) => {
+  try {
+    const menus = await handleGetMenues();
+    res.status(200).json(menus);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { getHomePage, getMenus };

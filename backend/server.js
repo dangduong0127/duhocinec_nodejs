@@ -3,6 +3,7 @@
 // import path from "path";
 // import router from "./src/routes/web.js";
 const express = require("express");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
 const router = require("./src/routes/web");
@@ -15,7 +16,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src", "views"));
 app.use("/uploads", express.static(path.join(__dirname, "src", "uploads")));
-
+app.use(cors());
 app.use(router);
 
 // const connectionDB = async () => {

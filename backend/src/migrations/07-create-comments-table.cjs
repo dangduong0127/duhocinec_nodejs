@@ -16,6 +16,7 @@ module.exports = {
           model: "Posts",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       content: {
         type: Sequelize.STRING,
@@ -26,6 +27,7 @@ module.exports = {
           model: "Users",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
     });
   },

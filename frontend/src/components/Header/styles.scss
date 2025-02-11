@@ -1,15 +1,16 @@
 .header {
   //   font-size: 14px;
-  .header-wrapper {
+  .header-container {
     display: flex;
     justify-content: center;
 
-    border-bottom: 1px solid #ccc;
     .header-top-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       min-width: 1300px;
+      font-size: 14px;
+
       .header-top-left {
         ul {
           list-style: none;
@@ -48,9 +49,11 @@
           position: relative;
           height: 30px;
           input {
-            // height: 100%;
-            // width: 100%;
-            // border-right: 0px;
+            border: 1px solid #ccc;
+            outline: none;
+            :focus {
+              box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            }
           }
           .btn-search {
             position: relative;
@@ -61,29 +64,72 @@
             border: none;
             background-color: #f27649;
             color: #fff;
+            cursor: pointer;
           }
         }
+      }
+    }
 
-        ul {
-          list-style: none;
+    .header-main {
+      .header-inner {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        .logo {
+          width: 190px;
+          img {
+            width: 100%;
+            max-height: 75px;
+          }
+        }
+        .header-nav {
           display: flex;
-          gap: 20px;
+          align-items: center;
+          min-width: 800px;
+          .list-menu {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            width: 100%;
+            margin-bottom: 0;
+            li {
+              a {
+                display: flex;
+                align-items: center;
+                gap: 3px;
+                text-decoration: none;
+                color: rgba(102, 102, 102, 0.85);
+                font-weight: 500;
+                font-size: 1em;
+              }
 
-          li {
-            border: 2px solid #ccc;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            a.social-icon {
-              position: relative;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: 100%;
+              .subMenus {
+                position: absolute;
+                background-color: #fff;
+                border: 2px solid #ccc;
+                z-index: 999;
+                width: fit-content;
+                ul {
+                  padding: 10px 0px;
+                  list-style: none;
+                  li {
+                    a {
+                      display: block;
+                      padding: 10px 20px;
+                      &:hover {
+                        background-color: #ccc;
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
     }
+  }
+  .border-header-top {
+    border-bottom: 1px solid #ccc;
   }
 }

@@ -4,9 +4,9 @@ const sequelize = require("../config/database");
 module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
-      // // Quan hệ 1-N: Một User có nhiều Posts
-      // User.hasMany(models.Post, { foreignKey: "userId", as: "userPosts" });
-      // // Quan hệ 1-1: Một User thuộc một Role
+      // Quan hệ 1-N: Một User có nhiều Posts
+      User.hasMany(models.Post, { foreignKey: "author", as: "userPosts" });
+      // Quan hệ 1-1: Một User thuộc một Role
       // User.belongsTo(models.Role, { foreignKey: "roleId", as: "userRole" });
     }
   }

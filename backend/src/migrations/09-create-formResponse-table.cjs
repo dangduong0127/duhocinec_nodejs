@@ -16,6 +16,7 @@ module.exports = {
           model: "Forms",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       response: {
         type: Sequelize.TEXT,
@@ -26,6 +27,7 @@ module.exports = {
           model: "Users",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,

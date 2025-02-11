@@ -34,6 +34,7 @@ module.exports = {
           model: "Roles",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       phoneNumber: {
         type: Sequelize.STRING,

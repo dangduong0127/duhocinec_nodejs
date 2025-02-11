@@ -28,6 +28,7 @@ module.exports = {
           model: "Users",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       universities_id: {
         type: Sequelize.INTEGER,
@@ -35,6 +36,7 @@ module.exports = {
           model: "Universities",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,

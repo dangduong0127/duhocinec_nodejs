@@ -5,12 +5,12 @@ const { Model, DataTypes, Sequelize } = require("sequelize");
 module.exports = (sequelize) => {
   class Post extends Model {
     static associate(models) {
-      // Post.belongsTo(models.User, { foreignKey: "id", as: "author_inf" });
-      // Post.belongsTo(models.Category, {
-      //   foreignKey: "category_id",
-      //   as: "category",
-      // });
-      // Post.belongsTo(models.Taxonomy, {
+      Post.hasOne(models.User, { foreignKey: "id", as: "author_inf" });
+      Post.hasMany(models.Category, {
+        foreignKey: "id",
+        as: "category",
+      });
+      // Post.hasOne(models.Taxonomy, {
       //   foreignKey: "taxonomy_id",
       //   as: "taxonomy",
       // });
