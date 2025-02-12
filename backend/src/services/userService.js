@@ -1,10 +1,36 @@
 const db = require("../models");
 const { User, Category, SubMenu } = db;
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const getAllUsers = async () => {
   try {
     const users = await User.findAll({ raw: true });
     return users;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const createUserService = async (data) => {
+  try {
+    //hash password
+    const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+
+    const result = await User.create({
+      email: data.email,
+      password: hashedPassword,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      address: data.address,
+      gender: data.gender,
+      roleId: 2,
+      phoneNumber: data.phoneNumber,
+      image: data.image,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    return result;
   } catch (err) {
     console.log(err);
   }
@@ -46,38 +72,10 @@ const handleGetMenues = async () => {
         return acc;
       }, {})
     );
-    // const groupedMenus = Object.values(
-    //   menus.reduce((acc, item) => {
-    //     const { id, name, parent_id, path, position } = item;
-
-    //     // Nếu menu cha chưa tồn tại trong `acc`, thêm vào
-    //     if (!acc[id]) {
-    //       acc[id] = {
-    //         id,
-    //         name,
-    //         SubMenus: [],
-    //       };
-    //     }
-
-    //     // Nếu có `parent_id`, tức là nó là SubMenu => Thêm vào danh sách `SubMenus` của cha
-    //     if (parent_id && acc[parent_id]) {
-    //       acc[parent_id].SubMenus.push({
-    //         id,
-    //         name,
-    //         path,
-    //         position,
-    //         SubMenus: [],
-    //       });
-    //     }
-
-    //     return acc;
-    //   }, {})
-    // );
-
     return groupedMenus;
   } catch (err) {
     console.log(err);
   }
 };
 
-module.exports = { getAllUsers, handleGetMenues };
+module.exports = { getAllUsers, handleGetMenues, createUserService };

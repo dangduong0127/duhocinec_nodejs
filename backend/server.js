@@ -12,11 +12,16 @@ const router = require("./src/routes/web");
 // const __dirname = path.resolve();
 const env = dotenv.config();
 const app = express();
+//config cors
+app.use(cors());
+
+//config req.body
+app.use(express.json()); //for json
+app.use(express.urlencoded({ extended: true })); //for from data
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src", "views"));
 app.use("/uploads", express.static(path.join(__dirname, "src", "uploads")));
-app.use(cors());
 app.use(router);
 
 // const connectionDB = async () => {

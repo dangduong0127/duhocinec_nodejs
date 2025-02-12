@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
       // Quan hệ 1-N: Một User có nhiều Posts
       User.hasMany(models.Post, { foreignKey: "author", as: "userPosts" });
       // Quan hệ 1-1: Một User thuộc một Role
-      // User.belongsTo(models.Role, { foreignKey: "roleId", as: "userRole" });
+      User.hasOne(models.Role, { foreignKey: "id", as: "userRole" });
     }
   }
 

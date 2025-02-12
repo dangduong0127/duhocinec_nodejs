@@ -5,11 +5,6 @@ const { Model, DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   class Category extends Model {
     static associate(models) {
-      Category.hasOne(models.User, {
-        foreignKey: "category_id",
-        as: "user",
-      });
-
       Category.hasMany(models.Post, {
         foreignKey: "category_id",
         as: "Posts",
