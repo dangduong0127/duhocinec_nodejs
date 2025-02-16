@@ -7,6 +7,7 @@ const {
   getAllUsers,
   handleGetMenues,
   createUserService,
+  handleLogin,
 } = require("../services/userService");
 
 const getHomePage = (req, res) => {
@@ -41,4 +42,16 @@ const createUser = async (req, res) => {
   res.status(200).json(user);
 };
 
-module.exports = { getHomePage, getMenus, getAllUsersData, createUser };
+const getLogin = async (req, res) => {
+  const { email, password } = req.body;
+  const result = await handleLogin(email, password);
+  return res.status(200).json(result);
+};
+
+module.exports = {
+  getHomePage,
+  getMenus,
+  getAllUsersData,
+  createUser,
+  getLogin,
+};

@@ -1,11 +1,24 @@
 const db = require("../models");
-const { User, Category, SubMenu } = db;
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const { User, Category, SubMenu, Role } = db;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const getAllUsers = async () => {
   try {
-    const users = await User.findAll({ raw: true });
+    const users = await User.findAll({
+      raw: true,
+      nest: true,
+      attributes: { exclude: ["password"] },
+      include: [
+        {
+          model: Role,
+          as: "role",
+          attributes: ["name"],
+        },
+      ],
+    });
     return users;
   } catch (err) {
     console.log(err);
@@ -14,23 +27,32 @@ const getAllUsers = async () => {
 
 const createUserService = async (data) => {
   try {
-    //hash password
-    const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+    //Check if user already exists
+    const existingUser = await User.findOne({ where: { email: data.email } });
+    if (existingUser) {
+      return {
+        success: false,
+        message: "User already exists",
+      };
+    } else {
+      //hash password
+      const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
-    const result = await User.create({
-      email: data.email,
-      password: hashedPassword,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      address: data.address,
-      gender: data.gender,
-      roleId: 2,
-      phoneNumber: data.phoneNumber,
-      image: data.image,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-    return result;
+      const result = await User.create({
+        email: data.email,
+        password: hashedPassword,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        address: data.address,
+        gender: data.gender,
+        roleId: 2,
+        phoneNumber: data.phoneNumber,
+        image: data.image,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      return result;
+    }
   } catch (err) {
     console.log(err);
   }
@@ -78,4 +100,43 @@ const handleGetMenues = async () => {
   }
 };
 
-module.exports = { getAllUsers, handleGetMenues, createUserService };
+const handleLogin = async (email, password) => {
+  try {
+    const user = await User.findOne({
+      where: [{ email: email }],
+    });
+
+    if (user) {
+      const comparePass = await bcrypt.compare(password, user.password);
+      if (comparePass) {
+        // create token
+        const paypload = {
+          email: user.email,
+          name: user.lastName,
+        };
+        const access_token = jwt.sign(paypload, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRES,
+        });
+        return {
+          success: true,
+          message: "Login success",
+          accessToken: access_token,
+          user: { email: user.email, name: user.lastName },
+        };
+      } else {
+        return { success: false, message: "Invalid password" };
+      }
+    } else {
+      return { success: false, message: "User not found" };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = {
+  getAllUsers,
+  handleGetMenues,
+  createUserService,
+  handleLogin,
+};

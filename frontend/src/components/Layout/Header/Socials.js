@@ -8,51 +8,52 @@ import {
   faTiktok,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
 const Socials = () => {
   return (
     <ul className="social-list">
       <li>
-        <a
+        <Link
           target="_blank"
           className="social-icon"
-          href="https://www.facebook.com/tuvanduhocinec/"
+          to="https://www.facebook.com/tuvanduhocinec/"
         >
           <FontAwesomeIcon icon={faFacebook} style={{ color: "#ccc" }} />
-        </a>
+        </Link>
       </li>
       <li>
-        <a
+        <Link
           target="_blank"
           className="social-icon"
-          href="https://www.instagram.com/duhocinec/"
+          to="https://www.instagram.com/duhocinec/"
         >
           <FontAwesomeIcon icon={faInstagram} style={{ color: "#ccc" }} />
-        </a>
+        </Link>
       </li>
       <li>
-        <a
+        <Link
           target="_blank"
           className="social-icon"
-          href="https://www.tiktok.com/@duhocinec"
+          to="https://www.tiktok.com/@duhocinec"
         >
           <FontAwesomeIcon icon={faTiktok} style={{ color: "#ccc" }} />
-        </a>
+        </Link>
       </li>
 
       <li>
-        <a target="_blank" className="social-icon" href="mailto:inec@inec.vn">
+        <Link target="_blank" className="social-icon" to="mailto:inec@inec.vn">
           <FontAwesomeIcon icon={faEnvelope} style={{ color: "#ccc" }} />
-        </a>
+        </Link>
       </li>
 
       <li>
-        <a
+        <Link
           target="_blank"
           className="social-icon"
-          href="https://www.youtube.com/user/tuvanduhocinec"
+          to="https://www.youtube.com/user/tuvanduhocinec"
         >
           <FontAwesomeIcon icon={faYoutube} style={{ color: "#ccc" }} />
-        </a>
+        </Link>
       </li>
     </ul>
   );

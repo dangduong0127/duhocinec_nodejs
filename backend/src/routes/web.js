@@ -4,6 +4,7 @@ const {
   getMenus,
   getAllUsersData,
   createUser,
+  getLogin,
 } = require("../controllers/homeController.js");
 const app = express();
 const router = express.Router();
@@ -15,5 +16,6 @@ router.get("/test", (req, res) => {
 router.get("/api/v1/getallmenus", getMenus);
 router.get("/api/v1/getallusers", getAllUsersData);
 router.post("/api/v1/register", createUser);
+router.post("/api/v1/login", getLogin);
 
 module.exports = router;

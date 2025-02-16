@@ -1,30 +1,45 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../../utils/axios.customize";
 import "./styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPhone } from "@fortawesome/free-solid-svg-icons";
-
 import { Link } from "react-router-dom";
 import Socials from "./Socials";
+import { Menu } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 const Header = () => {
   let title = "DU HỌC INEC - Du học INEC – Chắp cánh tương lai";
   const [data, setData] = useState([]);
   const [isHovered, setIsHoverd] = useState(null);
-
   const serverUrl = process.env.REACT_APP_SERVER_BASE_URL;
   const homeUrl = process.env.REACT_APP_SERVER_HOME;
+  const items = [
+    {
+      label: "Account",
+      key: "dashboard",
+      icon: <UserOutlined style={{ fontSize: "18px" }} />,
+      children: [
+        { label: <Link to="/login">Login</Link>, key: "login" },
+        {
+          label: <Link to="/register">Register</Link>,
+          key: "register",
+        },
+      ],
+    },
+  ];
+
   const getImageUrl = (path) => {
     return `${serverUrl}uploads/${path}`;
   };
 
   useEffect(() => {
     axios
-      .get(`${serverUrl}api/v1/getallmenus`)
+      .get(`/api/v1/getallmenus`)
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(data);
+  // console.log(data);
   return (
     <header className="header">
       <div className="header-wrapper">
@@ -116,16 +131,24 @@ const Header = () => {
               </div>
 
               <div className="actions">
-                <a href="/url" className="findCourse btn-blue-border">
+                <Link to="/url" className="findCourse btn-blue-border">
                   Tìm kiếm khoá học
-                </a>
+                </Link>
+                <Link to="/admin" className="account">
+                  <Menu
+                    mode="horizontal"
+                    selectedKeys="none"
+                    items={items}
+                    style={{ fontSize: "18px" }}
+                  />
+                </Link>
               </div>
             </div>
           </div>
         </div>
         <table
-          cellpadding="5"
-          cellspacing="0"
+          cellPadding="5"
+          cellSpacing="0"
           style={{
             fontSize: "1px",
             lineHeight: "1px",

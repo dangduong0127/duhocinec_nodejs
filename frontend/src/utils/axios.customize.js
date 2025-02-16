@@ -1,13 +1,15 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseUrl: process.env.REACT_APP_SERVER_BASE_URL,
+  baseURL: process.env.REACT_APP_SERVER_BASE_URL,
 });
 
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+    config.headers.Authorization = `Bearer ${localStorage.getItem("access_token")}`;
+
     return config;
   },
   function (error) {

@@ -91,7 +91,7 @@
             gap: 15px;
             list-style: none;
             width: 100%;
-            margin-bottom: 0;
+
             li {
               a {
                 display: flex;
@@ -124,6 +124,15 @@
                 }
               }
             }
+          }
+        }
+
+        .actions {
+          display: flex;
+          gap: 20px;
+          .account {
+            text-decoration: none;
+            min-width: 200px;
           }
         }
       }

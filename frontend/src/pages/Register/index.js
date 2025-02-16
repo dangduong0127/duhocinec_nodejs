@@ -1,39 +1,233 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+// import axios from "axios";
 import "./styles.scss";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import { createUserApi } from "../../utils/api";
+import { notification } from "antd";
 
 const Register = () => {
-  const [data, setData] = useState([]);
+  const navigate = useNavigate();
   const slidePage = useRef(null);
   const nextBtnFirst = useRef(null);
   const prevBtnSec = useRef(null);
+  const nextBtnSec = useRef(null);
+  const prevBtnThird = useRef(null);
+  const nextBtnThird = useRef(null);
+  const prevBtnFourth = useRef(null);
+  const submitBtn = useRef(null);
+  const progressBar = useRef(null);
+  const elementsRef = useRef({
+    progressText: null,
+    progressCheck: null,
+    bullet: null,
+  });
+  const [current, setCurrent] = useState(1);
+  // const [data, setData] = useState([]);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    dob: "",
+    gender: 2,
+    phoneNumber: "",
+    username: "",
+    password: "",
+    re_password: "",
+  });
 
-  console.log(nextBtnFirst);
   useEffect(() => {
-    const fetchData = async () => {
+    elementsRef.current.progressText =
+      progressBar.current.querySelectorAll(".step > p");
+    elementsRef.current.progressCheck =
+      progressBar.current.querySelectorAll(".step > .check");
+    elementsRef.current.bullet =
+      progressBar.current.querySelectorAll(".step > .bullet");
+  }, []);
+
+  const handleNextBtnFirst = (event) => {
+    event.preventDefault();
+    slidePage.current.style.marginLeft = "-25%";
+    elementsRef.current.progressText[current - 1].classList.add("active");
+    elementsRef.current.progressCheck[current - 1].classList.add("active");
+    elementsRef.current.bullet[current - 1].classList.add("active");
+    setCurrent(current + 1);
+  };
+
+  const handleNextBtnSec = (event) => {
+    event.preventDefault();
+    slidePage.current.style.marginLeft = "-50%";
+    elementsRef.current.progressText[current - 1].classList.add("active");
+    elementsRef.current.progressCheck[current - 1].classList.add("active");
+    elementsRef.current.bullet[current - 1].classList.add("active");
+    setCurrent(current + 1);
+  };
+
+  const handleNextBtnThird = (event) => {
+    event.preventDefault();
+    slidePage.current.style.marginLeft = "-75%";
+    elementsRef.current.progressText[current - 1].classList.add("active");
+    elementsRef.current.progressCheck[current - 1].classList.add("active");
+    elementsRef.current.bullet[current - 1].classList.add("active");
+    setCurrent(current + 1);
+  };
+
+  const handlePrevBtnSec = (event) => {
+    event.preventDefault();
+    slidePage.current.style.marginLeft = "0%";
+    elementsRef.current.progressText[current - 2].classList.remove("active");
+    elementsRef.current.progressCheck[current - 2].classList.remove("active");
+    elementsRef.current.bullet[current - 2].classList.remove("active");
+    setCurrent(current - 1);
+  };
+
+  const handlePrevBtnThird = (event) => {
+    event.preventDefault();
+    slidePage.current.style.marginLeft = "-25%";
+    elementsRef.current.progressText[current - 2].classList.remove("active");
+    elementsRef.current.progressCheck[current - 2].classList.remove("active");
+    elementsRef.current.bullet[current - 2].classList.remove("active");
+    setCurrent(current - 1);
+  };
+
+  const handlePreBtnFourth = (event) => {
+    event.preventDefault();
+    slidePage.current.style.marginLeft = "-50%";
+    elementsRef.current.progressText[current - 2].classList.remove("active");
+    elementsRef.current.progressCheck[current - 2].classList.remove("active");
+    elementsRef.current.bullet[current - 2].classList.remove("active");
+    setCurrent(current - 1);
+  };
+
+  const handleAddActiveClass = (num) => {
+    elementsRef.current.progressText[num].classList.add("active");
+    elementsRef.current.progressCheck[num].classList.add("active");
+    elementsRef.current.bullet[num].classList.add("active");
+  };
+  const handleRemoveActiveClass = (num) => {
+    elementsRef.current.progressText[num].classList.remove("active");
+    elementsRef.current.progressCheck[num].classList.remove("active");
+    elementsRef.current.bullet[num].classList.remove("active");
+  };
+  //Call api from the server
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         `${process.env.REACT_APP_SERVER_BASE_URL}api/v1/getallusers`
+  //       );
+  //       console.log(res.data);
+  //       setData(res.data);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  //handle submit
+  const handleBtnSubmitForm = () => {
+    if (elementsRef.current.bullet[current - 1]) {
+      elementsRef.current.bullet[current - 1].classList.add("active");
+      elementsRef.current.progressText[current - 1].classList.add("active");
+      elementsRef.current.progressCheck[current - 1].classList.add("active");
+      setCurrent(current + 1);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    const createUser = async (values) => {
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_SERVER_BASE_URL}api/v1/getallusers`
-        );
-        console.log(res.data);
-        setData(res.data);
+        const res = await createUserApi(values);
+        if (res.success) {
+          notification.success({
+            message: "Registration Successful",
+            description: "You have successfully signed up. You can now log in.",
+          });
+          navigate("/login");
+        } else {
+          notification.error({
+            message: "Registration Failed",
+            description: "User already exists.",
+          });
+        }
       } catch (e) {
         console.log(e);
       }
     };
-    fetchData();
-  }, []);
+
+    //validate form
+    const validate = () => {
+      if (formData.firstName === "") {
+        alert("Please enter your first name!");
+        slidePage.current.style.marginLeft = "0%";
+        handleRemoveActiveClass(0);
+        handleRemoveActiveClass(1);
+        handleRemoveActiveClass(2);
+        handleRemoveActiveClass(3);
+        setCurrent(1);
+        return false;
+      } else if (formData.lastName === "") {
+        alert("Please enter your last name!");
+        slidePage.current.style.marginLeft = "0%";
+        handleRemoveActiveClass(0);
+        handleRemoveActiveClass(1);
+        handleRemoveActiveClass(2);
+        handleRemoveActiveClass(3);
+        setCurrent(1);
+        return false;
+      } else if (formData.email === "") {
+        alert("Please enter your email!");
+        slidePage.current.style.marginLeft = "-25%";
+        handleAddActiveClass(0);
+        handleRemoveActiveClass(1);
+        handleRemoveActiveClass(2);
+        handleRemoveActiveClass(3);
+        setCurrent(2);
+        return false;
+      } else if (formData.phoneNumber === "") {
+        alert("Please enter your number phone!");
+        slidePage.current.style.marginLeft = "-25%";
+        handleAddActiveClass(0);
+        handleRemoveActiveClass(1);
+        handleRemoveActiveClass(2);
+        handleRemoveActiveClass(3);
+        setCurrent(2);
+        return false;
+      } else if (formData.dob === "") {
+        alert("Please enter your date of birth!");
+        slidePage.current.style.marginLeft = "-50%";
+        handleAddActiveClass(0);
+        handleAddActiveClass(1);
+        handleRemoveActiveClass(2);
+        handleRemoveActiveClass(3);
+        setCurrent(3);
+        return false;
+      } else if (formData.password === "") {
+        alert("Please enter your password!");
+        handleRemoveActiveClass(3);
+        return false;
+      }
+      handleAddActiveClass(3);
+      return true;
+    };
+
+    if (validate()) {
+      createUser(formData);
+    }
+  };
 
   return (
     <>
-      <Header />
-
       <div className="form-wrapper">
         <div className="form-container">
           <header>Signup Form</header>
-          <div className="progress-bar">
+          <div ref={progressBar} className="progress-bar">
             <div className="step">
               <p>Name</p>
               <div className="bullet">
@@ -64,39 +258,59 @@ const Register = () => {
             </div>
           </div>
           <div className="form-outer">
-            <form action="#">
+            <form action="#" onSubmit={handleSubmitForm}>
               <div className="page slide-page" ref={slidePage}>
                 <div className="title">Basic Info:</div>
                 <div className="field">
                   <div className="label">First Name</div>
-                  <input type="text" />
+                  <input type="text" name="firstName" onChange={handleChange} />
                 </div>
                 <div className="field">
                   <div className="label">Last Name</div>
-                  <input type="text" />
+                  <input type="text" name="lastName" onChange={handleChange} />
                 </div>
+
                 <div className="field">
-                  <button ref={nextBtnFirst} className="firstNext next">
+                  <button
+                    ref={nextBtnFirst}
+                    onClick={(e) => handleNextBtnFirst(e)}
+                    className="firstNext next"
+                  >
                     Next
                   </button>
                 </div>
+                <Link to="../Login">Have an account?</Link>
               </div>
 
               <div className="page">
                 <div className="title">Contact Info:</div>
                 <div className="field">
                   <div className="label">Email Address</div>
-                  <input type="text" />
+                  <input type="text" name="email" onChange={handleChange} />
                 </div>
                 <div className="field">
                   <div className="label">Phone Number</div>
-                  <input type="Number" />
+                  <input
+                    type="Number"
+                    name="phoneNumber"
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="field btns">
-                  <button ref={prevBtnSec} className="prev-1 prev">
+                  <button
+                    ref={prevBtnSec}
+                    onClick={(e) => handlePrevBtnSec(e)}
+                    className="prev-1 prev"
+                  >
                     Previous
                   </button>
-                  <button className="next-1 next">Next</button>
+                  <button
+                    ref={nextBtnSec}
+                    onClick={(e) => handleNextBtnSec(e)}
+                    className="next-1 next"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
 
@@ -104,19 +318,31 @@ const Register = () => {
                 <div className="title">Date of Birth:</div>
                 <div className="field">
                   <div className="label">Date</div>
-                  <input type="text" />
+                  <input type="date" name="dob" onChange={handleChange} />
                 </div>
                 <div className="field">
                   <div className="label">Gender</div>
-                  <select>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Other</option>
+                  <select name="gender" onChange={handleChange}>
+                    <option value={1}>Male</option>
+                    <option value={0}>Female</option>
+                    <option value={2}>Other</option>
                   </select>
                 </div>
                 <div className="field btns">
-                  <button className="prev-2 prev">Previous</button>
-                  <button className="next-2 next">Next</button>
+                  <button
+                    ref={prevBtnThird}
+                    onClick={(e) => handlePrevBtnThird(e)}
+                    className="prev-2 prev"
+                  >
+                    Previous
+                  </button>
+                  <button
+                    ref={nextBtnThird}
+                    onClick={(e) => handleNextBtnThird(e)}
+                    className="next-2 next"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
 
@@ -124,23 +350,47 @@ const Register = () => {
                 <div className="title">Login Details:</div>
                 <div className="field">
                   <div className="label">Username</div>
-                  <input type="text" />
+                  <input type="text" name="username" onChange={handleChange} />
                 </div>
                 <div className="field">
                   <div className="label">Password</div>
-                  <input type="password" />
+                  <input
+                    type="password"
+                    name="password"
+                    onChange={handleChange}
+                  />
                 </div>
+                <div className="field">
+                  <div className="label">Repeat Password</div>
+                  <input
+                    type="password"
+                    name="re_password"
+                    onChange={handleChange}
+                  />
+                </div>
+
                 <div className="field btns">
-                  <button className="prev-3 prev">Previous</button>
-                  <button className="submit">Submit</button>
+                  <button
+                    ref={prevBtnFourth}
+                    onClick={(e) => handlePreBtnFourth(e)}
+                    className="prev-3 prev"
+                  >
+                    Previous
+                  </button>
+                  <button
+                    ref={submitBtn}
+                    onClick={(e) => handleBtnSubmitForm(e)}
+                    className="submit"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
                 </div>
               </div>
             </form>
           </div>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 };
