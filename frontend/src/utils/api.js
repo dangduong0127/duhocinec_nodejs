@@ -13,5 +13,8 @@ const getAllUsers = () => {
   const URL_API = "/api/v1/getallusers";
   return axios.get(URL_API);
 };
-
-export { createUserApi, checkLoginApi, getAllUsers };
+const logoutApi = (userId) => {
+  const URL_API = "/api/v1/logout";
+  return axios.post(URL_API, userId);
+};
+export { createUserApi, checkLoginApi, getAllUsers, logoutApi };

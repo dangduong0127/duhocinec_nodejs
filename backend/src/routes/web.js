@@ -5,6 +5,7 @@ const {
   getAllUsersData,
   createUser,
   getLogin,
+  logout,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const app = express();
@@ -22,5 +23,6 @@ router.get("/api/v1/getallmenus", getMenus);
 router.get("/api/v1/getallusers", getAllUsersData);
 router.post("/api/v1/register", createUser);
 router.post("/api/v1/login", getLogin);
+router.post("/api/v1/logout", logout);
 
 module.exports = router;

@@ -8,6 +8,7 @@ const {
   handleGetMenues,
   createUserService,
   handleLogin,
+  hanldeLogout,
 } = require("../services/userService");
 
 const getHomePage = (req, res) => {
@@ -29,7 +30,7 @@ const getMenus = async (req, res) => {
 
 const getAllUsersData = async (req, res) => {
   try {
-    const users = await getAllUsers();
+    const users = await getAllUsers(req, res);
     res.status(200).json(users);
   } catch (err) {
     console.log(err);
@@ -48,10 +49,16 @@ const getLogin = async (req, res) => {
   return res.status(200).json(result);
 };
 
+const logout = async (req, res) => {
+  const logout = await hanldeLogout(req.userId);
+  res.status(200).json({ logout });
+};
+
 module.exports = {
   getHomePage,
   getMenus,
   getAllUsersData,
   createUser,
   getLogin,
+  logout,
 };

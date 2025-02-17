@@ -7,7 +7,9 @@ import {
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { logoutApi } from "../../utils/api";
 const { Header, Content, Footer, Sider } = Layout;
+
 // const items = [
 //   UserOutlined,
 //   VideoCameraOutlined,
@@ -94,8 +96,14 @@ const Admin = () => {
             onClick={() => {
               const a = window.confirm("Are you sure you want to logout");
               if (a) {
-                localStorage.removeItem("access_token");
-                navigator("/login");
+                const logout = async () => {
+                  const userId = localStorage.getItem("userId");
+                  await logoutApi(userId);
+                  localStorage.removeItem("access_token");
+                  localStorage.removeItem("userId");
+                  navigator("/login");
+                };
+                logout();
               } else {
                 return;
               }

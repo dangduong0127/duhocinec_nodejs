@@ -121,15 +121,6 @@ const Users = () => {
     getUserDatas();
   }, [navigator]);
 
-  //   const dataSource = Array.from({
-  //     length: 40,
-  //   }).map((_, i) => ({
-  //     num: i,
-  //     key: i,
-  //     name: `Edward ${i}`,
-  //     age: 32,
-  //     address: `London Park no. ${i}`,
-  //   }));;
   const dataSource = userData?.map((item, index) => {
     return {
       ...item,

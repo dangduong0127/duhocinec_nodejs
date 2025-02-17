@@ -32,6 +32,7 @@ const Login = () => {
         const result = promise.data;
         if (result.success) {
           localStorage.setItem("access_token", result.accessToken);
+          localStorage.setItem("userId", result.user.userId);
           notification.success({
             message: "Login Successful",
             description: result.message,
