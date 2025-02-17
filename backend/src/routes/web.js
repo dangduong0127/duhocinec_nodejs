@@ -6,8 +6,13 @@ const {
   createUser,
   getLogin,
 } = require("../controllers/homeController.js");
+const authorization = require("../middleware/auth.js");
 const app = express();
 const router = express.Router();
+
+// Apply middleware for all routers getting
+router.all("*", authorization);
+
 router.get("/", getHomePage);
 router.get("/test", (req, res) => {
   res.send("This is a test route");
