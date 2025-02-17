@@ -5,7 +5,8 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, theme } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 // const items = [
 //   UserOutlined,
@@ -21,7 +22,7 @@ const Admin = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-
+  const navigator = useNavigate();
   const [tab, setTab] = useState("1");
 
   const handleSlectedKeys = (e) => {
@@ -36,6 +37,7 @@ const Admin = () => {
         return <div>Courses</div>;
       case "3":
         return <div>Settings</div>;
+
       default:
         return <div>Default</div>;
     }
@@ -55,7 +57,9 @@ const Admin = () => {
         }}
       >
         <div className="demo-logo-vertical">
-          <h1 style={{ textAlign: "center", color: "#fff" }}>Dashboard</h1>
+          <Link to="/">
+            <h1 style={{ textAlign: "center", color: "#fff" }}>Dashboard</h1>
+          </Link>
         </div>
         <Menu
           theme="dark"
@@ -79,8 +83,29 @@ const Admin = () => {
               label: "nav 3",
             },
           ]}
-          style={{ height: "100vh" }}
         />
+        <li>
+          <Button
+            style={{
+              width: "80%",
+              fontWeight: "600",
+              lineHeight: "20px",
+            }}
+            onClick={() => {
+              const a = window.confirm("Are you sure you want to logout");
+              if (a) {
+                localStorage.removeItem("access_token");
+                navigator("/login");
+              } else {
+                return;
+              }
+            }}
+            type="primary"
+            danger
+          >
+            Logout
+          </Button>
+        </li>
       </Sider>
       <Layout>
         <Header

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Table, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAllUsers } from "../../../utils/api";
+import { notification } from "antd";
+
 const columns = [
   {
     title: "Numbers",
@@ -102,14 +104,22 @@ const columns = [
 const Users = () => {
   const [userData, setUserData] = useState([]);
   const [fixedTop, setFixedTop] = useState(false);
+  const navigator = useNavigate();
 
   useEffect(() => {
     const getUserDatas = async () => {
       const response = await getAllUsers();
-      setUserData(response.data);
+      if (response?.message) {
+        notification.error({
+          message: response.message,
+        });
+        navigator("/login");
+      } else {
+        setUserData(response.data);
+      }
     };
     getUserDatas();
-  }, []);
+  }, [navigator]);
 
   //   const dataSource = Array.from({
   //     length: 40,
@@ -120,7 +130,7 @@ const Users = () => {
   //     age: 32,
   //     address: `London Park no. ${i}`,
   //   }));;
-  const dataSource = userData.map((item, index) => {
+  const dataSource = userData?.map((item, index) => {
     return {
       ...item,
       key: index,

@@ -1,7 +1,12 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const authorization = (req, res, next) => {
-  const allowed_list = ["/", "/api/v1/login", "/api/v1/register"];
+  const allowed_list = [
+    "/",
+    "/api/v1/login",
+    "/api/v1/register",
+    "/api/v1/getallmenus",
+  ];
 
   if (allowed_list.some((item) => req.originalUrl === item)) {
     return next();
