@@ -13,8 +13,8 @@ const getAllUsers = () => {
   const URL_API = "/api/v1/getallusers";
   return axios.get(URL_API);
 };
-const logoutApi = (userId) => {
+const logoutApi = () => {
   const URL_API = "/api/v1/logout";
-  return axios.post(URL_API, userId);
+  return axios.post(URL_API);
 };
 export { createUserApi, checkLoginApi, getAllUsers, logoutApi };

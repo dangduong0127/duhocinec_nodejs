@@ -134,12 +134,17 @@ const handleLogin = async (email, password) => {
 
         await Token.destroy({ where: { user_id: user.id } });
         await Token.create({ user_id: user.id, token: access_token });
-
+        const fullName = user.firstName + user.lastName;
         return {
           success: true,
           message: "Login success",
           accessToken: access_token,
-          user: { email: user.email, name: user.lastName, userId: user.id },
+          user: {
+            email: user.email,
+            userId: user.id,
+            fullName: fullName,
+            avatarUrl: user.image,
+          },
         };
       } else {
         return { success: false, message: "Invalid password" };

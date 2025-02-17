@@ -97,10 +97,10 @@ const Admin = () => {
               const a = window.confirm("Are you sure you want to logout");
               if (a) {
                 const logout = async () => {
-                  const userId = localStorage.getItem("userId");
-                  await logoutApi(userId);
+                  // const userId = localStorage.getItem("userId");
+                  await logoutApi();
                   localStorage.removeItem("access_token");
-                  localStorage.removeItem("userId");
+                  // localStorage.removeItem("userId");
                   navigator("/login");
                 };
                 logout();

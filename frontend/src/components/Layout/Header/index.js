@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "../../../utils/axios.customize";
 import "./styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Socials from "./Socials";
-import { Menu } from "antd";
+import { Menu, Avatar, Select } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { AuthContext } from "../../../hooks/Context/auth.context";
+import { useTranslation } from "react-i18next";
 const Header = () => {
   let title = "DU HỌC INEC - Du học INEC – Chắp cánh tương lai";
   const [data, setData] = useState([]);
   const [isHovered, setIsHoverd] = useState(null);
   const serverUrl = process.env.REACT_APP_SERVER_BASE_URL;
   const homeUrl = process.env.REACT_APP_SERVER_HOME;
+  const { auth } = useContext(AuthContext);
+  const { Option } = Select;
+
   const items = [
     {
       label: "Account",
@@ -39,7 +44,15 @@ const Header = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  // console.log(data);
+  // translate
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem("lang", lang);
+  };
+
+  // console.log(auth);
   return (
     <header className="header">
       <div className="header-wrapper">
@@ -99,7 +112,7 @@ const Header = () => {
                         onMouseLeave={() => setIsHoverd(null)}
                       >
                         <Link to={item.path} className="nav-item">
-                          <span>{item.name}</span>
+                          <span>{t(`Categories.${item.name}`, item.name)}</span>
                           {item.SubMenus.length !== 0 ? (
                             <FontAwesomeIcon
                               icon={faChevronDown}
@@ -134,14 +147,29 @@ const Header = () => {
                 <Link to="/url" className="findCourse btn-blue-border">
                   Tìm kiếm khoá học
                 </Link>
-                <Link to="/admin" className="account">
-                  <Menu
-                    mode="horizontal"
-                    selectedKeys="none"
-                    items={items}
-                    style={{ fontSize: "18px" }}
-                  />
-                </Link>
+                {auth.isAuthenticated ? (
+                  <Avatar src={auth.user.avatar} size={40} />
+                ) : (
+                  <Link to="/admin" className="account">
+                    <Menu
+                      mode="horizontal"
+                      selectedKeys="none"
+                      items={items}
+                      style={{ fontSize: "18px" }}
+                    />
+                  </Link>
+                )}
+
+                <div className="multi-lang">
+                  <Select
+                    defaultValue={i18n.language} // Set ngôn ngữ hiện tại
+                    style={{ width: 150 }} // Tùy chỉnh độ rộng
+                    onChange={changeLanguage}
+                  >
+                    <Option value="vi">🇻🇳 Tiếng Việt</Option>
+                    <Option value="en">🇺🇸 English</Option>
+                  </Select>
+                </div>
               </div>
             </div>
           </div>

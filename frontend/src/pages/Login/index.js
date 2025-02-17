@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles.scss";
 import { checkLoginApi } from "../../utils/api";
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../hooks/Context/auth.context";
 const Login = () => {
+  const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -33,6 +35,16 @@ const Login = () => {
         if (result.success) {
           localStorage.setItem("access_token", result.accessToken);
           localStorage.setItem("userId", result.user.userId);
+
+          setAuth({
+            isAuthenticated: true,
+            user: {
+              email: result.user.email,
+              fullName: result.user.fullName,
+              avatar: result.user.avatarUrl,
+              userId: result.user.userId,
+            },
+          });
           notification.success({
             message: "Login Successful",
             description: result.message,
