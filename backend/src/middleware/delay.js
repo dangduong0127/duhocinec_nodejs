@@ -1,13 +1,13 @@
 const delay = (req, res, next) => {
-  if (req.path === "/api/v1/login" || req.path === "/api/v1/getallmenus") {
-    next();
-  }
+  // if (req.path === "/api/v1/login" || req.path === "/api/v1/getallmenus") {
+  //   next();
+  // }
 
   setTimeout(() => {
-    if (req.headers.authorization) {
-      let token = req.headers.authorization.split(" ")[1];
-      console.log(token);
-    }
+    // if (req.headers.authorization) {
+    //   let token = req.headers.authorization.split(" ")[1];
+    //   console.log(token);
+    // }
 
     next();
   }, 3000);

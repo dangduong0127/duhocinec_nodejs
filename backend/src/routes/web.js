@@ -6,8 +6,12 @@ const {
   createUser,
   getLogin,
   logout,
+  getAccountInfo,
+  updateUsers,
+  deleteUser,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
+const delay = require("../middleware/delay.js");
 const app = express();
 const router = express.Router();
 
@@ -24,5 +28,8 @@ router.get("/api/v1/getallusers", getAllUsersData);
 router.post("/api/v1/register", createUser);
 router.post("/api/v1/login", getLogin);
 router.post("/api/v1/logout", logout);
+router.get("/api/v1/getAccountInfo", getAccountInfo);
+router.put("/api/v1/updateUsers", updateUsers);
+router.delete("/api/v1/deleteUser", deleteUser);
 
 module.exports = router;

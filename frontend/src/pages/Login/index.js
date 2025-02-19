@@ -1,17 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./styles.scss";
-import { checkLoginApi } from "../../utils/api";
+import { checkLoginApi, getUserProfile } from "../../utils/api";
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../hooks/Context/auth.context";
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      navigate("/");
+      return;
+    }
+  }, [auth.isAuthenticated]);
 
   const handleOnchange = (e) => {
     const { name, value } = e.target;
@@ -34,20 +41,19 @@ const Login = () => {
         const result = promise.data;
         if (result.success) {
           localStorage.setItem("access_token", result.accessToken);
-          localStorage.setItem("userId", result.user.userId);
-
-          setAuth({
-            isAuthenticated: true,
-            user: {
-              email: result.user.email,
-              fullName: result.user.fullName,
-              avatar: result.user.avatarUrl,
-              userId: result.user.userId,
-            },
-          });
           notification.success({
             message: "Login Successful",
             description: result.message,
+          });
+          const userData = await getUserProfile();
+          // console.log("userData when login: ", userData);
+          setAuth({
+            isAuthenticated: true,
+            user: {
+              email: userData.data.email,
+              name: userData.data.firstName + userData.data.lastName,
+              avatar: userData.data.image,
+            },
           });
           navigate("/");
         } else {

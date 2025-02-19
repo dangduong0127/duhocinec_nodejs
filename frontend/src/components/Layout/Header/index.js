@@ -3,33 +3,55 @@ import axios from "../../../utils/axios.customize";
 import "./styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPhone } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Socials from "./Socials";
-import { Menu, Avatar, Select } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Menu, Avatar, Select, Button } from "antd";
+// import { UserOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../../hooks/Context/auth.context";
 import { useTranslation } from "react-i18next";
+import logout from "../../../utils/logout";
 const Header = () => {
   let title = "DU HỌC INEC - Du học INEC – Chắp cánh tương lai";
   const [data, setData] = useState([]);
   const [isHovered, setIsHoverd] = useState(null);
   const serverUrl = process.env.REACT_APP_SERVER_BASE_URL;
   const homeUrl = process.env.REACT_APP_SERVER_HOME;
-  const { auth } = useContext(AuthContext);
   const { Option } = Select;
-
+  const { auth, setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
   const items = [
     {
-      label: "Account",
+      label:
+        auth.isAuthenticated && auth.user ? (
+          <Link to="/account">
+            <Avatar src={auth.user.avatar} size={40} />
+          </Link>
+        ) : (
+          <Link to="/admin">
+            <div>Account</div>
+          </Link>
+        ),
       key: "dashboard",
-      icon: <UserOutlined style={{ fontSize: "18px" }} />,
-      children: [
-        { label: <Link to="/login">Login</Link>, key: "login" },
-        {
-          label: <Link to="/register">Register</Link>,
-          key: "register",
-        },
-      ],
+      children: auth.isAuthenticated
+        ? [
+            {
+              label: (
+                <Button
+                  style={{ width: "100%" }}
+                  type="primary"
+                  danger
+                  onClick={() => logout(setAuth, navigate)}
+                >
+                  Đăng xuất
+                </Button>
+              ),
+              key: "logout",
+            },
+          ]
+        : [
+            { label: <Link to="/login">Login</Link>, key: "login" },
+            { label: <Link to="/register">Register</Link>, key: "register" },
+          ],
     },
   ];
 
@@ -147,18 +169,13 @@ const Header = () => {
                 <Link to="/url" className="findCourse btn-blue-border">
                   Tìm kiếm khoá học
                 </Link>
-                {auth.isAuthenticated ? (
-                  <Avatar src={auth.user.avatar} size={40} />
-                ) : (
-                  <Link to="/admin" className="account">
-                    <Menu
-                      mode="horizontal"
-                      selectedKeys="none"
-                      items={items}
-                      style={{ fontSize: "18px" }}
-                    />
-                  </Link>
-                )}
+
+                <Menu
+                  mode="horizontal"
+                  selectedKeys="none"
+                  items={items}
+                  style={{ fontSize: "18px" }}
+                />
 
                 <div className="multi-lang">
                   <Select

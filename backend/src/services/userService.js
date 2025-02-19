@@ -12,7 +12,7 @@ const getAllUsers = async (req, res) => {
         token: req.headers.authorization?.split(" ")[1],
       },
     });
-    console.log(checkToken);
+    // console.log(checkToken);
     if (checkToken.length > 0) {
       const users = await User.findAll({
         raw: true,
@@ -51,7 +51,7 @@ const createUserService = async (data) => {
       //hash password
       const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
-      const result = await User.create({
+      await User.create({
         email: data.email,
         password: hashedPassword,
         firstName: data.firstName,
@@ -64,7 +64,11 @@ const createUserService = async (data) => {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-      return result;
+      return {
+        success: true,
+        message: "User created successfully",
+        // data: result,
+      };
     }
   } catch (err) {
     console.log(err);
@@ -118,33 +122,33 @@ const handleLogin = async (email, password) => {
     const user = await User.findOne({
       where: [{ email: email }],
     });
-    console.log(user.id);
+
     if (user) {
       const comparePass = await bcrypt.compare(password, user.password);
       if (comparePass) {
         // create token
-        const paypload = {
-          email: user.email,
-          userId: user.id,
-          name: user.lastName,
+        const payload = {
+          email: user.email || "",
+          userId: user.id || "",
+          roleId: user.roleId || "",
         };
-        const access_token = jwt.sign(paypload, process.env.JWT_SECRET, {
+        const access_token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: process.env.JWT_EXPIRES,
         });
 
         await Token.destroy({ where: { user_id: user.id } });
         await Token.create({ user_id: user.id, token: access_token });
-        const fullName = user.firstName + user.lastName;
+        // const fullName = user.firstName + user.lastName;
         return {
           success: true,
           message: "Login success",
           accessToken: access_token,
-          user: {
-            email: user.email,
-            userId: user.id,
-            fullName: fullName,
-            avatarUrl: user.image,
-          },
+          // user: {
+          //   email: user.email,
+          //   userId: user.id,
+          //   fullName: fullName,
+          //   avatarUrl: user.image,
+          // },
         };
       } else {
         return { success: false, message: "Invalid password" };
@@ -166,10 +170,90 @@ const hanldeLogout = async (userId) => {
   }
 };
 
+const getUserInfo = async (userId) => {
+  try {
+    const userData = await User.findOne({
+      raw: true,
+      nest: true,
+      where: { id: userId },
+      attributes: { exclude: ["password"] },
+    });
+    return userData;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleUpdateUser = async (data) => {
+  try {
+    if (!data.id) {
+      return {
+        success: false,
+        message: "User ID is required",
+      };
+    }
+
+    let user = await User.findOne({
+      raw: false,
+      attributes: { exclude: ["password"] },
+      where: { id: data.id },
+    });
+
+    if (user) {
+      (user.firstName = data.lastName),
+        (user.lastName = data.firstName),
+        (user.address = data.address),
+        (user.gender = data.gender),
+        (user.phoneNumber = data.phoneNumber),
+        (user.image = data.image),
+        (user.roleId = data.roleId);
+      user.updatedAt = new Date();
+      await user.save();
+      return {
+        success: true,
+        message: "User updated successfully",
+      };
+    } else {
+      return {
+        success: false,
+        message: "User not found",
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleDeleteUser = async (userId) => {
+  try {
+    if (!userId.id) {
+      return {
+        success: false,
+        message: "User ID is required",
+      };
+    }
+
+    const deleteUser = await User.destroy({
+      where: { id: userId.id },
+    });
+
+    if (deleteUser) {
+      return { success: true, message: "User deleted successfully" };
+    } else {
+      return { success: false, message: "User not found" };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
   createUserService,
   handleLogin,
   hanldeLogout,
+  getUserInfo,
+  handleUpdateUser,
+  handleDeleteUser,
 };

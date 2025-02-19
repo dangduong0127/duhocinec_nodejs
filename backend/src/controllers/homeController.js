@@ -9,6 +9,9 @@ const {
   createUserService,
   handleLogin,
   hanldeLogout,
+  getUserInfo,
+  handleUpdateUser,
+  handleDeleteUser,
 } = require("../services/userService");
 
 const getHomePage = (req, res) => {
@@ -54,6 +57,22 @@ const logout = async (req, res) => {
   res.status(200).json({ logout });
 };
 
+const getAccountInfo = async (req, res) => {
+  const user = await getUserInfo(req.user.userId);
+  return res.status(200).json(user);
+};
+
+const updateUsers = async (req, res) => {
+  const data = req.body;
+  let message = await handleUpdateUser(data);
+  res.status(200).json(message);
+};
+
+const deleteUser = async (req, res) => {
+  const deleteStatus = await handleDeleteUser(req.body);
+  res.status(200).json(deleteStatus);
+};
+
 module.exports = {
   getHomePage,
   getMenus,
@@ -61,4 +80,7 @@ module.exports = {
   createUser,
   getLogin,
   logout,
+  getAccountInfo,
+  updateUsers,
+  deleteUser,
 };

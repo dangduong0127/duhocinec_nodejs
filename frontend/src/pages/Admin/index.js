@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import User from "./Users";
 import {
   UploadOutlined,
@@ -7,7 +7,8 @@ import {
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { logoutApi } from "../../utils/api";
+import { AuthContext } from "../../hooks/Context/auth.context";
+import logout from "../../utils/logout.js";
 const { Header, Content, Footer, Sider } = Layout;
 
 // const items = [
@@ -21,10 +22,11 @@ const { Header, Content, Footer, Sider } = Layout;
 //   label: `nav ${index + 1}`,
 // }));
 const Admin = () => {
+  const { setAuth } = useContext(AuthContext);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const [tab, setTab] = useState("1");
 
   const handleSlectedKeys = (e) => {
@@ -77,12 +79,12 @@ const Admin = () => {
             {
               key: "2",
               icon: <VideoCameraOutlined />,
-              label: "nav 2",
+              label: "Categories",
             },
             {
               key: "3",
               icon: <UploadOutlined />,
-              label: "nav 3",
+              label: "Posts",
             },
           ]}
         />
@@ -93,21 +95,7 @@ const Admin = () => {
               fontWeight: "600",
               lineHeight: "20px",
             }}
-            onClick={() => {
-              const a = window.confirm("Are you sure you want to logout");
-              if (a) {
-                const logout = async () => {
-                  // const userId = localStorage.getItem("userId");
-                  await logoutApi();
-                  localStorage.removeItem("access_token");
-                  // localStorage.removeItem("userId");
-                  navigator("/login");
-                };
-                logout();
-              } else {
-                return;
-              }
-            }}
+            onClick={() => logout(setAuth, navigate)}
             type="primary"
             danger
           >

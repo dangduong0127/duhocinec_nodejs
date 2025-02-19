@@ -17,4 +17,28 @@ const logoutApi = () => {
   const URL_API = "/api/v1/logout";
   return axios.post(URL_API);
 };
-export { createUserApi, checkLoginApi, getAllUsers, logoutApi };
+
+const getUserProfile = () => {
+  const URL_API = "/api/v1/getAccountInfo";
+  return axios.get(URL_API);
+};
+
+const updatedUser = (data) => {
+  const URL_API = "/api/v1/updateUsers";
+  return axios.put(URL_API, data);
+};
+
+const deleteUser = (id) => {
+  const URL_API = "/api/v1/deleteUser";
+  return axios.delete(URL_API, { data: { id } });
+};
+
+export {
+  createUserApi,
+  checkLoginApi,
+  getAllUsers,
+  logoutApi,
+  getUserProfile,
+  updatedUser,
+  deleteUser,
+};

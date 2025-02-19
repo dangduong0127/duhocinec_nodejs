@@ -144,15 +144,15 @@ const Register = () => {
     const createUser = async (values) => {
       try {
         const res = await createUserApi(values);
-        if (res.success) {
+        if (res.data.success) {
           notification.success({
-            message: "Registration Successful",
+            message: res.data.message,
             description: "You have successfully signed up. You can now log in.",
           });
           navigate("/login");
         } else {
           notification.error({
-            message: "Registration Failed",
+            message: res.data.message,
             description: "User already exists.",
           });
         }
