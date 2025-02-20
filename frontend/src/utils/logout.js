@@ -9,6 +9,7 @@ const logout = async (setAuth, navigate) => {
     user: {
       email: "",
       name: "",
+      roleId: "",
       avatar: "",
     },
   });

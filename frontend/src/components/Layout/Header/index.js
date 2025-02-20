@@ -22,28 +22,46 @@ const Header = () => {
   const items = [
     {
       label:
-        auth.isAuthenticated && auth.user ? (
+        auth.isAuthenticated === true ? (
           <Link to="/account">
             <Avatar src={auth.user.avatar} size={40} />
           </Link>
         ) : (
-          <Link to="/admin">
-            <div>Account</div>
-          </Link>
+          <span
+          // style={{
+          //   fontSize: "15px",
+          //   display: "flex",
+          //   gap: "5px",
+          // }}
+          >
+            {/* <UserOutlined /> */}
+            Account
+          </span>
         ),
       key: "dashboard",
       children: auth.isAuthenticated
         ? [
+            auth.user.roleId === 1
+              ? {
+                  label: <Link to="/admin">Dashboard</Link>,
+                  key: "admin-dashboard",
+                }
+              : {
+                  label: <Link to="/account">Account Settings</Link>,
+                  key: "account-settings",
+                },
             {
               label: (
-                <Button
-                  style={{ width: "100%" }}
-                  type="primary"
-                  danger
-                  onClick={() => logout(setAuth, navigate)}
-                >
-                  Đăng xuất
-                </Button>
+                <>
+                  <Button
+                    style={{ width: "100%" }}
+                    type="primary"
+                    danger
+                    onClick={() => logout(setAuth, navigate)}
+                  >
+                    Đăng xuất
+                  </Button>
+                </>
               ),
               key: "logout",
             },

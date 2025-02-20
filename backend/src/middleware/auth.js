@@ -7,7 +7,7 @@ const authorization = (req, res, next) => {
     "/api/v1/login",
     "/api/v1/register",
     "/api/v1/getallmenus",
-    // "/api/v1/getAccountInfo",
+    "/api/upload",
   ];
 
   if (allowed_list.some((item) => req.originalUrl === item)) {

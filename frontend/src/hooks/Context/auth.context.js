@@ -8,6 +8,7 @@ const AuthenWrapper = (props) => {
     user: {
       email: "",
       name: "",
+      roleId: "",
       avatar: "",
     },
   };

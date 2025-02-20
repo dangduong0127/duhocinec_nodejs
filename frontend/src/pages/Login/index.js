@@ -46,13 +46,16 @@ const Login = () => {
             description: result.message,
           });
           const userData = await getUserProfile();
-          // console.log("userData when login: ", userData);
+          console.log("userData when login: ", userData);
           setAuth({
             isAuthenticated: true,
             user: {
               email: userData.data.email,
               name: userData.data.firstName + userData.data.lastName,
-              avatar: userData.data.image,
+              roleId: userData.data.roleId,
+              avatar:
+                userData.data?.image ||
+                process.env.REACT_APP_SERVER_BASE_URL + "uploads/avatar.jpg",
             },
           });
           navigate("/");
