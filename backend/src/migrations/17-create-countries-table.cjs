@@ -30,6 +30,18 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      category_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Categories",
+          key: "id",
+        },
+      },
       universities_id: {
         type: Sequelize.INTEGER,
         references: {

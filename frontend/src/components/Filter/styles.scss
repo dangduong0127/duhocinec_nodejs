@@ -1,37 +1,4 @@
-.branding-line {
-  width: 80px;
-  position: relative;
-  height: 4px;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-end;
-
-  .branding-line-child {
-    align-self: stretch;
-    flex: 1;
-    position: relative;
-    background-color: #003cdc;
-  }
-  .branding-line-item {
-    align-self: stretch;
-    flex: 1;
-    position: relative;
-    background-color: #009925;
-  }
-  .branding-line-inner {
-    align-self: stretch;
-    flex: 1;
-    position: relative;
-    background-color: #ff961e;
-  }
-  .rectangle-div {
-    align-self: stretch;
-    flex: 1;
-    position: relative;
-    background-color: #ff1e23;
-  }
-}
+@import "../../styles/_mixin.scss";
 
 .section-filter {
   .filter-wrapper {
@@ -44,6 +11,9 @@
       // .filter-header{
 
       // }
+      @include responsive(mobile) {
+        padding: 0px 16px;
+      }
 
       .filter-main {
         form {
@@ -53,11 +23,20 @@
             align-items: end;
             gap: 20px;
 
-            li select {
-              min-width: 250px;
-              padding: 10px 15px;
-              border: 1px solid #ccc;
-              border-radius: 30px;
+            @include responsive(mobile) {
+              flex-wrap: wrap;
+              padding: 0px 15px;
+            }
+
+            li {
+              width: 100%;
+              select {
+                min-width: 250px;
+                padding: 10px 15px;
+                border: 1px solid #ccc;
+                border-radius: 30px;
+                width: 100%;
+              }
             }
             button {
               padding: 18px;

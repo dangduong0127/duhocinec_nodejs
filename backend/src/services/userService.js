@@ -1,7 +1,7 @@
 const db = require("../models");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { User, Category, SubMenu, Role, Token } = db;
+const { User, Category, SubMenu, Role, Token, Menu, Country } = db;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -77,7 +77,7 @@ const createUserService = async (data) => {
 
 const handleGetMenues = async () => {
   try {
-    const menus = await Category.findAll({
+    const menus = await Menu.findAll({
       raw: true,
       nest: true,
       include: [
@@ -247,6 +247,23 @@ const handleDeleteUser = async (userId) => {
   }
 };
 
+const hanldeGetAllCountries = async () => {
+  try {
+    const countries = await Country.findAll({
+      raw: true,
+      nest: true,
+      include: {
+        model: User,
+        as: "users",
+        attributes: ["firstName", "lastName"],
+      },
+    });
+    return countries;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
@@ -256,4 +273,5 @@ module.exports = {
   getUserInfo,
   handleUpdateUser,
   handleDeleteUser,
+  hanldeGetAllCountries,
 };

@@ -10,10 +10,9 @@ const {
   updateUsers,
   deleteUser,
   handleUploadFile,
+  getAllCountries,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
-const delay = require("../middleware/delay.js");
-const app = express();
 const router = express.Router();
 
 // Apply middleware for all routers getting
@@ -32,6 +31,8 @@ router.post("/api/v1/logout", logout);
 router.get("/api/v1/getAccountInfo", getAccountInfo);
 router.put("/api/v1/updateUsers", updateUsers);
 router.delete("/api/v1/deleteUser", deleteUser);
+router.get("/api/v1/getAllCountries", getAllCountries);
+
 router.post("/api/upload", handleUploadFile);
 
 module.exports = router;

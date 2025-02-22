@@ -9,6 +9,7 @@ import { Button, Layout, Menu, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../hooks/Context/auth.context";
 import logout from "../../utils/logout.js";
+import Countries from "./Countries";
 const { Header, Content, Footer, Sider } = Layout;
 
 // const items = [
@@ -41,7 +42,8 @@ const Admin = () => {
         return <div>Courses</div>;
       case "3":
         return <div>Settings</div>;
-
+      case "4":
+        return <Countries />;
       default:
         return <div>Default</div>;
     }
@@ -85,6 +87,26 @@ const Admin = () => {
               key: "3",
               icon: <UploadOutlined />,
               label: "Posts",
+            },
+            {
+              key: "4",
+              icon: <UploadOutlined />,
+              label: "Countries",
+            },
+            {
+              key: "5",
+              icon: <UploadOutlined />,
+              label: "Schools",
+            },
+            {
+              key: "6",
+              icon: <UploadOutlined />,
+              label: "Courses",
+            },
+            {
+              key: "7",
+              icon: <UploadOutlined />,
+              label: "Scholarships",
             },
           ]}
         />

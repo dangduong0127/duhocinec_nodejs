@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Menus", {
+    await queryInterface.createTable("SubMenus", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,6 +12,15 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      parent_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Menus",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
       path: {
         type: Sequelize.STRING,
@@ -23,6 +32,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Menus");
+    await queryInterface.dropTable("SubMenus");
   },
 };

@@ -1,18 +1,20 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const authorization = (req, res, next) => {
-  let token = req.headers.authorization.split(" ")[1];
   const allowed_list = [
     "/",
     "/api/v1/login",
     "/api/v1/register",
     "/api/v1/getallmenus",
     "/api/upload",
+    "/api/v1/getAllCountries",
   ];
 
   if (allowed_list.some((item) => req.originalUrl === item)) {
     return next();
   }
+
+  let token = req.headers.authorization.split(" ")[1];
   if (req.originalUrl === "/api/v1/getAccountInfo") {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);

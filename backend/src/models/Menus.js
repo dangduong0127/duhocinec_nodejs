@@ -3,16 +3,16 @@
 const { Model, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  class SubMenu extends Model {
+  class Menu extends Model {
     static associate(models) {
-      SubMenu.hasMany(models.Menu, {
-        foreignKey: "id",
+      Menu.hasMany(models.SubMenu, {
+        foreignKey: "parent_id",
         as: "SubMenus",
       });
     }
   }
 
-  SubMenu.init(
+  Menu.init(
     {
       id: {
         allowNull: false,
@@ -24,13 +24,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      parent_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "Categories",
-          key: "id",
-        },
-      },
       path: {
         type: DataTypes.STRING,
       },
@@ -41,10 +34,10 @@ module.exports = (sequelize) => {
     {
       sequelize,
       timestamps: false,
-      modelName: "SubMenu",
-      tableName: "SubMenus",
+      modelName: "Menu",
+      tableName: "Menus",
     }
   );
 
-  return SubMenu;
+  return Menu;
 };

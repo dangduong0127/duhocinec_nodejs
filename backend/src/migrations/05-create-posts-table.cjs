@@ -10,6 +10,29 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+
+      title: {
+        type: Sequelize.STRING,
+      },
+      content: {
+        type: Sequelize.TEXT,
+      },
+      image: {
+        type: Sequelize.STRING,
+      },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      author: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
       category_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -23,23 +46,6 @@ module.exports = {
           model: "Taxonomy",
           key: "id",
         },
-      },
-      title: {
-        type: Sequelize.STRING,
-      },
-      content: {
-        type: Sequelize.TEXT,
-      },
-      image: {
-        type: Sequelize.STRING,
-      },
-      author: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Users",
-          key: "id",
-        },
-        onDelete: "CASCADE",
       },
       post_types: {
         type: Sequelize.INTEGER,

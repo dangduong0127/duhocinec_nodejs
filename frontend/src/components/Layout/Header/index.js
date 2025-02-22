@@ -144,42 +144,48 @@ const Header = () => {
 
               <div className="header-nav">
                 <ul className="list-menu">
-                  {data.map((item) => {
-                    return (
-                      <li
-                        key={item.id}
-                        onMouseEnter={() => setIsHoverd(item.id)}
-                        onMouseLeave={() => setIsHoverd(null)}
-                      >
-                        <Link to={item.path} className="nav-item">
-                          <span>{t(`Categories.${item.name}`, item.name)}</span>
-                          {item.SubMenus.length !== 0 ? (
-                            <FontAwesomeIcon
-                              icon={faChevronDown}
-                              fontSize={"12px"}
-                            />
+                  {data && data.length > 0 ? (
+                    data.map((item) => {
+                      return (
+                        <li
+                          key={item.id}
+                          onMouseEnter={() => setIsHoverd(item.id)}
+                          onMouseLeave={() => setIsHoverd(null)}
+                        >
+                          <Link to={item.path} className="nav-item">
+                            <span>
+                              {t(`Categories.${item.name}`, item.name)}
+                            </span>
+                            {item.SubMenus.length !== 0 ? (
+                              <FontAwesomeIcon
+                                icon={faChevronDown}
+                                fontSize={"12px"}
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </Link>
+                          {isHovered === item.id && item.SubMenus.length > 0 ? (
+                            <div className="subMenus">
+                              <ul>
+                                {item.SubMenus.map((item) => {
+                                  return (
+                                    <li key={item.id}>
+                                      <Link to={item.path}>{item.name}</Link>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>
                           ) : (
                             ""
                           )}
-                        </Link>
-                        {isHovered === item.id && item.SubMenus.length > 0 ? (
-                          <div className="subMenus">
-                            <ul>
-                              {item.SubMenus.map((item) => {
-                                return (
-                                  <li key={item.id}>
-                                    <Link to={item.path}>{item.name}</Link>
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </li>
-                    );
-                  })}
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
                 </ul>
               </div>
 

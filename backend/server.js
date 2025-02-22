@@ -13,7 +13,11 @@ const router = require("./src/routes/web");
 const env = dotenv.config();
 const app = express();
 //config cors
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.DOMAIN_ALLOWED,
+  })
+);
 
 //config req.body
 app.use(express.json()); //for json

@@ -10,13 +10,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      post_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Posts",
-          key: "id",
-        },
-      },
+
       title: {
         type: Sequelize.STRING,
       },
@@ -27,6 +21,25 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",
+          key: "id",
+        },
+      },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      post_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Posts",
+          key: "id",
+        },
+      },
+      category_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Categories",
           key: "id",
         },
       },

@@ -1,0 +1,88 @@
+@import "../../styles/variables";
+.introCountries-section {
+  padding: 40px 0px;
+  .introCountries-wrapper {
+    display: flex;
+    justify-content: center;
+
+    .row-content {
+      .tabbed-content {
+        margin-top: 30px;
+
+        ul.nav-list {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          list-style: none;
+
+          li.tab {
+            display: inline-block;
+            border: 2px solid transparent;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            a {
+              text-decoration: none;
+              color: #666666d9;
+            }
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+          .active {
+            text-decoration: none;
+            border: 2px solid $primary-color !important;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            a {
+              color: $primary-color !important;
+            }
+          }
+        }
+
+        .tab-panels {
+          //   display: flex;
+          //   justify-content: space-between;
+
+          .panel {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            flex-wrap: wrap;
+            gap: 20px 60px;
+            justify-content: center;
+
+            &.active {
+              display: grid;
+            }
+
+            .country-box {
+              //   width: 280px;
+              //   display: inline-block;
+              //   margin: auto;
+              img {
+                border-radius: 10px;
+              }
+              a {
+                text-decoration: none;
+                color: $primary-color;
+                font-size: 20px;
+                font-weight: 600;
+                &:hover {
+                  color: $quaternary-color;
+                }
+              }
+              .country-name {
+                text-align: center;
+              }
+            }
+          }
+
+          .entry-content {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

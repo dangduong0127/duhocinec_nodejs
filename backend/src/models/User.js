@@ -8,6 +8,8 @@ module.exports = (sequelize) => {
       User.hasMany(models.Post, { foreignKey: "author", as: "userPosts" });
       // Quan hệ 1-1: Một User thuộc một Role
       User.belongsTo(models.Role, { foreignKey: "roleId", as: "role" });
+
+      User.hasMany(models.Country, { foreignKey: "author", as: "users" });
     }
   }
 

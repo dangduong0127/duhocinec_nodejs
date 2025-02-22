@@ -22,6 +22,11 @@ module.exports = {
       content: {
         type: Sequelize.TEXT,
       },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       author: {
         type: Sequelize.INTEGER,
         references: {
@@ -29,6 +34,13 @@ module.exports = {
           key: "id",
         },
         onDelete: "CASCADE",
+      },
+      category_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Categories",
+          key: "id",
+        },
       },
       courses_id: {
         type: Sequelize.INTEGER,

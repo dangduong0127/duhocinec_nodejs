@@ -33,6 +33,11 @@ const deleteUser = (id) => {
   return axios.delete(URL_API, { data: { id } });
 };
 
+const getAllCountries = () => {
+  const URL_API = "/api/v1/getAllCountries";
+  return axios.get(URL_API);
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -41,4 +46,5 @@ export {
   getUserProfile,
   updatedUser,
   deleteUser,
+  getAllCountries,
 };

@@ -10,9 +10,9 @@ module.exports = (sequelize) => {
         as: "Posts",
       });
 
-      Category.hasMany(models.SubMenu, {
-        foreignKey: "parent_id",
-        as: "SubMenus",
+      Category.hasMany(models.Country, {
+        foreignKey: "category_id",
+        as: "countries",
       });
     }
   }

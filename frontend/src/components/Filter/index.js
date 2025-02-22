@@ -1,22 +1,13 @@
 import React from "react";
 import "./styles.scss";
 import { Button } from "antd";
+import TitleBradingLine from "../../pages/HomePage/Title&BrandingLine";
 const Filter = () => {
   return (
     <section className="section-filter">
       <div className="filter-wrapper">
         <div className="filter-row container">
-          <div className="filter-header">
-            <div className="filter-header-inner">
-              <h2>Bạn muốn học gì?</h2>
-            </div>
-            <div className="branding-line">
-              <div className="branding-line-child"></div>
-              <div className="branding-line-item"></div>
-              <div className="branding-line-inner"></div>
-              <div className="rectangle-div"></div>
-            </div>
-          </div>
+          <TitleBradingLine title="Bạn muốn học gì?" />
 
           <div className="filter-main">
             <form>
