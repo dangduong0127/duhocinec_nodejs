@@ -8,13 +8,14 @@ const authorization = (req, res, next) => {
     "/api/v1/getallmenus",
     "/api/upload",
     "/api/v1/getAllCountries",
+    "/api/uploadimage",
   ];
 
   if (allowed_list.some((item) => req.originalUrl === item)) {
     return next();
   }
 
-  let token = req.headers.authorization.split(" ")[1];
+  let token = req?.headers?.authorization?.split(" ")[1];
   if (req.originalUrl === "/api/v1/getAccountInfo") {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);

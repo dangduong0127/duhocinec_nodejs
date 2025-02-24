@@ -1,50 +1,80 @@
 import React, { useState, useEffect } from "react";
 import "./styles.scss";
-import { Table } from "antd";
+import { Checkbox, Table } from "antd";
 import { getAllCountries } from "../../../utils/api";
-
-const columns = [
-  {
-    title: "Id",
-    dataIndex: "id",
-    key: "id",
-    width: 20,
-  },
-  {
-    title: "Title",
-    dataIndex: "title",
-    key: "Populattitleion",
-    width: 100,
-  },
-  {
-    title: "Excerpt",
-    dataIndex: "excerpt",
-    key: "Excerpt",
-    width: 200,
-  },
-  {
-    title: "Slug",
-    dataIndex: "slug",
-    key: "slug",
-    width: 150,
-  },
-  {
-    title: "Author",
-    dataIndex: "fullName",
-    key: "author",
-    width: 100,
-  },
-  {
-    title: "Created At",
-    dataIndex: "createdAt",
-    key: "createdAt",
-    render: (date) => new Date(date).toLocaleString("vi-VN"),
-    width: 150,
-  },
-];
+import { Link } from "react-router-dom";
+import CountryEdit from "./Edit";
 
 const Countries = () => {
+  const [selectedCountry, setSelectdCountry] = useState(null);
   const [data, setData] = useState(null);
+  const columns = [
+    {
+      title: (
+        <>
+          <Checkbox />
+          <span> Select All</span>
+        </>
+      ),
+      dataIndex: "checkbox",
+      key: "checkbox",
+      fixed: "left",
+      width: 50,
+      render: (_, record) => <Checkbox />,
+    },
+    {
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
+      width: 20,
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "Populattitleion",
+      width: 100,
+      render: (title, record) => {
+        return (
+          <Link>
+            <span
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectdCountry(record.id);
+              }}
+            >
+              {title}
+            </span>
+          </Link>
+        );
+      },
+    },
+    {
+      title: "Excerpt",
+      dataIndex: "excerpt",
+      key: "Excerpt",
+      width: 200,
+    },
+    {
+      title: "Slug",
+      dataIndex: "slug",
+      key: "slug",
+      width: 150,
+    },
+    {
+      title: "Author",
+      dataIndex: "fullName",
+      key: "author",
+      width: 100,
+    },
+    {
+      title: "Created At",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (date) => new Date(date).toLocaleString("vi-VN"),
+      width: 150,
+    },
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,12 +91,20 @@ const Countries = () => {
       ...item,
       key: index,
       fullName: item.users.firstName + " " + item.users.lastName,
+      checkbox: false,
     };
   });
 
   return (
     <>
-      <Table columns={columns} dataSource={dataSource} />
+      {selectedCountry ? (
+        <CountryEdit
+          onBack={() => setSelectdCountry(null)}
+          data={data.find((e) => e.id === selectedCountry)}
+        />
+      ) : (
+        <Table columns={columns} dataSource={dataSource} />
+      )}
     </>
   );
 };
