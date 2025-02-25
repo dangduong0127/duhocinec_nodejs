@@ -8,6 +8,7 @@ import CountryEdit from "./Edit";
 const Countries = () => {
   const [selectedCountry, setSelectdCountry] = useState(null);
   const [data, setData] = useState(null);
+
   const columns = [
     {
       title: (
@@ -85,7 +86,7 @@ const Countries = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [selectedCountry]);
   const dataSource = data?.map((item, index) => {
     return {
       ...item,

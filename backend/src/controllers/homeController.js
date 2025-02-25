@@ -16,52 +16,8 @@ const {
   handleUpdateUser,
   handleDeleteUser,
   hanldeGetAllCountries,
+  hanldeUpdateCountry,
 } = require("../services/userService");
-
-// const handleUploadFile = async (req, res, next) => {
-//   const form = new formidable.IncomingForm();
-
-//   form.parse(req, (err, fields, files) => {
-//     if (err) {
-//       console.error("Error parsing form:", err);
-//       return res.status(500).json({ error: "File upload error" });
-//     }
-
-//     // ✅ Lấy file từ mảng
-//     const uploadedFile = files.profilePic[0]; // Vì `profilePic` là một mảng
-
-//     if (!uploadedFile) {
-//       return res.status(400).json({ error: "No file uploaded" });
-//     }
-
-//     const oldPath = uploadedFile.filepath; // ✅ Lấy đúng path
-//     const newPath = path.join(
-//       __dirname,
-//       "../uploads",
-//       uploadedFile.originalFilename
-//     ); // ✅ Tạo đường dẫn mới
-
-//     fs.readFile(oldPath, (err, data) => {
-//       if (err) {
-//         console.error("Error reading file:", err);
-//         return res.status(500).json({ error: "File reading error" });
-//       }
-
-//       fs.writeFile(newPath, data, (err) => {
-//         if (err) {
-//           console.error("Error saving file:", err);
-//           return res.status(500).json({ error: "File saving error" });
-//         }
-
-//         res.status(200).json({
-//           message: "Successfully uploaded",
-//           filename: uploadedFile.originalFilename,
-//           path: newPath,
-//         });
-//       });
-//     });
-//   });
-// };
 
 const handleUploadImage = (req, res, next) => {
   const form = new formidable.IncomingForm({
@@ -156,6 +112,11 @@ const getAllCountries = async (req, res) => {
   res.status(200).json(countries);
 };
 
+const UpdateCountry = async (req, res) => {
+  const response = await hanldeUpdateCountry(req.body);
+  return res.status(200).json(response);
+};
+
 module.exports = {
   getHomePage,
   getMenus,
@@ -166,7 +127,7 @@ module.exports = {
   getAccountInfo,
   updateUsers,
   deleteUser,
-  // handleUploadFile,
+  UpdateCountry,
   getAllCountries,
   handleUploadImage,
 };

@@ -29,7 +29,6 @@ const Admin = () => {
   } = theme.useToken();
   const navigate = useNavigate();
   const [tab, setTab] = useState("1");
-
   const handleSlectedKeys = (e) => {
     setTab(e.key);
   };
@@ -116,6 +115,7 @@ const Admin = () => {
               width: "80%",
               fontWeight: "600",
               lineHeight: "20px",
+              marginTop: "30px",
             }}
             onClick={() => logout(setAuth, navigate)}
             type="primary"

@@ -43,6 +43,11 @@ const uploadImage = (data) => {
   return axios.post(URL_API, data);
 };
 
+const updateCountry = (data) => {
+  const URL_API = "/api/v1/updateCountry";
+  return axios.put(URL_API, data);
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -53,4 +58,5 @@ export {
   deleteUser,
   getAllCountries,
   uploadImage,
+  updateCountry,
 };

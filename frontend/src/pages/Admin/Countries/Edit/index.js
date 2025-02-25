@@ -1,26 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Input, Upload, Card, Row, Col, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import axios from "axios";
+import { uploadImage, updateCountry } from "../../../../utils/api";
 
 const { TextArea } = Input;
-
-const uploadImage = (data) => {
-  return axios.post("/api/upload", data, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-};
-
 const CountryEdit = ({ onBack, data }) => {
   const [formData, setFormData] = useState({
+    id: data.id,
     title: data.title,
     excerpt: data.excerpt,
     content: data.content,
     slug: data.slug,
-    thumbnail: data.thumbnail, // URL ảnh trên server
+    thumbnail: data.thumbnail,
   });
 
-  const [previewImage, setPreviewImage] = useState(data.thumbnail); // Lưu ảnh tạm thời
+  const [previewImage, setPreviewImage] = useState(null); // Lưu ảnh tạm thời
   const [selectedFile, setSelectedFile] = useState(null); // Lưu file trước khi upload
   const [loading, setLoading] = useState(false);
 
@@ -33,41 +27,42 @@ const CountryEdit = ({ onBack, data }) => {
 
   // Xử lý chọn ảnh để preview
   const handlePreviewImage = ({ file }) => {
-    // const imageUrl = URL.createObjectURL(file); // Tạo URL tạm thời
-    const imageUrl = `http://localhost:1988/${file}`;
+    const imageUrl = URL.createObjectURL(file);
     setPreviewImage(imageUrl);
-    setSelectedFile(file); // Lưu file để upload sau
+    setSelectedFile(file);
   };
 
   // Xử lý upload ảnh khi bấm "Cập nhật"
   const handleSave = async () => {
-    setLoading(true);
-    let uploadedImageUrl = formData.thumbnail; // Mặc định giữ nguyên ảnh cũ
+    try {
+      let uploadedImageUrl = formData.thumbnail; // Mặc định giữ nguyên ảnh cũ
 
-    // Nếu có ảnh mới, thực hiện upload lên server
-    if (selectedFile) {
-      const formDataUpload = new FormData();
-      formDataUpload.append("profilePic", selectedFile); // ✅ Key theo API
+      // Nếu có ảnh mới, thực hiện upload lên server
+      if (selectedFile) {
+        const formDataUpload = new FormData();
+        formDataUpload.append("image", selectedFile); // ✅ Key theo API
 
-      try {
         const response = await uploadImage(formDataUpload);
+        console.log(response);
         if (response.status === 200) {
-          uploadedImageUrl = `/uploads/${response.data.filename}`; // ✅ Lấy URL từ API
+          uploadedImageUrl = `${response.data.file.path}`;
+          setFormData({ ...formData, thumbnail: uploadedImageUrl });
+          setLoading(true);
         } else {
           message.error("Tải ảnh lên thất bại!");
         }
-      } catch (error) {
-        message.error("Lỗi khi tải ảnh lên!");
-        return;
       }
+
+      updateCountry({ ...formData, thumbnail: uploadedImageUrl })
+        .then(() => {
+          message.success("Cập nhật bài viết thành công!");
+          setLoading(false);
+        })
+        .catch(() => message.error("Cập nhật thất bại!"));
+    } catch (error) {
+      message.error("Lỗi khi tải ảnh lên!");
+      return;
     }
-
-    // Cập nhật dữ liệu bài viết
-    setFormData((prev) => ({ ...prev, thumbnail: uploadedImageUrl }));
-    console.log("Updated Data:", { ...formData, thumbnail: uploadedImageUrl });
-
-    message.success("Cập nhật bài viết thành công!");
-    setLoading(false);
   };
 
   return (
@@ -136,12 +131,32 @@ const CountryEdit = ({ onBack, data }) => {
             <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
           </Upload>
 
-          {previewImage && (
+          {previewImage ? (
             <img
               src={previewImage}
               alt="thumbnail preview"
               style={{
                 width: "100%",
+                maxHeight: "300px",
+                objectFit: "cover",
+                overflowY: "auto",
+                marginTop: 10,
+                borderRadius: 4,
+              }}
+            />
+          ) : (
+            <img
+              src={
+                formData.thumbnail
+                  ? process.env.REACT_APP_SERVER_BASE_URL + formData.thumbnail
+                  : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+              }
+              alt="thumbnail preview"
+              style={{
+                width: "100%",
+                maxHeight: "300px",
+                objectFit: "cover",
+                overflowY: "auto",
                 marginTop: 10,
                 borderRadius: 4,
               }}

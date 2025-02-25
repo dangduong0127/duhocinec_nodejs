@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Table, Button, Input, Select } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Switch, Table } from "antd";
+import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../../../utils/api";
 import { notification, Modal } from "antd";
 import { updatedUser } from "../../../utils/api";

@@ -1,30 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./styles.scss";
 import TitleBradingLine from "../../pages/HomePage/Title&BrandingLine";
-
+import { getAllCountries } from "../../utils/api";
 const IntroduceContries = () => {
   const [isHovered, setIsHovered] = useState(0);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getAllCountries();
+      setData(res.data);
+    };
+    fetchData();
+  }, []);
 
   const items = [
     {
-      id: "#tab-chau-au",
+      id: 22,
       name: "Châu Âu",
     },
     {
-      id: "#tab-bac-my",
+      id: 23,
       name: "Châu Mỹ",
     },
     {
-      id: "#tab-chau-a",
+      id: 24,
       name: "Châu Á",
     },
     {
-      id: "#tab-chau-uc",
+      id: 25,
       name: "Châu Úc",
     },
   ];
-
+  console.log(data);
   return (
     <>
       <section className="introCountries-section">
@@ -46,7 +55,6 @@ const IntroduceContries = () => {
                   );
                 })}
               </ul>
-
               <div className="tab-panels">
                 {items && items.length > 0 ? (
                   items.map((item, index) => {
@@ -60,45 +68,31 @@ const IntroduceContries = () => {
                         }
                         id={item.id}
                       >
-                        <div className="country-box">
-                          <Link>
-                            <img
-                              src="http://localhost:1988/uploads/du-hoc-ao-2025-inec-280x158.jpg"
-                              alt=""
-                            />
-                            <h3 className="country-name">Du học áo</h3>
-                          </Link>
-                        </div>
-
-                        <div className="country-box">
-                          <Link>
-                            <img
-                              src="http://localhost:1988/uploads/du-hoc-ao-2025-inec-280x158.jpg"
-                              alt=""
-                            />
-                            <h3 className="country-name">Du học áo</h3>
-                          </Link>
-                        </div>
-
-                        <div className="country-box">
-                          <Link>
-                            <img
-                              src="http://localhost:1988/uploads/du-hoc-ao-2025-inec-280x158.jpg"
-                              alt=""
-                            />
-                            <h3 className="country-name">Du học áo</h3>
-                          </Link>
-                        </div>
-
-                        <div className="country-box">
-                          <Link>
-                            <img
-                              src="http://localhost:1988/uploads/du-hoc-ao-2025-inec-280x158.jpg"
-                              alt=""
-                            />
-                            <h3 className="country-name">Du học áo</h3>
-                          </Link>
-                        </div>
+                        {data &&
+                          data.map((data, index) => {
+                            let str = null;
+                            if (item.id === data.category_id) {
+                              console.log(data);
+                              str = (
+                                <div key={index} className="country-box">
+                                  <Link to={`/country${data.slug}`}>
+                                    <img
+                                      style={{
+                                        width: "300px",
+                                        height: "170px",
+                                      }}
+                                      src={`http://localhost:1988/${data.thumbnail}`}
+                                      alt={data.title}
+                                    />
+                                    <h3 className="country-name">
+                                      {data.title}
+                                    </h3>
+                                  </Link>
+                                </div>
+                              );
+                            }
+                            return str;
+                          })}
                       </div>
                     );
                   })

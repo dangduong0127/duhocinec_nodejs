@@ -54,7 +54,7 @@ const Login = () => {
               name: userData.data.firstName + userData.data.lastName,
               roleId: userData.data.roleId,
               avatar:
-                userData.data?.image ||
+                process.env.REACT_APP_SERVER_BASE_URL + userData.data?.image ||
                 process.env.REACT_APP_SERVER_BASE_URL + "uploads/avatar.jpg",
             },
           });

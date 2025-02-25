@@ -1,7 +1,7 @@
 const db = require("../models");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { User, Category, SubMenu, Role, Token, Menu, Country } = db;
+const { User, SubMenu, Role, Token, Menu, Country } = db;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -264,6 +264,30 @@ const hanldeGetAllCountries = async () => {
   }
 };
 
+const hanldeUpdateCountry = async (data) => {
+  try {
+    const country = await Country.findOne({
+      raw: false,
+      where: { id: data.id },
+    });
+    if (country) {
+      country.title = data.title;
+      country.excerpt = data.excerpt;
+      country.content = data.content;
+      country.thumbnail = data.thumbnail;
+      country.author = data.author;
+      country.slug = data.slug;
+      await country.save();
+      return {
+        success: true,
+        message: "Country updated successfully",
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
@@ -274,4 +298,5 @@ module.exports = {
   handleUpdateUser,
   handleDeleteUser,
   hanldeGetAllCountries,
+  hanldeUpdateCountry,
 };

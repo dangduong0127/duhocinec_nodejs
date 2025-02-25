@@ -9,7 +9,7 @@ const {
   getAccountInfo,
   updateUsers,
   deleteUser,
-  // handleUploadFile,
+  UpdateCountry,
   handleUploadImage,
   getAllCountries,
 } = require("../controllers/homeController.js");
@@ -36,7 +36,7 @@ router.put("/api/v1/updateUsers", updateUsers);
 router.delete("/api/v1/deleteUser", deleteUser);
 router.get("/api/v1/getAllCountries", getAllCountries);
 
-// router.post("/api/upload", handleUploadFile);
+router.put("/api/v1/updateCountry", UpdateCountry);
 router.post("/api/uploadimage", handleUploadImage);
 
 module.exports = router;
