@@ -1,0 +1,354 @@
+.section-country-details {
+  margin: 0 auto;
+  .country-wrapper {
+    display: flex;
+
+    .country-detail-wrapper {
+      .country {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        position: relative;
+        gap: 8px;
+        width: 100%;
+        padding: 64px;
+        text-align: left;
+        font-size: 44px;
+
+        .country-flag {
+          width: 76px;
+          height: 48px;
+          border-radius: 8px;
+          object-fit: cover;
+        }
+        .country-name {
+          flex: 1;
+          position: relative;
+          letter-spacing: -0.02px;
+          line-height: 1.4;
+          font-weight: 600;
+          font-size: 44px;
+          margin: 0;
+          color: #000;
+        }
+      }
+
+      #newPolicy {
+        width: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 32px;
+        text-align: left;
+        font-size: 16px;
+        color: #2e2e2e;
+        padding: 0px 64px 64px;
+        .new-policy-title {
+          align-self: stretch;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 12px;
+          font-size: 32px;
+          margin: 0;
+          color: #141414;
+          .chnh-sch-mi {
+            flex: 1;
+            position: relative;
+            letter-spacing: -0.02px;
+            line-height: 1.4;
+            font-weight: 600;
+            font-size: 32px;
+            margin: 0;
+          }
+        }
+
+        .new-policy-content {
+          position: relative;
+          font-size: 16px;
+          color: #2e2e2e;
+          text-align: left;
+          margin: 0;
+          font-size: inherit;
+          padding-left: 12px;
+          line-height: 1.6;
+          font-weight: 500;
+        }
+      }
+
+      #cost-est-study-abroad {
+        width: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 32px;
+        text-align: left;
+        font-size: 32px;
+        color: #141414;
+        padding: 0px 64px 64px 64px;
+        .cost-est-study-abroad-title {
+          align-self: stretch;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 12px;
+          h2 {
+            font-size: 32px;
+            margin: 0;
+            color: #000;
+          }
+        }
+        .container-cost-est-study-abroad {
+          align-self: stretch;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 32px;
+          font-size: 16px;
+          color: #585858;
+          .col-cosr-est-study-abroad {
+            align-self: stretch;
+            border-radius: 12px;
+            background-color: #fff;
+            border: 1px solid #ececec;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 16px;
+            gap: 16px;
+            .input-filed-cost-est {
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: flex-start;
+            }
+
+            .input-filed-cost-est {
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: flex-start;
+              select {
+                display: block;
+                box-shadow: inset 0 -1.4em 1em 0 rgba(0, 0, 0, 0.02);
+                background-position: right 0.45em top 50%;
+                background-repeat: no-repeat;
+                padding-right: 1.4em;
+                background-size: auto 16px;
+                background-color: #ececec;
+                border: none;
+                margin-bottom: 0;
+                border-radius: 30px;
+                width: 100%;
+                height: 46px;
+                padding: 0 0.75em;
+                color: #333;
+              }
+            }
+          }
+        }
+      }
+
+      #country-details-container {
+        width: 100%;
+        padding: 0px 64px 64px 64px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 32px;
+        text-align: left;
+        font-size: 32px;
+        color: #141414;
+        .country-details-container-title {
+          align-self: stretch;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 12px;
+          h2 {
+            font-size: 32px;
+            margin: 0;
+          }
+        }
+
+        .country-details-container-content-wrapper {
+          align-self: stretch;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 32px;
+          font-size: 16px;
+          color: #2e2e2e;
+          .country-details-filter {
+            width: 300px;
+            border-radius: 12px;
+            background-color: #fff;
+            border: 1px solid #ececec;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 16px;
+            gap: 16px;
+            form {
+              width: 100%;
+              ul {
+                padding: 0;
+                list-style: none;
+                display: block;
+                margin-top: 0;
+                margin-bottom: 0;
+                li {
+                  display: block;
+                  padding: 10px 0;
+                  margin: 0;
+                  label {
+                    display: inline-block;
+                    margin: 0;
+                    padding: 0;
+                    width: 100%;
+                    font-size: 0.9em;
+                    select {
+                      display: block;
+                      background-color: #ececec;
+                      border-radius: 30px;
+                      height: 46px;
+                      min-width: 170px;
+                      border: none;
+                      padding-right: 1.4em;
+                      background-size: auto 16px;
+                      width: 100%;
+                    }
+                  }
+                  input[type="submit"] {
+                    border: 1px solid #0c65d8;
+                    background-color: white;
+                    position: relative;
+                    display: inline-block;
+                    color: #000;
+                    border-radius: 30px;
+                    text-transform: math-auto;
+                    font-size: 0.97em;
+                    letter-spacing: 0.03em;
+                    cursor: pointer;
+                    font-weight: bolder;
+                    text-shadow: none;
+                    line-height: 2.4em;
+                    min-height: 2.5em;
+                    padding: 0 1.2em;
+                    max-width: 100%;
+                    text-align: center;
+                    margin: auto;
+                    width: 100%;
+                  }
+                }
+              }
+            }
+          }
+
+          .country-details-col {
+            flex: 1;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 16px;
+            font-size: 20px;
+
+            #search-filter-results-47364 {
+              max-height: 570px;
+              overflow-y: auto;
+              width: 100%;
+              .country-details-school-card {
+                border-radius: 12px;
+                background-color: #fff;
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 12px;
+                gap: 10px;
+                .country-details-card-img {
+                  width: 120px;
+                  height: 120px;
+                  img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 4px;
+                    object-fit: cover;
+                  }
+                }
+                .country-details-text {
+                  align-self: stretch;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  justify-content: flex-start;
+                  gap: 12px;
+                  .university-of-british {
+                    align-self: stretch;
+                    position: relative;
+                    letter-spacing: -0.02px;
+                    line-height: 125%;
+                    font-weight: 600;
+                    color: #000;
+                  }
+                  .country-details-info {
+                    align-self: stretch;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: center;
+                    gap: 4px;
+                    font-size: 14px;
+                    color: #4a4a4a;
+                    .country-details-location {
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                      justify-content: flex-start;
+                      gap: 4px;
+                      .vancouver-canada {
+                        position: relative;
+                        line-height: 150%;
+                        max-width: 300px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .country-details-col {
+          flex: 1;
+          background-color: #fff;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 16px;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}

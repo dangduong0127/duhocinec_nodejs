@@ -17,6 +17,7 @@ const {
   handleDeleteUser,
   hanldeGetAllCountries,
   hanldeUpdateCountry,
+  hanldeGetCountryDetails,
 } = require("../services/userService");
 
 const handleUploadImage = (req, res, next) => {
@@ -117,6 +118,11 @@ const UpdateCountry = async (req, res) => {
   return res.status(200).json(response);
 };
 
+const getCountryDetails = async (req, res) => {
+  const response = await hanldeGetCountryDetails(req.query.id);
+  return res.status(200).json(response);
+};
+
 module.exports = {
   getHomePage,
   getMenus,
@@ -130,4 +136,5 @@ module.exports = {
   UpdateCountry,
   getAllCountries,
   handleUploadImage,
+  getCountryDetails,
 };

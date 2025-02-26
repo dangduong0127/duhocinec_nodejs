@@ -13,6 +13,8 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./hooks/Context/auth.context";
 import { Spin } from "antd";
 import UserSettings from "./pages/UserSettings";
+import Countries from "./pages/Countries";
+import CountryDetail from "./pages/Countries/CountryDetail";
 function App() {
   const { auth, setAuth, appLoading, setAppLoading } = useContext(AuthContext);
 
@@ -116,6 +118,24 @@ function App() {
                 </Layout>
               }
             />
+
+            <Route
+              path="/countries"
+              element={
+                <Layout>
+                  <Countries />
+                </Layout>
+              }
+            />
+            <Route
+              path="/countries/:slug"
+              element={
+                <Layout>
+                  <CountryDetail />
+                </Layout>
+              }
+            />
+
             <Route
               path="*"
               element={

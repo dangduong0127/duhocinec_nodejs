@@ -288,6 +288,37 @@ const hanldeUpdateCountry = async (data) => {
   }
 };
 
+const hanldeGetCountryDetails = async (postID) => {
+  try {
+    if (!postID) {
+      return {
+        success: false,
+        message: "Post ID is required",
+      };
+    }
+    const country = await Country.findOne({
+      raw: false,
+      where: {
+        id: postID,
+      },
+    });
+    if (country) {
+      return {
+        success: true,
+        message: "Country fetched successfully",
+        details: country,
+      };
+    } else {
+      return {
+        success: false,
+        message: "Country not found",
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
@@ -299,4 +330,5 @@ module.exports = {
   handleDeleteUser,
   hanldeGetAllCountries,
   hanldeUpdateCountry,
+  hanldeGetCountryDetails,
 };

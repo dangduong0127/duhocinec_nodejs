@@ -12,6 +12,7 @@ const {
   UpdateCountry,
   handleUploadImage,
   getAllCountries,
+  getCountryDetails,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -37,6 +38,7 @@ router.delete("/api/v1/deleteUser", deleteUser);
 router.get("/api/v1/getAllCountries", getAllCountries);
 
 router.put("/api/v1/updateCountry", UpdateCountry);
+router.get("/api/v1/getCountryDetails", getCountryDetails);
 router.post("/api/uploadimage", handleUploadImage);
 
 module.exports = router;

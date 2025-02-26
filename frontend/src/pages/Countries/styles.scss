@@ -1,0 +1,10 @@
+section.countries-section {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+
+  .countries-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./styles.scss";
 import TitleBradingLine from "../../pages/HomePage/Title&BrandingLine";
 import { getAllCountries } from "../../utils/api";
+import SingleCountry from "./SingleCountry";
 const IntroduceContries = () => {
   const [isHovered, setIsHovered] = useState(0);
   const [data, setData] = useState(null);
@@ -70,28 +71,16 @@ const IntroduceContries = () => {
                       >
                         {data &&
                           data.map((data, index) => {
-                            let str = null;
+                            let output = null;
                             if (item.id === data.category_id) {
                               console.log(data);
-                              str = (
+                              output = (
                                 <div key={index} className="country-box">
-                                  <Link to={`/country${data.slug}`}>
-                                    <img
-                                      style={{
-                                        width: "300px",
-                                        height: "170px",
-                                      }}
-                                      src={`http://localhost:1988/${data.thumbnail}`}
-                                      alt={data.title}
-                                    />
-                                    <h3 className="country-name">
-                                      {data.title}
-                                    </h3>
-                                  </Link>
+                                  <SingleCountry data={data} />
                                 </div>
                               );
                             }
-                            return str;
+                            return output;
                           })}
                       </div>
                     );

@@ -48,6 +48,11 @@ const updateCountry = (data) => {
   return axios.put(URL_API, data);
 };
 
+const getCountryDetails = (data) => {
+  const URL_API = "/api/v1/getCountryDetails";
+  return axios.get(URL_API, { params: { id: data } });
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -59,4 +64,5 @@ export {
   getAllCountries,
   uploadImage,
   updateCountry,
+  getCountryDetails,
 };
