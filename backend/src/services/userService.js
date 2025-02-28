@@ -9,7 +9,7 @@ const getAllUsers = async (req, res) => {
   try {
     const checkToken = await Token.findAll({
       where: {
-        token: req.headers.authorization?.split(" ")[1],
+        token: req.cookies?.access_token,
       },
     });
     // console.log(checkToken);
@@ -120,7 +120,7 @@ const handleGetMenues = async () => {
 const handleLogin = async (email, password) => {
   try {
     const user = await User.findOne({
-      where: [{ email: email }],
+      where: { email: email },
     });
 
     if (user) {
@@ -172,13 +172,20 @@ const hanldeLogout = async (userId) => {
 
 const getUserInfo = async (userId) => {
   try {
-    const userData = await User.findOne({
-      raw: true,
-      nest: true,
-      where: { id: userId },
-      attributes: { exclude: ["password"] },
-    });
-    return userData;
+    if (!userId) {
+      return {
+        success: false,
+        message: "User ID is required",
+      };
+    } else {
+      const userData = await User.findOne({
+        raw: true,
+        nest: true,
+        where: { id: userId },
+        attributes: { exclude: ["password"] },
+      });
+      return userData;
+    }
   } catch (err) {
     console.log(err);
   }

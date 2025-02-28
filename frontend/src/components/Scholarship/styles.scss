@@ -1,0 +1,44 @@
+#country-scholarship-container {
+  display: grid;
+  grid-template-columns: 220px auto auto auto;
+  background-color: #1c50a1;
+  color: white;
+  padding: 20px;
+  width: 100%;
+  border-radius: 10px;
+  gap: 30px;
+  //   margin: 0px 64px 64px 64px;
+
+  .title-scholarship-and-other {
+    max-width: 220px;
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+  .nav-scholarship-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.5sease,
+      transform 0.5sease;
+    .contents-scholarship-and-other a h5 {
+      color: #fff;
+    }
+    .devider-scholarship-and-other {
+      margin: 15px 0;
+      border-width: 0;
+      border-top: 1px solid currentColor;
+      opacity: 0.1;
+    }
+    .sub-text-accordion {
+      font-size: 14px;
+      font-style: italic;
+    }
+    span {
+      color: #fff;
+    }
+  }
+  .show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

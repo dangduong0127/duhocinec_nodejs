@@ -14,6 +14,16 @@ const Login = () => {
   });
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionStatus = urlParams.get("session");
+    if (sessionStatus === "expired") {
+      notification.error({
+        message: "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (auth.isAuthenticated) {
       navigate("/");
       return;
@@ -37,10 +47,11 @@ const Login = () => {
 
     const fetchApi = async (data) => {
       try {
-        const promise = await checkLoginApi(data);
-        const result = promise.data;
+        const res = await checkLoginApi(data);
+        const result = res.data;
+        // console.log(res);
         if (result.success) {
-          localStorage.setItem("access_token", result.accessToken);
+          // localStorage.setItem("access_token", result.accessToken);
           notification.success({
             message: "Login Successful",
             description: result.message,

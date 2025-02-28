@@ -34,7 +34,7 @@ const IntroduceContries = () => {
       name: "Châu Úc",
     },
   ];
-  console.log(data);
+  // console.log(data);
   return (
     <>
       <section className="introCountries-section">
@@ -73,7 +73,7 @@ const IntroduceContries = () => {
                           data.map((data, index) => {
                             let output = null;
                             if (item.id === data.category_id) {
-                              console.log(data);
+                              // console.log(data);
                               output = (
                                 <div key={index} className="country-box">
                                   <SingleCountry data={data} />

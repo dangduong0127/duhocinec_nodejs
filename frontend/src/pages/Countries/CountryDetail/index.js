@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getCountryDetails } from "../../../utils/api";
 import Banner from "../../../components/Banner";
-import { IconBook, IconDollar, IconSearch } from "../../../components/Icons";
+import {
+  IconBook,
+  IconDollar,
+  IconDollar2,
+  IconLocaltion,
+  IconSearch,
+} from "../../../components/Icons";
 import "./styles.scss";
 import Sidebar from "../../../components/Sidebar";
+import Schoolarship from "../../../components/Scholarship";
 const CountryDetail = () => {
-  const { slug } = useParams();
   const location = useLocation();
   const countryID = location?.state;
   const [countryData, setCountryData] = useState(null);
@@ -80,7 +86,7 @@ const CountryDetail = () => {
         <Banner />
         <div className="section-country-details container">
           <div className="country-wrapper">
-            <Sidebar />
+            <Sidebar data={countryData} />
 
             <div className="country-detail-wrapper">
               <div className="country">
@@ -458,39 +464,13 @@ const CountryDetail = () => {
                             </div>
                             <div className="country-details-info">
                               <div className="country-details-location">
-                                <svg
-                                  width="20"
-                                  height="21"
-                                  viewBox="0 0 20 21"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <rect
-                                    y="0.5"
-                                    width="20"
-                                    height="20"
-                                    fill="#D9D9D9"
-                                  ></rect>
-                                </svg>
+                                <IconLocaltion size="20" color="#000" />
                                 <div className="vancouver-canada">
                                   {uni.location}
                                 </div>
                               </div>
                               <div className="country-details-location">
-                                <svg
-                                  width="20"
-                                  height="21"
-                                  viewBox="0 0 20 21"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <rect
-                                    y="0.5"
-                                    width="20"
-                                    height="20"
-                                    fill="#D9D9D9"
-                                  ></rect>
-                                </svg>
+                                <IconDollar2 size="20" color="#000" />
                                 <div className="vancouver-canada">
                                   Chỉ từ {uni.price}
                                 </div>
@@ -503,6 +483,8 @@ const CountryDetail = () => {
                   </div>
                 </div>
               </div>
+
+              <Schoolarship />
             </div>
           </div>
         </div>

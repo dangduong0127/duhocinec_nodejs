@@ -7,15 +7,21 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
 const router = require("./src/routes/web");
+const cookieParser = require("cookie-parser");
 // import sequelize from "./src/config/connectDB.js";
 // import User from "./src/models/User.js";
 // const __dirname = path.resolve();
 const env = dotenv.config();
 const app = express();
+
+//config cookieParser
+app.use(cookieParser());
+
 //config cors
 app.use(
   cors({
     origin: process.env.DOMAIN_ALLOWED,
+    credentials: true, // Cho phép gửi cookie qua request
   })
 );
 

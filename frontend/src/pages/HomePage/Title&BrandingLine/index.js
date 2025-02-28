@@ -14,6 +14,9 @@ const TitleBradingLine = (props) => {
           <div className="branding-line-inner"></div>
           <div className="rectangle-div"></div>
         </div>
+        <div className="description">
+          <p>{props.description}</p>
+        </div>
       </div>
     </>
   );

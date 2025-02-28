@@ -1,21 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./styles.scss";
-import { getUserProfile, uploadImage, updatedUser } from "../../utils/api";
+import {
+  getUserProfile,
+  uploadImage,
+  updatedUser,
+  logoutApi,
+} from "../../utils/api";
 import { Avatar, Input, Select, Button } from "antd";
-// import { EditFilled, UserOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../hooks/Context/auth.context";
 
 const UserSettings = () => {
   const [userData, setUserData] = useState(null);
   const [imageUrlTemp, setImageUrlTemp] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
-  const { auth } = useContext(AuthContext);
-
   useEffect(() => {
     const userProfile = async () => {
       const response = await getUserProfile();
-      setUserData(response.data);
+      if (response.status !== false) {
+        setUserData(response.data);
+      } else {
+        await logoutApi();
+      }
     };
     userProfile();
   }, [refresh]);

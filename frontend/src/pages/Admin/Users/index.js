@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Table } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getAllUsers } from "../../../utils/api";
-import { notification, Modal } from "antd";
-import { updatedUser } from "../../../utils/api";
+import { getAllUsers, logoutApi } from "../../../utils/api";
+import { notification } from "antd";
 import ModalEditUser from "./Modal Edit";
 import ModalDeleteUser from "./Modal Delete";
 
@@ -107,7 +106,7 @@ const Users = () => {
     const getUserDatas = async () => {
       try {
         const response = await getAllUsers();
-
+        // console.log(response);
         if (response?.message) {
           notification.error({
             message: response.message,
@@ -115,6 +114,10 @@ const Users = () => {
           navigate("/login");
         } else {
           setUserData(response.data);
+        }
+
+        if (response.status === false) {
+          await logoutApi();
         }
       } catch (e) {
         console.log(e);

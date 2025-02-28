@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../hooks/Context/auth.context";
 import logout from "../../utils/logout.js";
 import Countries from "./Countries";
+import LayoutPage from "../../components/Layout/index.js";
 const { Header, Content, Footer, Sider } = Layout;
 
 // const items = [
@@ -23,7 +24,7 @@ const { Header, Content, Footer, Sider } = Layout;
 //   label: `nav ${index + 1}`,
 // }));
 const Admin = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -48,7 +49,7 @@ const Admin = () => {
     }
   };
 
-  return (
+  return auth.user.roleId === 1 ? (
     <Layout>
       <Sider
         breakpoint="lg"
@@ -158,6 +159,31 @@ const Admin = () => {
         </Footer>
       </Layout>
     </Layout>
+  ) : (
+    <LayoutPage>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "70vh",
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1>You don't have permission to access this resource!</h1>
+          <Link to="/">
+            <Button type="primary">Back to home page</Button>
+          </Link>
+        </div>
+      </div>
+    </LayoutPage>
   );
 };
 export default Admin;

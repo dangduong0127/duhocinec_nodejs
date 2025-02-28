@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import "./styles.scss";
 import { IconBook } from "../Icons";
 import { Link } from "react-router-dom";
-const Sidebar = () => {
+const Sidebar = ({ data }) => {
   const [isActive, setActive] = useState(false);
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="sidebar-wrapper">
@@ -11,11 +17,13 @@ const Sidebar = () => {
         <div className="nav-container">
           <div className="vertical-nav">
             <Link
-              to="#newPolicy"
               className={
                 isActive === true ? "nav-item nav-item-active" : "nav-item"
               }
-              onClick={() => setActive(true)}
+              onClick={() => {
+                setActive(true);
+                scrollToSection("newPolicy");
+              }}
             >
               <policy />
               <IconBook size="20" color="#000" />

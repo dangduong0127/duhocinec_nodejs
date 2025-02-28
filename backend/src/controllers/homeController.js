@@ -82,13 +82,31 @@ const createUser = async (req, res) => {
 };
 
 const getLogin = async (req, res) => {
-  const { email, password } = req.body;
-  const result = await handleLogin(email, password);
-  return res.status(200).json(result);
+  try {
+    const { email, password } = req.body;
+    const result = await handleLogin(email, password);
+    // console.log(result);
+    if (!result || result.success !== true) {
+      return res.status(201).json(result);
+    }
+
+    res.cookie("access_token", result.accessToken, {
+      httpOnly: true,
+      secure: false, // Chỉ bật secure nếu chạy production
+      sameSite: "Lax",
+      maxAge: 3600000,
+    });
+
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error("Login error:", err);
+    return res.status(500).json(result);
+  }
 };
 
 const logout = async (req, res) => {
   const logout = await hanldeLogout(req.user.userId);
+  res.clearCookie("access_token");
   res.status(200).json({ logout });
 };
 

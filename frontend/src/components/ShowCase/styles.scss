@@ -1,0 +1,32 @@
+.showcase-wrapper {
+  display: flex;
+  justify-content: center;
+  .container {
+    .showcase-content {
+      display: flex !important;
+      justify-content: space-between;
+      margin-top: 20px;
+      .showcase-item {
+        max-width: 300px;
+        .showcase-item__image {
+          width: 300px;
+          height: 300px;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+          }
+        }
+        .showcase-item__content {
+          width: 100%;
+          padding: 15px 15px 20px;
+          p {
+            text-align: justify;
+            color: #3791e6;
+          }
+        }
+      }
+    }
+  }
+}

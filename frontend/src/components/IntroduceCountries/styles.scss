@@ -49,7 +49,6 @@
           .panel {
             grid-template-columns: 1fr 1fr 1fr 1fr;
             flex-wrap: wrap;
-            gap: 20px 60px;
             justify-content: center;
 
             &.active {
