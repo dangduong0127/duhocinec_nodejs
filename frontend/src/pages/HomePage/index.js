@@ -7,6 +7,7 @@ import Schoolarship from "../../components/Scholarship";
 import ShowCase from "../../components/ShowCase";
 import WhatOurClientsSay from "./WhatOurClientsSay";
 import SuccessStory from "./SuccessStory";
+import PartnerSystem from "./PartnerSystem";
 const HomePage = () => {
   return (
     <>
@@ -25,6 +26,7 @@ const HomePage = () => {
       <ShowCase />
       <SuccessStory />
       <WhatOurClientsSay />
+      <PartnerSystem />
     </>
   );
 };
