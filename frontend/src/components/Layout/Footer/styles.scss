@@ -1,3 +1,4 @@
+@import "../../../styles/variables";
 .footer-wrapper {
   width: 100%;
   position: relative;
@@ -22,7 +23,7 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -101,4 +102,18 @@
       margin-bottom: 0;
     }
   }
+}
+
+.scrollToTop {
+  background-color: $primary-color;
+  position: fixed;
+  border: none;
+  color: #fff;
+  height: 50px;
+  width: 50px;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.2s linear;
 }

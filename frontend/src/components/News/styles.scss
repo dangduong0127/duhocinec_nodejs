@@ -1,0 +1,31 @@
+section.news-section {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+
+  .title-header-section {
+    margin-bottom: 20px;
+  }
+
+  .news-wrapper {
+    text-align: center;
+    .news-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 20px;
+      .news-item {
+        .news-imgbox {
+          img {
+            width: 100%;
+            border-radius: 10px;
+          }
+        }
+        .news-txtbox {
+          color: #3c4043;
+          font-weight: 600;
+          line-height: 1.4;
+        }
+      }
+    }
+  }
+}

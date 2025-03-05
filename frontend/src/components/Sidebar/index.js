@@ -25,49 +25,41 @@ const Sidebar = ({ data }) => {
                 scrollToSection("newPolicy");
               }}
             >
-              <policy />
               <IconBook size="20" color="#000" />
               <div className="label">Chính sách mới</div>
             </Link>
 
             <Link to="#newPolicy" className="nav-item">
-              <policy />
               <IconBook size="20" color="#000" />
               <div className="label">Chính sách mới</div>
             </Link>
 
             <Link to="#newPolicy" className="nav-item">
-              <policy />
               <IconBook size="20" color="#000" />
               <div className="label">Chính sách mới</div>
             </Link>
 
             <Link to="#newPolicy" className="nav-item">
-              <policy />
               <IconBook size="20" color="#000" />
               <div className="label">Chính sách mới</div>
             </Link>
 
             <Link to="#newPolicy" className="nav-item">
-              <policy />
               <IconBook size="20" color="#000" />
               <div className="label">Chính sách mới</div>
             </Link>
 
             <Link to="#newPolicy" className="nav-item">
-              <policy />
               <IconBook size="20" color="#000" />
               <div className="label">Chính sách mới</div>
             </Link>
 
             <Link to="#newPolicy" className="nav-item">
-              <policy />
               <IconBook size="20" color="#000" />
               <div className="label">Chính sách mới</div>
             </Link>
 
             <Link to="#newPolicy" className="nav-item">
-              <policy />
               <IconBook size="20" color="#000" />
               <div className="label">Chính sách mới</div>
             </Link>

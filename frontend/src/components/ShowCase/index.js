@@ -20,7 +20,7 @@ const ShowCase = () => {
                   />
                 </div>
                 <div className="showcase-item__content">
-                  <div class="box-text">
+                  <div className="box-text">
                     <p>
                       Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
                       Singapore (SMU)
@@ -39,7 +39,7 @@ const ShowCase = () => {
                   />
                 </div>
                 <div className="showcase-item__content">
-                  <div class="box-text">
+                  <div className="box-text">
                     <p>
                       Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
                       Singapore (SMU)
@@ -58,7 +58,7 @@ const ShowCase = () => {
                   />
                 </div>
                 <div className="showcase-item__content">
-                  <div class="box-text">
+                  <div className="box-text">
                     <p>
                       Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
                       Singapore (SMU)
@@ -77,7 +77,7 @@ const ShowCase = () => {
                   />
                 </div>
                 <div className="showcase-item__content">
-                  <div class="box-text">
+                  <div className="box-text">
                     <p>
                       Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
                       Singapore (SMU)
@@ -98,7 +98,7 @@ const ShowCase = () => {
                   />
                 </div>
                 <div className="showcase-item__content">
-                  <div class="box-text">
+                  <div className="box-text">
                     <p>
                       Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
                       Singapore (SMU)
@@ -117,7 +117,7 @@ const ShowCase = () => {
                   />
                 </div>
                 <div className="showcase-item__content">
-                  <div class="box-text">
+                  <div className="box-text">
                     <p>
                       Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
                       Singapore (SMU)
@@ -136,7 +136,7 @@ const ShowCase = () => {
                   />
                 </div>
                 <div className="showcase-item__content">
-                  <div class="box-text">
+                  <div className="box-text">
                     <p>
                       Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
                       Singapore (SMU)
@@ -155,7 +155,7 @@ const ShowCase = () => {
                   />
                 </div>
                 <div className="showcase-item__content">
-                  <div class="box-text">
+                  <div className="box-text">
                     <p>
                       Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
                       Singapore (SMU)

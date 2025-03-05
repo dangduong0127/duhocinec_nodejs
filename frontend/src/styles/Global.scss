@@ -92,9 +92,26 @@ body {
     font-size: 16px;
     color: #2e2e2e;
     line-height: 129%;
+    font-weight: 600;
   }
 }
 
 a {
   text-decoration: none;
+}
+
+.btn-show-more {
+  border-radius: 999px;
+  background-color: #f6f6f6;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  color: #202020;
 }

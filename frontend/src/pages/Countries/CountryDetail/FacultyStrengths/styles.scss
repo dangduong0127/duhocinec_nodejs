@@ -1,0 +1,50 @@
+.country-faculty-strengths {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 64px;
+  gap: 32px;
+  font-size: 16px;
+  color: #141414;
+  .major-list {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 24px;
+    color: #2e2e2e;
+    .country-faculty-strengths-col {
+      align-self: stretch;
+      display: grid;
+      grid-template-columns: 300px 300px 300px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 28px;
+      .major {
+        border-bottom: 1px solid #ececec;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 16px 0px;
+        gap: 8px;
+        .devices-icon {
+          width: 40px;
+          height: 40px;
+          position: relative;
+        }
+        .cng-ngh-thng {
+          position: relative;
+          line-height: 150%;
+          font-weight: 500;
+          color: #141414;
+        }
+      }
+    }
+  }
+}

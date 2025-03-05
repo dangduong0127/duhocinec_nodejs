@@ -20,7 +20,7 @@ const Schoolarship = () => {
           </p>
         </pre>
         <button
-          class="button-scholarship-and-other apply-scholarship-scholarship-and-other btn-rainbow-border popmake-70234 pum-trigger"
+          className="button-scholarship-and-other apply-scholarship-scholarship-and-other btn-rainbow-border popmake-70234 pum-trigger"
           style={{ cursor: "pointer" }}
         >
           <span>Apply học bổng</span>

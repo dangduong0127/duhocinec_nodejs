@@ -1,10 +1,38 @@
-import React from "react";
-import "./styles.scss";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Socials from "../Header/Socials";
+import { Button } from "antd";
+import { UpOutlined } from "@ant-design/icons";
+import "./styles.scss";
 const Footer = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const btnScrollEl = useRef(null);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setScrollPosition(window.scrollY);
+    });
+    if (scrollPosition >= 500) {
+      btnScrollEl.current.style.opacity = 1;
+    } else {
+      btnScrollEl.current.style.opacity = 0;
+    }
+  }, [scrollPosition]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer id="footer" className="footer-wrapper">
+      <Button
+        ref={btnScrollEl}
+        className="scrollToTop"
+        onClick={() => scrollToTop()}
+      >
+        <UpOutlined />
+      </Button>
+
       {/* Logo & Social Links */}
       <section className="section">
         <div className="bg section-bg">

@@ -8,6 +8,9 @@ import ShowCase from "../../components/ShowCase";
 import WhatOurClientsSay from "./WhatOurClientsSay";
 import SuccessStory from "./SuccessStory";
 import PartnerSystem from "./PartnerSystem";
+import Arward from "./Arward";
+import Events from "../../components/Events";
+import News from "../../components/News";
 const HomePage = () => {
   return (
     <>
@@ -27,6 +30,9 @@ const HomePage = () => {
       <SuccessStory />
       <WhatOurClientsSay />
       <PartnerSystem />
+      <Arward />
+      <Events />
+      <News />
     </>
   );
 };

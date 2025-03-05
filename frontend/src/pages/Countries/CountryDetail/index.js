@@ -5,6 +5,8 @@ import { getCountryDetails } from "../../../utils/api";
 import Banner from "../../../components/Banner";
 import {
   IconBook,
+  IconCollege,
+  IconNews,
   IconDollar,
   IconDollar2,
   IconLocaltion,
@@ -13,6 +15,16 @@ import {
 import "./styles.scss";
 import Sidebar from "../../../components/Sidebar";
 import Schoolarship from "../../../components/Scholarship";
+import TitleCountryDetails from "../TitleCountryDetails";
+// import { DownOutlined } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import CountryLearnMore from "./CountryLearnmore";
+import FacultyStrengths from "./FacultyStrengths";
+import CountryVisa from "./CountryVisa";
+import Feedback from "../../../components/Feedback";
+import { Carousel } from "antd";
+
 const CountryDetail = () => {
   const location = useLocation();
   const countryID = location?.state;
@@ -24,6 +36,7 @@ const CountryDetail = () => {
         setCountryData(data.details);
       } catch (err) {
         console.error(err);
+        setCountryData(null);
       }
     };
     fetchApi();
@@ -80,6 +93,12 @@ const CountryDetail = () => {
     },
   ];
 
+  const [cityFee, setCityFee] = useState(null);
+
+  const handleCityFeeChange = (e) => {
+    setCityFee(e.target.value);
+  };
+
   return (
     countryData && (
       <>
@@ -99,14 +118,12 @@ const CountryDetail = () => {
               </div>
 
               <div id="newPolicy">
-                <div className="new-policy-title">
-                  <IconBook size="40" color="red" />
-                  <h2 class="chnh-sch-mi">
-                    Chính sách <span>Du học Canada mới nhất</span>
-                  </h2>
-                </div>
-                <div class="new-policy-content">
-                  <pre class="pre-content">
+                <TitleCountryDetails
+                  title="Chính sách Du học Canada mới nhất"
+                  icon={<IconBook size="40" color="red" />}
+                />
+                <div className="new-policy-content">
+                  <pre className="pre-content">
                     {" "}
                     <p>
                       Canada đã dừng chương trình visa miễn chứng minh tài chính
@@ -179,6 +196,8 @@ const CountryDetail = () => {
                           width: "100%",
                           height: "100%",
                           border: "none",
+                          borderRadius: "10px",
+                          boxShadow: "10px 10px 7px #ccc",
                         }}
                         src="https://www.youtube.com/embed/JgH0iZz8WcA"
                         allowFullScreen
@@ -196,17 +215,23 @@ const CountryDetail = () => {
               {/* <!-- cost estimate study abroad -->  */}
               <div id="cost_es_container">
                 <div id="cost-est-study-abroad">
-                  <div className="cost-est-study-abroad-title">
-                    <IconDollar size="40" color="red" />
-                    <h2 class="d-ton-chi">
-                      Dự toán chi phí <span>Du học Canada</span>
-                    </h2>
-                  </div>
+                  <TitleCountryDetails
+                    title="Dự toán chi phí Du học Canada"
+                    icon={<IconDollar size="40" color="red" />}
+                  />
+
                   <div className="container-cost-est-study-abroad">
                     <div className="col-cosr-est-study-abroad">
                       <div className="input-filed-cost-est">
-                        <select id="level_fee" className="">
-                          <option value="Chọn bậc học">Chọn bậc học</option>
+                        <select
+                          id="level_fee"
+                          value={cityFee}
+                          onChange={handleCityFeeChange}
+                          className=""
+                        >
+                          <option value="Chọn bậc học" selected>
+                            Chọn bậc học
+                          </option>
                           <option value="200000000">Trung Học</option>
                           <option value="350000000">Cao Đẳng</option>
                           <option value="400000000">Cử Nhân</option>
@@ -218,7 +243,9 @@ const CountryDetail = () => {
                       </div>
                       <div className="input-filed-cost-est">
                         <select id="city_fee" className="">
-                          <option value="Chọn thành phố">Chọn thành phố</option>
+                          <option value="Chọn thành phố" selected>
+                            Chọn thành phố
+                          </option>
                           <option value="250000000">Toronto, ON</option>
                           <option value="250000000">Winnipeg, MB</option>
                           <option value="230000000">Ottawa, ON</option>
@@ -281,15 +308,10 @@ const CountryDetail = () => {
               </div>
               {/* Country details */}
               <div id="country-details-container">
-                <div className="country-details-container-title">
-                  <IconSearch size="40" color="red" />
-                  <h2
-                    style={{ fontSize: "32px", margin: 0, color: "#000" }}
-                    className="bn-nn-chn"
-                  >
-                    <span>Du học Canada</span> nên chọn trường nào
-                  </h2>
-                </div>
+                <TitleCountryDetails
+                  title="Du học Canada nên chọn trường nào"
+                  icon={<IconSearch size="40" color="red" />}
+                />
 
                 <div className="country-details-container-content-wrapper">
                   <div className="country-details-filter">
@@ -297,8 +319,8 @@ const CountryDetail = () => {
                       data-sf-form-id="47364"
                       data-is-rtl="0"
                       data-maintain-state=""
-                      data-ajax-url="https://duhocinec.com/?sfid=47364&amp;sf_action=get_data&amp;sf_data=all"
-                      data-ajax-form-url="https://duhocinec.com/?sfid=47364&amp;sf_action=get_data&amp;sf_data=form"
+                      // data-ajax-url="https://duhocinec.com/?sfid=47364&amp;sf_action=get_data&amp;sf_data=all"
+                      // data-ajax-form-url="https://duhocinec.com/?sfid=47364&amp;sf_action=get_data&amp;sf_data=form"
                       data-display-result-method="shortcode"
                       data-use-history-api="1"
                       data-template-loaded="0"
@@ -317,7 +339,6 @@ const CountryDetail = () => {
                       method="post"
                       className="searchandfilter"
                       id="search-filter-form-47364"
-                      autocomplete="off"
                       data-instance-count="1"
                       data-gtm-form-interact-id="0"
                     >
@@ -327,7 +348,7 @@ const CountryDetail = () => {
                           data-sf-field-name="_sft_faculty"
                           data-sf-field-type="taxonomy"
                           data-sf-field-input-type="select"
-                          data-sf-term-rewrite='["https:\/\/duhocinec.com\/faculty\/[0]\/"]'
+                          // data-sf-term-rewrite='["https:\/\/duhocinec.com\/faculty\/[0]\/"]'
                         >
                           <h4>Ngành</h4>{" "}
                           <label>
@@ -339,13 +360,13 @@ const CountryDetail = () => {
                               <option
                                 className="sf-level-0 sf-item-0"
                                 data-sf-depth="0"
-                                value=""
+                                value="0"
+                                selected
                               >
                                 All Items
                               </option>
                               <option
                                 className="sf-level-0 sf-option-active"
-                                selected="selected"
                                 data-sf-count="49"
                                 data-sf-depth="0"
                                 value="47207"
@@ -361,7 +382,7 @@ const CountryDetail = () => {
                           data-sf-field-name="_sft_faculty"
                           data-sf-field-type="taxonomy"
                           data-sf-field-input-type="select"
-                          data-sf-term-rewrite='["https:\/\/duhocinec.com\/faculty\/[0]\/"]'
+                          // data-sf-term-rewrite='["https:\/\/duhocinec.com\/faculty\/[0]\/"]'
                         >
                           <h4>Ngành</h4>{" "}
                           <label>
@@ -373,13 +394,14 @@ const CountryDetail = () => {
                               <option
                                 className="sf-level-0 sf-item-0"
                                 data-sf-depth="0"
-                                value=""
+                                value="0"
+                                selected
                               >
                                 All Items
                               </option>
                               <option
                                 className="sf-level-0 sf-option-active"
-                                selected="selected"
+                                // selected="selected"
                                 data-sf-count="49"
                                 data-sf-depth="0"
                                 value="47207"
@@ -395,7 +417,7 @@ const CountryDetail = () => {
                           data-sf-field-name="_sft_faculty"
                           data-sf-field-type="taxonomy"
                           data-sf-field-input-type="select"
-                          data-sf-term-rewrite='["https:\/\/duhocinec.com\/faculty\/[0]\/"]'
+                          // data-sf-term-rewrite='["https:\/\/duhocinec.com\/faculty\/[0]\/"]'
                         >
                           <h4>Ngành</h4>{" "}
                           <label>
@@ -408,6 +430,7 @@ const CountryDetail = () => {
                                 className="sf-level-0 sf-item-0"
                                 data-sf-depth="0"
                                 value=""
+                                selected
                               >
                                 All Items
                               </option>
@@ -485,6 +508,247 @@ const CountryDetail = () => {
               </div>
 
               <Schoolarship />
+
+              <div id="required-country">
+                <TitleCountryDetails
+                  title="Yêu cầu đầu vào"
+                  icon={<IconCollege size="40" color="red" />}
+                />
+
+                <pre className="pre-content">
+                  <p>
+                    Canada yêu cầu sinh viên quốc tế có chứng chỉ ngoại ngữ như
+                    IELTS, TOEFL (đối với tiếng Anh) hoặc TEF, TCF (đối với
+                    tiếng Pháp). Ngoài ra, ứng viên cần cung cấp hồ sơ học tập
+                    và kinh nghiệm làm việc liên quan (nếu có), đặc biệt quan
+                    trọng cho các bậc sau đại học như thạc sĩ, tiến sĩ.
+                  </p>
+                </pre>
+
+                <div className="required-detail">
+                  <div className="single-required">
+                    <div className="single-required-content">
+                      <h3>Trung học </h3>
+                      <div className="single-required-ul-content">
+                        <ul style={{ opacity: "0", height: "0" }}>
+                          <li>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                          </li>
+                        </ul>
+                        <ul className="required-ul-content">
+                          <pre className="pre-content">
+                            <ul>
+                              <li>Có kết quả học tập trung bình khá trở lên</li>
+                              <li>Tiếng Anh trình độ giao tiếp</li>
+                              <li>Không bắt buộc có IELTS/TOEFL</li>
+                            </ul>
+                            <p>&nbsp;</p>
+                          </pre>
+                        </ul>
+                      </div>
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    </div>
+                  </div>
+                  <div className="single-required">
+                    <div className="single-required-content">
+                      <h3>Cao đẳng</h3>
+                      <div className="single-required-ul-content">
+                        <ul>
+                          <li>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                          </li>
+                        </ul>
+                        <ul className="required-ul-content">
+                          <pre className="pre-content">
+                            <ul>
+                              <li>Tốt nghiệp THPT</li>
+                              <li>
+                                IELTS 6.0; hoặc chứng chỉ khác trình độ tương
+                                đương
+                              </li>
+                              <li>Hoặc học khóa tiếng Anh của trường</li>
+                            </ul>
+                          </pre>
+                        </ul>
+                      </div>
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    </div>
+                  </div>
+                  <div className="single-required">
+                    <div className="single-required-content">
+                      <h3>Cử nhân</h3>
+                      <div className="single-required-ul-content">
+                        <ul>
+                          <li>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                          </li>
+                        </ul>
+                        <ul className="required-ul-content">
+                          <pre className="pre-content">
+                            <ul>
+                              <li>Tốt nghiệp THPT</li>
+                              <li>
+                                IELTS 6.5; hoặc chứng chỉ khác trình độ tương
+                                đương
+                              </li>
+                              <li>Hoặc học khóa tiếng Anh tại trường</li>
+                            </ul>
+                          </pre>
+                        </ul>
+                      </div>
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    </div>
+                  </div>
+                  <div className="single-required">
+                    <div className="single-required-content">
+                      <h3>Thạc sĩ </h3>
+                      <div className="single-required-ul-content">
+                        <ul>
+                          <li>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                          </li>
+                        </ul>
+                        <ul className="required-ul-content">
+                          <pre className="pre-content">
+                            <ul>
+                              <li>Tốt nghiệp Cử nhân</li>
+                              <li>
+                                IELTS 6.5; hoặc chứng chỉ khác trình độ tương
+                                đương; hoặc học khóa tiếng Anh tại trường
+                              </li>
+                              <li>
+                                GRE/GMAT và kinh nghiệm làm việc (tùy ngành)
+                              </li>
+                            </ul>
+                          </pre>
+                        </ul>
+                      </div>
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    </div>
+                  </div>
+                  <div className="single-required">
+                    <div className="single-required-content">
+                      <h3>Chứng chỉ Sau đại học</h3>
+                      <div className="single-required-ul-content">
+                        <ul>
+                          <li>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                          </li>
+                        </ul>
+                        <ul className="required-ul-content">
+                          <pre className="pre-content">
+                            <ul>
+                              <li>Tốt nghiệp Cao đẳng hoặc Cử nhân</li>
+                              <li>
+                                IELTS 6.5; hoặc chứng chỉ khác trình độ tương
+                                đương; hoặc học tiếng Anh tại trường
+                              </li>
+                              <li>Thường không yêu cầu kinh nghiệm/GMAT/GRE</li>
+                            </ul>
+                          </pre>
+                        </ul>
+                      </div>
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="btn-wrapper">
+                  <button className="btn-rainbow-border">
+                    <span>Kết nối tư vấn ngay cùng INEC</span>
+                  </button>
+                </div>
+              </div>
+
+              <CountryLearnMore />
+              <FacultyStrengths />
+              <CountryVisa />
+              <Feedback />
+
+              <div className="news-post">
+                <TitleCountryDetails
+                  title="Tin tức"
+                  icon={<IconNews size="40" color="red" />}
+                />
+
+                <div className="btn-nav-wrapper">
+                  <button
+                    id="57713"
+                    value="true"
+                    className="btn-sm-news btn-sm-active"
+                  >
+                    Tin đọc nhiều nhất
+                  </button>
+                  <button id="57713" value="false" className="btn-sm-news">
+                    Tin mới nhất
+                  </button>
+                  <button id="57614" value="true" className="btn-sm-news">
+                    Sự kiện
+                  </button>
+                </div>
+
+                <div className="country-news-countainer">
+                  <Carousel draggable>
+                    <div className="news-row">
+                      <Link className="news-card show">
+                        <img
+                          className="photo-animation-icon"
+                          alt="Hội thảo: Chiến lược tối ưu bằng cấp, việc làm và định cư Canada"
+                          src="https://duhocinec.com/wp-content/uploads/2024/09/xin-thi-chung-thuc-apply-visa-canada-03.jpg"
+                        />
+                        <div className="news-main-text">
+                          <div className="news-content">
+                            <h4 className="qun-l-kinh">
+                              Hội thảo: Chiến lược tối ưu bằng cấp, việc làm và
+                              định cư Canada
+                            </h4>
+                            <div className="news-excerpt">
+                              Du học Canada bậc Đại học có phải là dự định của
+                              bạn? Tham gia ngay hội thảo của INEC để nhận thông
+                              tin hữu ích về chính sách mới, có chiến lược tối
+                              ưu bằng cấp, cơ hội việc làm và định cư. Cơ hội tư
+                              vấn trực tiếp lộ trình chinh phục bằng Cử nhân
+                              danh giá của top trường đại học hàng đầu xứ lá
+                              phong.
+                            </div>
+                          </div>
+                          <div className="createdAt">24-01-2025</div>
+                        </div>
+                      </Link>
+
+                      <Link className="news-card show">
+                        <img
+                          className="photo-animation-icon"
+                          alt="Hội thảo: Chiến lược tối ưu bằng cấp, việc làm và định cư Canada"
+                          src="https://duhocinec.com/wp-content/uploads/2024/09/xin-thi-chung-thuc-apply-visa-canada-03.jpg"
+                        />
+                        <div className="news-main-text">
+                          <div className="news-content">
+                            <h4 className="qun-l-kinh">
+                              Hội thảo: Chiến lược tối ưu bằng cấp, việc làm và
+                              định cư Canada
+                            </h4>
+                            <div className="news-excerpt">
+                              Du học Canada bậc Đại học có phải là dự định của
+                              bạn? Tham gia ngay hội thảo của INEC để nhận thông
+                              tin hữu ích về chính sách mới, có chiến lược tối
+                              ưu bằng cấp, cơ hội việc làm và định cư. Cơ hội tư
+                              vấn trực tiếp lộ trình chinh phục bằng Cử nhân
+                              danh giá của top trường đại học hàng đầu xứ lá
+                              phong.
+                            </div>
+                          </div>
+                          <div className="createdAt">24-01-2025</div>
+                        </div>
+                      </Link>
+                    </div>
+                  </Carousel>
+                </div>
+
+                <div className="btn-wrapper">
+                  <button className="btn-show-more">Xem thêm</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
