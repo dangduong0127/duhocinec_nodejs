@@ -17,10 +17,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "if0_38460961",
+    "password": "45hb7WL8KFaW",
+    "database": "if0_38460961_duhocinec",
+    "host": "sql309.infinityfree.com",
     "dialect": "mysql"
   }
 }
