@@ -9,7 +9,7 @@ const Banner = () => {
 
   return (
     <>
-      <Carousel autoplay arrows draggable>
+      <Carousel autoplay autoplaySpeed={4000} arrows draggable>
         <div>
           <img
             src={getImageUrl(

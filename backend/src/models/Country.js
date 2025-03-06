@@ -14,6 +14,11 @@ module.exports = (sequelize) => {
         foreignKey: "author",
         as: "users",
       });
+
+      Country.hasMany(models.PostMeta, {
+        foreignKey: "post_id",
+        as: "postMeta",
+      });
     }
   }
 

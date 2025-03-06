@@ -1,7 +1,7 @@
 const db = require("../models");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { User, SubMenu, Role, Token, Menu, Country } = db;
+const { User, SubMenu, Role, Token, Menu, Country, PostMeta } = db;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -257,13 +257,19 @@ const handleDeleteUser = async (userId) => {
 const hanldeGetAllCountries = async () => {
   try {
     const countries = await Country.findAll({
-      raw: true,
+      raw: false,
       nest: true,
-      include: {
-        model: User,
-        as: "users",
-        attributes: ["firstName", "lastName"],
-      },
+      include: [
+        {
+          model: User,
+          as: "users",
+          attributes: ["firstName", "lastName"],
+        },
+        {
+          model: PostMeta,
+          as: "postMeta",
+        },
+      ],
     });
     return countries;
   } catch (err) {
@@ -271,27 +277,88 @@ const hanldeGetAllCountries = async () => {
   }
 };
 
+// const hanldeUpdateCountry = async (data) => {
+//   try {
+//     const country = await Country.findOne({
+//       raw: false,
+//       include: {
+//         model: PostMeta,
+//         as: "postMeta",
+//       },
+//       where: { id: data.id },
+//     });
+//     if (country) {
+//       country.title = data.title;
+//       country.excerpt = data.excerpt;
+//       country.content = data.content;
+//       country.thumbnail = data.thumbnail;
+//       country.author = data.author;
+//       country.slug = data.slug;
+//       await country.save();
+//       return {
+//         success: true,
+//         message: "Country updated successfully",
+//       };
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
 const hanldeUpdateCountry = async (data) => {
   try {
     const country = await Country.findOne({
       raw: false,
+      include: {
+        model: PostMeta,
+        as: "postMeta",
+      },
       where: { id: data.id },
     });
-    if (country) {
-      country.title = data.title;
-      country.excerpt = data.excerpt;
-      country.content = data.content;
-      country.thumbnail = data.thumbnail;
-      country.author = data.author;
-      country.slug = data.slug;
-      await country.save();
+
+    if (!country) {
       return {
-        success: true,
-        message: "Country updated successfully",
+        success: false,
+        message: "Country not found",
       };
     }
+
+    // Cập nhật các thuộc tính chính của Country
+    country.title = data.title;
+    country.excerpt = data.excerpt;
+    country.content = data.content;
+    country.thumbnail = data.thumbnail;
+    country.author = data.author;
+    country.slug = data.slug;
+
+    // Cập nhật postMeta nếu có dữ liệu
+    if (data.postMeta && Array.isArray(data.postMeta)) {
+      // Duyệt qua mảng postMeta và cập nhật từng phần tử
+      for (const meta of data.postMeta) {
+        const postMetaItem = await PostMeta.findOne({
+          where: { id: meta.id },
+        });
+
+        if (postMetaItem) {
+          postMetaItem.field_value = meta.field_value;
+          await postMetaItem.save(); // Lưu lại từng item
+        }
+      }
+    }
+
+    // Lưu thông tin của Country
+    await country.save();
+
+    return {
+      success: true,
+      message: "Country updated successfully",
+    };
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    return {
+      success: false,
+      message: "An error occurred while updating the country",
+    };
   }
 };
 
@@ -309,6 +376,7 @@ const hanldeGetCountryDetails = async (postID) => {
         id: postID,
       },
     });
+
     if (country) {
       return {
         success: true,

@@ -12,7 +12,7 @@ const Arward = () => {
           description="Những giải thưởng, chứng nhận do các trường đối tác trao tặng chính là sự công nhận cho quá trình tư vấn, hỗ trợ tận tâm của INEC trong suốt những năm qua."
         />
 
-        <Carousel autoplay>
+        <Carousel autoplay draggable>
           <div className="arward-carousel-item">
             <Link to>
               <div className="single-award-item">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getCountryDetails } from "../../../utils/api";
 import Banner from "../../../components/Banner";
@@ -24,8 +24,8 @@ import FacultyStrengths from "./FacultyStrengths";
 import CountryVisa from "./CountryVisa";
 import Feedback from "../../../components/Feedback";
 import { Carousel } from "antd";
-
 const CountryDetail = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const countryID = location?.state;
   const [countryData, setCountryData] = useState(null);
@@ -33,7 +33,13 @@ const CountryDetail = () => {
     const fetchApi = async () => {
       try {
         const { data } = await getCountryDetails(countryID);
-        setCountryData(data.details);
+
+        if (data.success === true) {
+          setCountryData(data.details);
+          console.log(data);
+        } else {
+          navigate("/");
+        }
       } catch (err) {
         console.error(err);
         setCountryData(null);
@@ -104,8 +110,10 @@ const CountryDetail = () => {
       <>
         <Banner />
         <div className="section-country-details container">
+          {/* <div dangerouslySetInnerHTML={{ __html: countryData.content }}></div> */}
+
           <div className="country-wrapper">
-            <Sidebar data={countryData} />
+            <Sidebar />
 
             <div className="country-detail-wrapper">
               <div className="country">
@@ -114,7 +122,7 @@ const CountryDetail = () => {
                   className="country-flag"
                   alt="flag"
                 />
-                <h1 className="country-name">Du học Canada</h1>
+                {/* <h1 className="country-name">{countryData.title || "test"}</h1> */}
               </div>
 
               <div id="newPolicy">

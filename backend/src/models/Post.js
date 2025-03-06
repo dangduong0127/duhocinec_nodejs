@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
         foreignKey: "id",
         as: "category",
       });
-      // Post.hasOne(models.Taxonomy, {
+      // Post.hasMany(models.PostMeta, {
       //   foreignKey: "taxonomy_id",
       //   as: "taxonomy",
       // });

@@ -9,7 +9,7 @@ const ShowCase = () => {
     <section className="showcase-wrapper">
       <div className="container">
         <TitleBradingLine title="Học sinh INEC trúng truyển" />
-        <Carousel autoplay>
+        <Carousel autoplay autoplaySpeed={4000} draggable>
           <div className="showcase-content">
             <Link to>
               <div className="showcase-item">

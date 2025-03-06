@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { Button, Form, Input, Upload, Card, Row, Col, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { uploadImage, updateCountry } from "../../../../utils/api";
+import JoditEditor from "jodit-react";
+import RenderHTML from "../../../../utils/renderHTML";
 
 const { TextArea } = Input;
 const CountryEdit = ({ onBack, data }) => {
@@ -12,6 +14,7 @@ const CountryEdit = ({ onBack, data }) => {
     content: data.content,
     slug: data.slug,
     thumbnail: data.thumbnail,
+    postMeta: data.postMeta,
   });
 
   const [previewImage, setPreviewImage] = useState(null); // Lưu ảnh tạm thời
@@ -25,6 +28,43 @@ const CountryEdit = ({ onBack, data }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleOnChangeTextEditor = (value) => {
+    setFormData({ ...formData, content: value });
+  };
+
+  const handleChangeCustomFields = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    const convertDatatoStr = JSON.stringify(formData.postMeta[0].field_value);
+    const result = JSON.parse(convertDatatoStr);
+    const fixedString = result.replace(/(\w+):/g, '"$1":');
+    console.log(JSON.parse(fixedString));
+
+    setFormData((prevData) => ({
+      ...prevData,
+      postMeta: prevData.postMeta.map((item) => {
+        // Convert field_value thành JSON hợp lệ trước khi sử dụng
+        const fixedFieldValue = JSON.parse(
+          JSON.stringify(item.field_value) // Chuyển đổi thành chuỗi JSON
+        ).replace(/(\w+):/g, '"$1":'); // Sửa các khóa thành JSON hợp lệ
+
+        // Log kết quả đã sửa
+        console.log(fixedFieldValue);
+
+        // Kiểm tra nếu item có tên trùng với `name` thì cập nhật
+        return item.name === name
+          ? {
+              ...item,
+              field_value: JSON.stringify({
+                ...JSON.parse(fixedFieldValue), // Chuyển đổi lại thành đối tượng sau khi sửa
+                value, // Cập nhật giá trị
+              }),
+            }
+          : item;
+      }),
+    }));
+  };
+
   // Xử lý chọn ảnh để preview
   const handlePreviewImage = ({ file }) => {
     const imageUrl = URL.createObjectURL(file);
@@ -35,36 +75,34 @@ const CountryEdit = ({ onBack, data }) => {
   // Xử lý upload ảnh khi bấm "Cập nhật"
   const handleSave = async () => {
     try {
-      let uploadedImageUrl = formData.thumbnail; // Mặc định giữ nguyên ảnh cũ
-
-      // Nếu có ảnh mới, thực hiện upload lên server
-      if (selectedFile) {
-        const formDataUpload = new FormData();
-        formDataUpload.append("image", selectedFile); // ✅ Key theo API
-
-        const response = await uploadImage(formDataUpload);
-        console.log(response);
-        if (response.status === 200) {
-          uploadedImageUrl = `${response.data.file.path}`;
-          setFormData({ ...formData, thumbnail: uploadedImageUrl });
-          setLoading(true);
-        } else {
-          message.error("Tải ảnh lên thất bại!");
-        }
-      }
-
-      updateCountry({ ...formData, thumbnail: uploadedImageUrl })
-        .then(() => {
-          message.success("Cập nhật bài viết thành công!");
-          setLoading(false);
-        })
-        .catch(() => message.error("Cập nhật thất bại!"));
+      console.log(formData);
+      // let uploadedImageUrl = formData.thumbnail; // Mặc định giữ nguyên ảnh cũ
+      // // Nếu có ảnh mới, thực hiện upload lên server
+      // if (selectedFile) {
+      //   const formDataUpload = new FormData();
+      //   formDataUpload.append("image", selectedFile); // ✅ Key theo API
+      //   const response = await uploadImage(formDataUpload);
+      //   console.log(response);
+      //   if (response.status === 200) {
+      //     uploadedImageUrl = `${response.data.file.path}`;
+      //     setFormData({ ...formData, thumbnail: uploadedImageUrl });
+      //     setLoading(true);
+      //   } else {
+      //     message.error("Tải ảnh lên thất bại!");
+      //   }
+      // }
+      // updateCountry({ ...formData, thumbnail: uploadedImageUrl })
+      //   .then(() => {
+      //     message.success("Cập nhật bài viết thành công!");
+      //     setLoading(false);
+      //   })
+      //   .catch(() => message.error("Cập nhật thất bại!"));
     } catch (error) {
       message.error("Lỗi khi tải ảnh lên!");
       return;
     }
   };
-
+  console.log(formData);
   return (
     <Row gutter={16}>
       {/* Nội dung chính */}
@@ -86,12 +124,27 @@ const CountryEdit = ({ onBack, data }) => {
                 onChange={handleChange}
               />
             </Form.Item>
+            {/* {formData.postMeta.map((item) => {
+              return (
+                <Form.Item key={item.id} label={item.field_name}>
+                  <RenderHTML
+                    name={item.field_name}
+                    value={item.field_value}
+                    onChange={handleOnChangeCustomeFields}
+                  />
+                </Form.Item>
+              );
+            })} */}
+            <RenderHTML
+              value={formData.postMeta}
+              change={handleChangeCustomFields}
+            />
             <Form.Item label="Nội dung">
-              <TextArea
-                name="content"
-                rows={6}
+              <JoditEditor
                 value={formData.content}
-                onChange={handleChange}
+                rows={6}
+                config={{ toolbarButtonSize: "medium" }}
+                onChange={handleOnChangeTextEditor}
               />
             </Form.Item>
           </Form>
