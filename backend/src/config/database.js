@@ -1,11 +1,17 @@
 const { Sequelize } = require("sequelize");
-
+const config = require("./config.json")[process.env.NODE_ENV || "development"];
 // Option 3: Passing parameters separately (other dialects)
-const sequelize = new Sequelize("duhocinec", "root", null, {
-  host: "localhost",
-  dialect: "mysql",
-  logging: false,
-});
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  {
+    host: config.host,
+    dialect: config.dialect,
+    logging: config.logging,
+    timezone: config.timezone,
+  }
+);
 
 //  async () => {
 //   try {
