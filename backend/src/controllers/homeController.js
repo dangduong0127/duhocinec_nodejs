@@ -93,7 +93,7 @@ const getLogin = async (req, res) => {
     res.cookie("access_token", result.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false, // Chỉ bật secure nếu chạy production
-      sameSite: "Lax",
+      sameSite: "None",
       maxAge: 3600000,
     });
 
