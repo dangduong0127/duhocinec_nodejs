@@ -19,10 +19,7 @@ const authorization = (req, res, next) => {
   // Đến đây nghĩa là route cần xác thực, tiếp tục kiểm tra token
   let token = req.cookies ? req.cookies.access_token : undefined;
 
-  if (
-    req.originalUrl === "/api/v1/getAccountInfo" ||
-    req.originalUrl === "/api/v1/logout"
-  ) {
+  if (req.url === "/api/v1/getAccountInfo" || req.url === "/api/v1/logout") {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = {
@@ -39,7 +36,7 @@ const authorization = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
+    // console.log(decoded);
     req.user = {
       userId: decoded.userId,
       roleId: decoded.roleId,
