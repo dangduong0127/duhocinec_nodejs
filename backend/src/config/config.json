@@ -17,10 +17,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "if0_38460961",
-    "password": "45hb7WL8KFaW",
-    "database": "if0_38460961_duhocinec",
-    "host": "sql309.infinityfree.com",
+    "username": "root",
+    "password": "ZmwnLKcIrmCAqBizlXsGyiKLMkWtNOuw",
+    "database": "railway",
+    "host": "mysql.railway.internal",
     "dialect": "mysql",
     "query": { "raw": true },
     "logging": false,
