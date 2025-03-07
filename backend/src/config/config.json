@@ -21,6 +21,9 @@
     "password": "45hb7WL8KFaW",
     "database": "if0_38460961_duhocinec",
     "host": "sql309.infinityfree.com",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "query": { "raw": true },
+    "logging": false,
+    "timezone": "+07:00"
   }
 }
