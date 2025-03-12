@@ -323,32 +323,31 @@ const hanldeUpdateCountry = async (data) => {
       };
     }
 
-    // Cập nhật các thuộc tính chính của Country
+    // console.log(country.dataValues);
+    // // Cập nhật các thuộc tính chính của Country
     country.title = data.title;
     country.excerpt = data.excerpt;
     country.content = data.content;
     country.thumbnail = data.thumbnail;
     country.author = data.author;
     country.slug = data.slug;
-
-    // Cập nhật postMeta nếu có dữ liệu
-    if (data.postMeta && Array.isArray(data.postMeta)) {
-      // Duyệt qua mảng postMeta và cập nhật từng phần tử
-      for (const meta of data.postMeta) {
+    if (data.postMeta) {
+      for (let i = 0; i < data.postMeta.length; i++) {
+        const postMetaData = data.postMeta[i];
         const postMetaItem = await PostMeta.findOne({
-          where: { id: meta.id },
+          raw: false,
+          where: { post_id: country.id, field_name: postMetaData.field_name },
         });
 
         if (postMetaItem) {
-          postMetaItem.field_value = meta.field_value;
-          await postMetaItem.save(); // Lưu lại từng item
+          // Cập nhật trường field_value của PostMeta
+          postMetaItem.field_value = postMetaData.field_value;
+          await postMetaItem.save();
         }
       }
     }
 
-    // Lưu thông tin của Country
     await country.save();
-
     return {
       success: true,
       message: "Country updated successfully",
@@ -372,6 +371,10 @@ const hanldeGetCountryDetails = async (postID) => {
     }
     const country = await Country.findOne({
       raw: false,
+      include: {
+        model: PostMeta,
+        as: "postMeta",
+      },
       where: {
         id: postID,
       },

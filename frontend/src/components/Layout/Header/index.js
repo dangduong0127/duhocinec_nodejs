@@ -15,7 +15,6 @@ const Header = () => {
   const [data, setData] = useState([]);
   const [isHovered, setIsHoverd] = useState(null);
   const serverUrl = process.env.REACT_APP_SERVER_BASE_URL;
-  const homeUrl = process.env.REACT_APP_SERVER_HOME;
   const { Option } = Select;
   const { auth, setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -134,7 +133,7 @@ const Header = () => {
           <div className="header-main">
             <div className="header-inner">
               <div className="logo">
-                <Link to={homeUrl} title={title}>
+                <Link to="/" title={title}>
                   <img
                     src={getImageUrl("sticky-logo-inec.png")}
                     alt="logo branch"

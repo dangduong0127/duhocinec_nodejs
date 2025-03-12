@@ -5,13 +5,13 @@ import { IconComma, IconFlag } from "../Icons";
 import { Carousel, Modal } from "antd";
 import { Link } from "react-router-dom";
 
-const Feedback = () => {
+const Feedback = ({ data }) => {
   const [isOpenModal, setIsModalOpen] = useState(false);
 
   return (
     <div className="feedback-section">
       <TitleCountryDetails
-        title="Khách hàng nói gì về Du học Canada"
+        title={`Khách hàng nói gì về ${data.title}`}
         icon={<IconFlag size="40" color="red" />}
       />
 

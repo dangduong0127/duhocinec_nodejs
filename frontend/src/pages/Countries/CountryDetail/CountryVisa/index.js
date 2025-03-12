@@ -4,11 +4,11 @@ import TitleCountryDetails from "../../TitleCountryDetails";
 import { IconNews } from "../../../../components/Icons";
 import { Link } from "react-router-dom";
 
-const CountryVisa = () => {
+const CountryVisa = ({ data }) => {
   return (
     <div className="country-visa">
       <TitleCountryDetails
-        title="Visa Du học Canada"
+        title={`Visa ${data.title}`}
         icon={<IconNews size={40} color="red" />}
       />
 

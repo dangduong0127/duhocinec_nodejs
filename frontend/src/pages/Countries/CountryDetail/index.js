@@ -24,6 +24,7 @@ import FacultyStrengths from "./FacultyStrengths";
 import CountryVisa from "./CountryVisa";
 import Feedback from "../../../components/Feedback";
 import { Carousel } from "antd";
+import DOMPurify from "dompurify";
 const CountryDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -104,14 +105,12 @@ const CountryDetail = () => {
   const handleCityFeeChange = (e) => {
     setCityFee(e.target.value);
   };
-
+  console.log("country data:", countryData);
   return (
     countryData && (
       <>
         <Banner />
         <div className="section-country-details container">
-          {/* <div dangerouslySetInnerHTML={{ __html: countryData.content }}></div> */}
-
           <div className="country-wrapper">
             <Sidebar />
 
@@ -122,96 +121,27 @@ const CountryDetail = () => {
                   className="country-flag"
                   alt="flag"
                 />
-                {/* <h1 className="country-name">{countryData.title || "test"}</h1> */}
+                <h1 className="country-name">
+                  {countryData.title || "Title page"}
+                </h1>
               </div>
 
               <div id="newPolicy">
                 <TitleCountryDetails
-                  title="Chính sách Du học Canada mới nhất"
+                  title={`Chính sách ${countryData.title}`}
                   icon={<IconBook size="40" color="red" />}
                 />
                 <div className="new-policy-content">
-                  <pre className="pre-content">
-                    {" "}
-                    <p>
-                      Canada đã dừng chương trình visa miễn chứng minh tài chính
-                      (SDS). Chính phủ Canada vừa có quy định giờ làm thêm ngoài
-                      trường cho sinh viên là 24 giờ/tuần.
-                    </p>
-                    <p>
-                      Những thay đổi mới nhất này theo sau loạt thay đổi trước
-                      đó đối với chương trình sinh viên quốc tế trong vòng 12
-                      tháng qua.
-                    </p>
-                    <ul>
-                      <li>
-                        Bộ Di trú và Quốc tịch Canada (IRCC) có kế hoạch chỉ cấp
-                        437.000 giấy phép du học trong năm 2025, giảm 10% so với
-                        năm 2024.
-                      </li>
-                      <li>
-                        Thay đổi yêu cầu với đơn xin giấy phép làm việc sau tốt
-                        nghiệp (PGWP). Từ ngày 1/11/2024, tất cả đơn đăng ký xin
-                        PGWP phải&nbsp; chứng minh trình độ ngôn ngữ tối thiểu
-                        là tiếng Pháp hoặc tiếng Anh theo Tiêu chuẩn Ngôn ngữ
-                        Canada (CLB) cấp độ 7 đối với sinh viên tốt nghiệp
-                        chương trình học tại đại học và CLB 5 đối với sinh viên
-                        tốt nghiệp trường cao đẳng (college).
-                      </li>
-                      <li>
-                        Sinh viên tốt nghiệp các trường cao đẳng công lập sẽ vẫn
-                        đủ điều kiện xin PGWP thời hạn đến 3 năm nếu họ tốt
-                        nghiệp một lĩnh vực học tập liên quan đến các ngành nghề
-                        đang thiếu hụt dài hạn.
-                      </li>
-                      <li>
-                        Chỉ cấp Giấy phép làm việc cho vợ/chồng của những sinh
-                        viên theo đuổi các chương trình Thạc sĩ kéo dài ít nhất
-                        16 tháng; đồng thời giới hạn làm việc trong lĩnh vực
-                        quản lý, chuyên môn hoặc trong các lĩnh vực thiếu hụt
-                        lao động.
-                      </li>
-                      <li>
-                        Từ 1/1/2024, IRCC tăng yêu cầu chứng minh tài chính khi
-                        xin Giấy phép du học lên mức 20.635 CAD.
-                      </li>
-                    </ul>
-                    <p>
-                      Thoạt nhìn du học Canada dường như có không ít khó khăn,
-                      thử thách cho sinh viên. Nhưng nếu xâu chuỗi lại và phân
-                      tích sâu hơn, các thay đổi đang hướng tới bảo vệ tính toàn
-                      vẹn hệ thống nhập cư và tăng trải nghiệm cuộc sống, học
-                      tập cùng như các cơ hội rõ ràng hơn cho sinh viên.
-                    </p>
-                    <p>
-                      Kết nối ngay với các chuyên gia hơn 20 năm kinh nghiệm tư
-                      vấn du học Canada của INEC để được tư vấn, hỗ trợ thông
-                      tin chính xác hơn.
-                    </p>
-                    <div
-                      style={{
-                        position: "relative",
-                        width: "100%",
-                        paddingTop: "56.25%",
-                      }}
-                    >
-                      <iframe
-                        title="YouTube Video"
-                        style={{
-                          position: "absolute",
-                          top: "0",
-                          left: "0",
-                          width: "100%",
-                          height: "100%",
-                          border: "none",
-                          borderRadius: "10px",
-                          boxShadow: "10px 10px 7px #ccc",
-                        }}
-                        src="https://www.youtube.com/embed/JgH0iZz8WcA"
-                        allowFullScreen
+                  {countryData.postMeta.map((item) => {
+                    const data = JSON.parse(item.field_value).value;
+                    return (
+                      <pre
+                        className="pre-content"
+                        key={item.id}
+                        dangerouslySetInnerHTML={{ __html: data }}
                       />
-                    </div>
-                  </pre>
+                    );
+                  })}
                 </div>
                 <button
                   className="btn-rainbow-border popmake-47305 pum-trigger"
@@ -224,7 +154,7 @@ const CountryDetail = () => {
               <div id="cost_es_container">
                 <div id="cost-est-study-abroad">
                   <TitleCountryDetails
-                    title="Dự toán chi phí Du học Canada"
+                    title={`Dự toán chi phí ${countryData.title}`}
                     icon={<IconDollar size="40" color="red" />}
                   />
 
@@ -317,7 +247,7 @@ const CountryDetail = () => {
               {/* Country details */}
               <div id="country-details-container">
                 <TitleCountryDetails
-                  title="Du học Canada nên chọn trường nào"
+                  title={`${countryData.title} nên chọn trường nào`}
                   icon={<IconSearch size="40" color="red" />}
                 />
 
@@ -668,10 +598,10 @@ const CountryDetail = () => {
                 </div>
               </div>
 
-              <CountryLearnMore />
-              <FacultyStrengths />
-              <CountryVisa />
-              <Feedback />
+              <CountryLearnMore data={countryData} />
+              <FacultyStrengths data={countryData} />
+              <CountryVisa data={countryData} />
+              <Feedback data={countryData} />
 
               <div className="news-post">
                 <TitleCountryDetails

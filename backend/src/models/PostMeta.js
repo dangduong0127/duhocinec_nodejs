@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
       post_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Countries",
+          model: "Country",
           key: "id",
         },
       },

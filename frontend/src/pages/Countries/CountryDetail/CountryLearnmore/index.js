@@ -3,7 +3,7 @@ import "./styles.scss";
 import TitleCountryDetails from "../../TitleCountryDetails";
 import { IconContact } from "../../../../components/Icons";
 import { Collapse } from "antd";
-const CountryLearnMore = () => {
+const CountryLearnMore = ({ data }) => {
   const text = `
   A dog is a type of domesticated animal.
   Known for its loyalty and faithfulness,
@@ -37,7 +37,7 @@ const CountryLearnMore = () => {
   return (
     <div className="country-learn-more">
       <TitleCountryDetails
-        title="Kinh nghiệm Dụ học Canada"
+        title={`Kinh nghiệm ${data.title}`}
         icon={<IconContact size="40" color="red" />}
       />
 
