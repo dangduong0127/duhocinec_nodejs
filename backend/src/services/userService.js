@@ -1,7 +1,8 @@
 const db = require("../models");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { User, SubMenu, Role, Token, Menu, Country, PostMeta } = db;
+const { User, SubMenu, Role, Token, Menu, Country, PostMeta, Category, Post } =
+  db;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -397,6 +398,74 @@ const hanldeGetCountryDetails = async (postID) => {
   }
 };
 
+const handleGetAllCategory = async () => {
+  try {
+    const categories = await Category.findAll({
+      raw: false,
+      nest: true,
+      attributes: ["id", "name", "path", "position"],
+      include: {
+        model: Post,
+        as: "postsCategory",
+      },
+    });
+
+    return categories;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const hanldeGetAllPosts = async () => {
+  try {
+    const posts = await Post.findAll({
+      raw: false,
+      nest: true,
+      include: {
+        model: User,
+        as: "author_inf",
+        attributes: ["firstName", "lastName"],
+      },
+    });
+
+    return posts;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleUpdatePost = async (data) => {
+  try {
+    const post = await Post.findOne({
+      raw: false,
+      where: { id: data.id },
+    });
+
+    if (!post) {
+      return {
+        success: false,
+        message: "Post not found",
+      };
+    }
+
+    // console.log(country.dataValues);
+    // // Cập nhật các thuộc tính chính của Country
+    post.title = data.title;
+    post.content = data.content;
+    post.image = data.image;
+    // post.author = data.fullName;
+    post.slug = data.slug;
+
+    await post.save();
+    return {
+      success: true,
+      message: "Post updated successfully",
+    };
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
@@ -409,4 +478,7 @@ module.exports = {
   hanldeGetAllCountries,
   hanldeUpdateCountry,
   hanldeGetCountryDetails,
+  handleGetAllCategory,
+  hanldeGetAllPosts,
+  handleUpdatePost,
 };

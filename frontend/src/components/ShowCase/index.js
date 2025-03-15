@@ -86,9 +86,47 @@ const ShowCase = () => {
                 </div>
               </div>
             </Link>
+
+            <Link to>
+              <div className="showcase-item">
+                <div className="showcase-item__image">
+                  <img
+                    src="https://duhocinec.com/wp-content/uploads/2024/11/nguyen-tung-lam-dai-hoc-smu-singapore-280x280.jpg"
+                    alt="arwards"
+                  />
+                </div>
+                <div className="showcase-item__content">
+                  <div className="box-text">
+                    <p>
+                      Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
+                      Singapore (SMU)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
           </div>
 
           <div className="showcase-content">
+            <Link to>
+              <div className="showcase-item">
+                <div className="showcase-item__image">
+                  <img
+                    src="https://duhocinec.com/wp-content/uploads/2024/11/nguyen-tung-lam-dai-hoc-smu-singapore-280x280.jpg"
+                    alt="arwards"
+                  />
+                </div>
+                <div className="showcase-item__content">
+                  <div className="box-text">
+                    <p>
+                      Nguyễn Tùng Lâm - Học bổng 84.000 SGD - Đại học Quản lý
+                      Singapore (SMU)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
             <Link to>
               <div className="showcase-item">
                 <div className="showcase-item__image">

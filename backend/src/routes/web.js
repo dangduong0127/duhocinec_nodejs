@@ -13,6 +13,9 @@ const {
   handleUploadImage,
   getAllCountries,
   getCountryDetails,
+  getAllCategory,
+  getAllPosts,
+  updatePost,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -36,7 +39,10 @@ router.get("/api/v1/getAccountInfo", getAccountInfo);
 router.put("/api/v1/updateUsers", updateUsers);
 router.delete("/api/v1/deleteUser", deleteUser);
 router.get("/api/v1/getAllCountries", getAllCountries);
+router.get("/api/v1/getAllCategory", getAllCategory);
+router.get("/api/v1/getAllPosts", getAllPosts);
 
+router.put("/api/v1/updatePost", updatePost);
 router.put("/api/v1/updateCountry", UpdateCountry);
 router.get("/api/v1/getCountryDetails", getCountryDetails);
 router.post("/api/uploadimage", handleUploadImage);

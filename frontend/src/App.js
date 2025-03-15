@@ -8,15 +8,32 @@ import Login from "./pages/Login";
 import ErrorPage from "./pages/404page";
 import Layout from "./components/Layout";
 import Admin from "./pages/Admin";
-import { getUserProfile } from "./utils/api";
-import { useContext, useEffect } from "react";
+import { getUserProfile, getAllCategory } from "./utils/api";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./hooks/Context/auth.context";
 import { Spin } from "antd";
 import UserSettings from "./pages/UserSettings";
 import Countries from "./pages/Countries";
 import CountryDetail from "./pages/Countries/CountryDetail";
+import Posts from "./pages/Posts";
+import Loading from "./components/Loading";
 function App() {
   const { auth, setAuth, appLoading, setAppLoading } = useContext(AuthContext);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const result = await getAllCategory();
+        setCategories(result.data);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCategory();
+  }, []);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -44,6 +61,7 @@ function App() {
         console.error(err);
       } finally {
         setAppLoading(false);
+        setLoading(false);
       }
     };
 
@@ -52,7 +70,10 @@ function App() {
     }
   }, [auth.isAuthenticated]);
 
-  console.log(auth);
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       {appLoading === false ? (
@@ -89,10 +110,7 @@ function App() {
               path="/truong"
               element={<Layout>Đây là trang trường</Layout>}
             />
-            <Route
-              path="/quoc-gia"
-              element={<Layout>Đây là trang quốc gia</Layout>}
-            />
+
             <Route path="/admin" element={<Admin />} />
             <Route
               path="/register"
@@ -120,7 +138,7 @@ function App() {
             />
 
             <Route
-              path="/countries"
+              path="/quoc-gia"
               element={
                 <Layout>
                   <Countries />
@@ -128,13 +146,50 @@ function App() {
               }
             />
             <Route
-              path="/countries/:slug"
+              path="/quoc-gia/:slug"
               element={
                 <Layout>
                   <CountryDetail />
                 </Layout>
               }
             />
+
+            {categories.length > 0 &&
+              categories.map((item) => {
+                if (item.postsCategory.length > 0) {
+                  return (
+                    <>
+                      <Route
+                        key={`${item.id}-category`}
+                        path={item.path}
+                        element={<Layout>category</Layout>}
+                      />
+                      <Route
+                        key={`${item.id}-post-slug`}
+                        path={`${item.path}${item.postsCategory[0].slug}`}
+                        element={
+                          <Layout>
+                            <Posts
+                              category={item}
+                              postDetails={item.postsCategory[0]}
+                            />
+                          </Layout>
+                        }
+                      />
+                    </>
+                  );
+                } else {
+                  return (
+                    <Route
+                      key={`category-${item.id}`}
+                      path={item.path}
+                      element={<Layout>category</Layout>}
+                    />
+                  );
+                }
+              })}
+
+            <Route path="/gioi-thieu-ve-inec" element={<Layout></Layout>} />
 
             <Route
               path="*"

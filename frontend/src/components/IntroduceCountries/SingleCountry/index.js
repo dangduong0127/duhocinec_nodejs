@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const SingleCountry = ({ data }) => {
   return (
     <>
-      <Link to={`/countries${data.slug}`} state={data.id}>
+      <Link to={`/quoc-gia${data.slug}`} state={data.id}>
         <img
           style={{
             width: "300px",

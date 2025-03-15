@@ -53,6 +53,21 @@ const getCountryDetails = (data) => {
   return axios.get(URL_API, { params: { id: data } });
 };
 
+const getAllCategory = () => {
+  const URL_API = "/api/v1/getAllCategory";
+  return axios.get(URL_API);
+};
+
+const getAllPosts = () => {
+  const URL_API = "/api/v1/getAllPosts";
+  return axios.get(URL_API);
+};
+
+const updatePost = (data) => {
+  const URL_API = "/api/v1/updatePost";
+  return axios.put(URL_API, data);
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -65,4 +80,7 @@ export {
   uploadImage,
   updateCountry,
   getCountryDetails,
+  getAllCategory,
+  getAllPosts,
+  updatePost,
 };

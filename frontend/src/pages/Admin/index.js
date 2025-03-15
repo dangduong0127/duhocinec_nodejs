@@ -11,6 +11,8 @@ import { AuthContext } from "../../hooks/Context/auth.context";
 import logout from "../../utils/logout.js";
 import Countries from "./Countries";
 import LayoutPage from "../../components/Layout/index.js";
+import Posts from "./Posts/index.js";
+import Categories from "./Categories/index.js";
 const { Header, Content, Footer, Sider } = Layout;
 
 // const items = [
@@ -39,9 +41,9 @@ const Admin = () => {
       case "1":
         return <User />;
       case "2":
-        return <div>Courses</div>;
+        return <Categories />;
       case "3":
-        return <div>Settings</div>;
+        return <Posts />;
       case "4":
         return <Countries />;
       default:

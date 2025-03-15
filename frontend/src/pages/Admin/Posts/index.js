@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Checkbox, Table } from "antd";
-import { getAllCountries } from "../../../utils/api";
+import { Button, Checkbox, Table } from "antd";
+import { getAllPosts } from "../../../utils/api";
 import { Link } from "react-router-dom";
-import CountryEdit from "./Edit";
+import EditPost from "./Edit";
 
-const Countries = () => {
-  const [selectedCountry, setSelectdCountry] = useState(null);
-  const [data, setData] = useState(null);
+const Posts = () => {
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [postData, setPostData] = useState(null);
 
   const columns = [
     {
       title: (
         <>
           <Checkbox />
-          <span> Select All</span>
+          <span> All</span>
         </>
       ),
       dataIndex: "checkbox",
@@ -39,7 +39,7 @@ const Countries = () => {
             <span
               onClick={(e) => {
                 e.preventDefault();
-                setSelectdCountry(record.id);
+                setSelectedPost(record.id);
               }}
             >
               {title}
@@ -48,17 +48,18 @@ const Countries = () => {
         );
       },
     },
-    {
-      title: "Excerpt",
-      dataIndex: "excerpt",
-      key: "Excerpt",
-      width: 200,
-    },
+
     {
       title: "Slug",
       dataIndex: "slug",
       key: "slug",
       width: 150,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      width: 200,
     },
     {
       title: "Author",
@@ -78,35 +79,37 @@ const Countries = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getAllCountries();
-        setData(res.data);
+        const res = await getAllPosts();
+        setPostData(res.data);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
-  }, [selectedCountry]);
-  const dataSource = data?.map((item, index) => {
+  }, [selectedPost]);
+  const dataSource = postData?.map((item, index) => {
     return {
       ...item,
       key: index,
-      fullName: item.users.firstName + " " + item.users.lastName,
-      checkbox: false,
+      slug: item.slug,
+      status: item.post_status,
+      fullName: item.author_inf.firstName + " " + item.author_inf.lastName,
     };
   });
 
-  return (
+  return selectedPost ? (
+    <EditPost
+      onBack={() => setSelectedPost(null)}
+      data={postData.find((item) => item.id === selectedPost)}
+    />
+  ) : (
     <>
-      {selectedCountry ? (
-        <CountryEdit
-          onBack={() => setSelectdCountry(null)}
-          data={data.find((e) => e.id === selectedCountry)}
-        />
-      ) : (
-        <Table columns={columns} dataSource={dataSource} />
-      )}
+      <Button type="primary" style={{ marginBottom: "20px" }}>
+        Create Post
+      </Button>
+      <Table columns={columns} dataSource={dataSource} />
     </>
   );
 };
 
-export default Countries;
+export default Posts;

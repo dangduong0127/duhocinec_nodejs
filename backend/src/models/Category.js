@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
     static associate(models) {
       Category.hasMany(models.Post, {
         foreignKey: "category_id",
-        as: "Posts",
+        as: "postsCategory",
       });
 
       Category.hasMany(models.Country, {

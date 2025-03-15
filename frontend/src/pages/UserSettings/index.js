@@ -7,17 +7,20 @@ import {
   logoutApi,
 } from "../../utils/api";
 import { Avatar, Input, Select, Button } from "antd";
+import Loading from "../../components/Loading";
 
 const UserSettings = () => {
   const [userData, setUserData] = useState(null);
   const [imageUrlTemp, setImageUrlTemp] = useState(null);
   const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const userProfile = async () => {
       const response = await getUserProfile();
       if (response.status !== false) {
         setUserData(response.data);
+        setLoading(false);
       } else {
         await logoutApi();
       }
@@ -71,8 +74,9 @@ const UserSettings = () => {
     }
   };
 
-  console.log(userData);
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <h1 style={{ textAlign: "center" }}>User Settings</h1>
       <div className="user-settings container">

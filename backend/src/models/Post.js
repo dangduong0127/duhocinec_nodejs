@@ -6,9 +6,9 @@ module.exports = (sequelize) => {
   class Post extends Model {
     static associate(models) {
       Post.hasOne(models.User, { foreignKey: "id", as: "author_inf" });
-      Post.hasMany(models.Category, {
-        foreignKey: "id",
-        as: "category",
+      Post.belongsTo(models.Category, {
+        foreignKey: "category_id",
+        as: "postsCategory",
       });
       // Post.hasMany(models.PostMeta, {
       //   foreignKey: "taxonomy_id",
@@ -46,6 +46,9 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
       },
       image: {
+        type: DataTypes.STRING,
+      },
+      slug: {
         type: DataTypes.STRING,
       },
       author: {

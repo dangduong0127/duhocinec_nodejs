@@ -18,6 +18,9 @@ const {
   hanldeGetAllCountries,
   hanldeUpdateCountry,
   hanldeGetCountryDetails,
+  handleGetAllCategory,
+  hanldeGetAllPosts,
+  handleUpdatePost,
 } = require("../services/userService");
 
 const handleUploadImage = (req, res, next) => {
@@ -141,6 +144,21 @@ const getCountryDetails = async (req, res) => {
   return res.status(200).json(response);
 };
 
+const getAllCategory = async (req, res) => {
+  const response = await handleGetAllCategory();
+  return res.status(200).json(response);
+};
+
+const getAllPosts = async (req, res) => {
+  const response = await hanldeGetAllPosts();
+  return res.status(200).json(response);
+};
+
+const updatePost = async (req, res) => {
+  const response = await handleUpdatePost(req.body);
+  return res.status(200).json(response);
+};
+
 module.exports = {
   getHomePage,
   getMenus,
@@ -155,4 +173,7 @@ module.exports = {
   getAllCountries,
   handleUploadImage,
   getCountryDetails,
+  getAllCategory,
+  getAllPosts,
+  updatePost,
 };
