@@ -16,6 +16,7 @@ const {
   getAllCategory,
   getAllPosts,
   updatePost,
+  createPost,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -42,6 +43,7 @@ router.get("/api/v1/getAllCountries", getAllCountries);
 router.get("/api/v1/getAllCategory", getAllCategory);
 router.get("/api/v1/getAllPosts", getAllPosts);
 
+router.post("/api/v1/createPost", createPost);
 router.put("/api/v1/updatePost", updatePost);
 router.put("/api/v1/updateCountry", UpdateCountry);
 router.get("/api/v1/getCountryDetails", getCountryDetails);

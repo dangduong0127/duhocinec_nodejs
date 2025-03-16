@@ -21,6 +21,7 @@ const {
   handleGetAllCategory,
   hanldeGetAllPosts,
   handleUpdatePost,
+  hanldeCreatePost,
 } = require("../services/userService");
 
 const handleUploadImage = (req, res, next) => {
@@ -159,6 +160,11 @@ const updatePost = async (req, res) => {
   return res.status(200).json(response);
 };
 
+const createPost = async (req, res) => {
+  const response = await hanldeCreatePost(req.body);
+  return res.status(200).json(response);
+};
+
 module.exports = {
   getHomePage,
   getMenus,
@@ -176,4 +182,5 @@ module.exports = {
   getAllCategory,
   getAllPosts,
   updatePost,
+  createPost,
 };

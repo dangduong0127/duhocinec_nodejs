@@ -15,7 +15,7 @@ const EditPost = ({ onBack, data }) => {
     content: data.content,
     slug: data.slug,
     thumbnail: data.image,
-    fullName: data.author_inf.firstName + " " + data.author_inf.lastName,
+    // fullName: data.author_inf.firstName + " " + data.author_inf.lastName,
     updatedAt: data.updatedAt,
   });
 
@@ -109,9 +109,7 @@ const EditPost = ({ onBack, data }) => {
                 onChange={handleChange}
               />
             </Form.Item>
-            <p>
-              <strong>Tác giả:</strong> {formData.fullName}
-            </p>
+            <p>{/* <strong>Tác giả:</strong> {formData.fullName} */}</p>
             <p>
               <strong>Ngày tạo:</strong>{" "}
               {new Date(data.createdAt).toLocaleString("vi-VN")}

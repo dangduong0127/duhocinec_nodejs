@@ -164,18 +164,19 @@ function App() {
                         path={item.path}
                         element={<Layout>category</Layout>}
                       />
-                      <Route
-                        key={`${item.id}-post-slug`}
-                        path={`${item.path}${item.postsCategory[0].slug}`}
-                        element={
-                          <Layout>
-                            <Posts
-                              category={item}
-                              postDetails={item.postsCategory[0]}
-                            />
-                          </Layout>
-                        }
-                      />
+                      {item.postsCategory.map((post) => {
+                        return (
+                          <Route
+                            key={`${item.id}-${post.id}`}
+                            path={`${item.path}${post.slug}`}
+                            element={
+                              <Layout>
+                                <Posts category={item} postDetails={post} />
+                              </Layout>
+                            }
+                          />
+                        );
+                      })}
                     </>
                   );
                 } else {

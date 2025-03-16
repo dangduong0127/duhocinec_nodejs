@@ -68,6 +68,11 @@ const updatePost = (data) => {
   return axios.put(URL_API, data);
 };
 
+const createPost = (data) => {
+  const URL_API = "/api/v1/createPost";
+  return axios.post(URL_API, data);
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -83,4 +88,5 @@ export {
   getAllCategory,
   getAllPosts,
   updatePost,
+  createPost,
 };

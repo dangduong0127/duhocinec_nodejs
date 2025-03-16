@@ -466,6 +466,37 @@ const handleUpdatePost = async (data) => {
   }
 };
 
+const hanldeCreatePost = async (data) => {
+  try {
+    if (data) {
+      console.log(data);
+      const post = await Post.create({
+        // author: data.author,
+        category_id: data.category_id,
+        slug: data.slug,
+        title: data.title,
+        content: data.content,
+        image: data.image,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      return {
+        success: true,
+        message: "Post created successfully",
+        post_id: post.id,
+      };
+    } else {
+      return {
+        success: false,
+        message: "Data is required",
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
@@ -481,4 +512,5 @@ module.exports = {
   handleGetAllCategory,
   hanldeGetAllPosts,
   handleUpdatePost,
+  hanldeCreatePost,
 };

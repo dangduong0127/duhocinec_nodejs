@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Button, Checkbox, Table } from "antd";
+import { Button, Checkbox, Form, Modal, Table } from "antd";
 import { getAllPosts } from "../../../utils/api";
 import { Link } from "react-router-dom";
 import EditPost from "./Edit";
+import CreatePost from "./Create";
 
 const Posts = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [postData, setPostData] = useState(null);
+  const [selectedCreatePost, setSelectedCreatePost] = useState(false);
 
   const columns = [
     {
@@ -87,24 +89,27 @@ const Posts = () => {
     };
     fetchData();
   }, [selectedPost]);
+
   const dataSource = postData?.map((item, index) => {
     return {
       ...item,
       key: index,
       slug: item.slug,
       status: item.post_status,
-      fullName: item.author_inf.firstName + " " + item.author_inf.lastName,
+      // fullName: item.author_inf.firstName + " " + item.author_inf.lastName,
     };
   });
 
-  return selectedPost ? (
+  return selectedCreatePost ? (
+    <CreatePost onBack={() => setSelectedCreatePost(false)} />
+  ) : selectedPost ? (
     <EditPost
       onBack={() => setSelectedPost(null)}
       data={postData.find((item) => item.id === selectedPost)}
     />
   ) : (
     <>
-      <Button type="primary" style={{ marginBottom: "20px" }}>
+      <Button type="primary" onClick={() => setSelectedCreatePost(true)}>
         Create Post
       </Button>
       <Table columns={columns} dataSource={dataSource} />
