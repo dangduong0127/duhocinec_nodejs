@@ -17,6 +17,8 @@ import Countries from "./pages/Countries";
 import CountryDetail from "./pages/Countries/CountryDetail";
 import Posts from "./pages/Posts";
 import Loading from "./components/Loading";
+import Category from "./pages/Category";
+import SearchResults from "./pages/SearchResult";
 function App() {
   const { auth, setAuth, appLoading, setAppLoading } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
@@ -162,7 +164,11 @@ function App() {
                       <Route
                         key={`${item.id}-category`}
                         path={item.path}
-                        element={<Layout>category</Layout>}
+                        element={
+                          <Layout>
+                            <Category data={item} />
+                          </Layout>
+                        }
                       />
                       {item.postsCategory.map((post) => {
                         return (
@@ -184,13 +190,26 @@ function App() {
                     <Route
                       key={`category-${item.id}`}
                       path={item.path}
-                      element={<Layout>category</Layout>}
+                      element={
+                        <Layout>
+                          <Category data={item} />
+                        </Layout>
+                      }
                     />
                   );
                 }
               })}
 
             <Route path="/gioi-thieu-ve-inec" element={<Layout></Layout>} />
+
+            <Route
+              path="/search-results"
+              element={
+                <Layout>
+                  <SearchResults />
+                </Layout>
+              }
+            />
 
             <Route
               path="*"

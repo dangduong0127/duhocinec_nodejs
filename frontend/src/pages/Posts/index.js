@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.scss";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import BreadcrumbCustom from "../../components/Breadcrumb";
 
 const Posts = ({ category, postDetails }) => {
+  const [loading, setLoading] = useState(true);
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+
   return postDetails ? (
     <main className="site-main">
       <div className="container">
         {/* Breadcrumb */}
-        <div className="breadcrumb">
-          <Link to="/">Trang chủ</Link> &gt;
-          <Link to={category.path}> {category.name}</Link> &gt;
-          <span> {postDetails.title}</span>
-        </div>
+        <BreadcrumbCustom breadcrumb={category} titlePost={postDetails.title} />
 
         {/* Main layout */}
         <div className="main-layout">

@@ -17,6 +17,7 @@ const {
   getAllPosts,
   updatePost,
   createPost,
+  searchPosts,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -48,5 +49,6 @@ router.put("/api/v1/updatePost", updatePost);
 router.put("/api/v1/updateCountry", UpdateCountry);
 router.get("/api/v1/getCountryDetails", getCountryDetails);
 router.post("/api/uploadimage", handleUploadImage);
+router.get("/api/v1/searchPosts", searchPosts);
 
 module.exports = router;

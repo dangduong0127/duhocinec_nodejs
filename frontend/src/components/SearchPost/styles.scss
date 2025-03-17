@@ -1,0 +1,23 @@
+.homeSearchWrapper {
+  display: flex;
+  position: relative;
+  height: 30px;
+  input {
+    border: 1px solid #ccc;
+    outline: none;
+    :focus {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+  }
+  .btn-search {
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    border: none;
+    background-color: #f27649;
+    color: #fff;
+    cursor: pointer;
+  }
+}

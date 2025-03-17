@@ -73,6 +73,11 @@ const createPost = (data) => {
   return axios.post(URL_API, data);
 };
 
+const searchPosts = (data) => {
+  const URL_API = "/api/v1/searchPosts?q=" + data;
+  return axios.get(URL_API, data);
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -89,4 +94,5 @@ export {
   getAllPosts,
   updatePost,
   createPost,
+  searchPosts,
 };

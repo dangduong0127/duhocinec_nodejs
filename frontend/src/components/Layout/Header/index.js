@@ -2,14 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "../../../utils/axios.customize";
 import "./styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
+import { DownOutlined } from "@ant-design/icons";
 import Socials from "./Socials";
 import { Menu, Avatar, Select, Button } from "antd";
 // import { UserOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../../hooks/Context/auth.context";
 import { useTranslation } from "react-i18next";
 import logout from "../../../utils/logout";
+import SearchPosts from "../../SearchPost";
+const { SubMenu } = Menu;
 const Header = () => {
   let title = "DU HỌC INEC - Du học INEC – Chắp cánh tương lai";
   const [data, setData] = useState([]);
@@ -120,10 +123,7 @@ const Header = () => {
             </div>
 
             <div className="header-top-right">
-              <div className="homeSearchWrapper">
-                <input type="text" placeholder="Search..." />
-                <button className="btn-search">Tìm kiếm</button>
-              </div>
+              <SearchPosts />
               <Socials />
             </div>
           </div>
@@ -142,50 +142,41 @@ const Header = () => {
               </div>
 
               <div className="header-nav">
-                <ul className="list-menu">
+                <Menu mode="horizontal">
                   {data && data.length > 0 ? (
-                    data.map((item) => {
-                      return (
-                        <li
-                          key={item.id}
-                          onMouseEnter={() => setIsHoverd(item.id)}
-                          onMouseLeave={() => setIsHoverd(null)}
-                        >
-                          <Link to={item.path} className="nav-item">
-                            <span>
+                    data.map((item) => (
+                      <SubMenu
+                        key={item.path}
+                        title={
+                          <>
+                            <Link to={item.path}>
                               {t(`Categories.${item.name}`, item.name)}
-                            </span>
-                            {item.SubMenus.length !== 0 ? (
-                              <FontAwesomeIcon
-                                icon={faChevronDown}
-                                fontSize={"12px"}
+                            </Link>
+                            {item.SubMenus.length > 0 && (
+                              <DownOutlined
+                                style={{ fontSize: "12px", paddingLeft: "5px" }}
                               />
-                            ) : (
-                              ""
                             )}
-                          </Link>
-                          {isHovered === item.id && item.SubMenus.length > 0 ? (
-                            <div className="subMenus">
-                              <ul>
-                                {item.SubMenus.map((item) => {
-                                  return (
-                                    <li key={item.id}>
-                                      <Link to={item.path}>{item.name}</Link>
-                                    </li>
-                                  );
-                                })}
-                              </ul>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </li>
-                      );
-                    })
+                          </>
+                        }
+                        onTitleMouseEnter={() => setIsHoverd(item.id)}
+                        // onTitleMouseLeave={() => setIsHoverd(null)}
+                      >
+                        {isHovered === item.id && item.SubMenus.length > 0 && (
+                          <Menu.ItemGroup>
+                            {item.SubMenus.map((subItem) => (
+                              <Menu.Item key={subItem.id}>
+                                <Link to={subItem.path}>{subItem.name}</Link>
+                              </Menu.Item>
+                            ))}
+                          </Menu.ItemGroup>
+                        )}
+                      </SubMenu>
+                    ))
                   ) : (
                     <></>
                   )}
-                </ul>
+                </Menu>
               </div>
 
               <div className="actions">

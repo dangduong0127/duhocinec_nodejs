@@ -1,3 +1,5 @@
+@import "../../styles/mixin";
+
 section.events-section {
   display: flex;
   justify-content: center;
@@ -63,5 +65,19 @@ section.events-section {
         }
       }
     }
+  }
+}
+
+@include responsive(mobile) {
+  section.events-section .events-wrapper {
+    grid-template-columns: 1fr;
+    padding: 0px 16px;
+  }
+  section.events-section
+    .events-wrapper
+    .events-col
+    .events-item-noimg
+    .events-txtbox {
+    max-width: 250px;
   }
 }

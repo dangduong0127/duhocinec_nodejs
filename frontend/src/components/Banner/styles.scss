@@ -1,0 +1,11 @@
+.carousel-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+}
+
+.ant-carousel .slick-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

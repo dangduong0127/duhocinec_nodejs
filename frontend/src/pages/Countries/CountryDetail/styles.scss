@@ -1,3 +1,5 @@
+@import "../../../styles/mixin";
+
 .section-country-details {
   margin: 0 auto;
   .country-wrapper {
@@ -462,5 +464,34 @@
     button {
       border: none;
     }
+  }
+}
+
+@include responsive(mobile) {
+  .section-country-details .country-wrapper {
+    grid-template-columns: 100%;
+  }
+  .sidebar-wrapper {
+    display: none;
+  }
+  .section-country-details
+    .country-wrapper
+    .country-detail-wrapper
+    #required-country
+    .required-detail {
+    justify-content: center;
+  }
+
+  .country-faculty-strengths .major-list .country-faculty-strengths-col {
+    grid-template-columns: 100% !important;
+    padding: 0 16px;
+  }
+
+  .section-country-details
+    .country-wrapper
+    .country-detail-wrapper
+    #country-details-container
+    .country-details-container-content-wrapper {
+    display: block;
   }
 }

@@ -1,4 +1,5 @@
 const db = require("../models");
+const { Op } = require("sequelize");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { User, SubMenu, Role, Token, Menu, Country, PostMeta, Category, Post } =
@@ -497,6 +498,49 @@ const hanldeCreatePost = async (data) => {
   }
 };
 
+const handleSearchPosts = async (key) => {
+  try {
+    if (key) {
+      const posts = await Post.findAll({
+        raw: false,
+        nest: true,
+        where: {
+          title: { [Op.like]: `%${key}%` },
+        },
+      });
+
+      const countries = await Country.findAll({
+        raw: false,
+        nest: true,
+        where: {
+          title: { [Op.like]: `%${key}%` },
+        },
+      });
+
+      if (posts.length > 0 || countries.length > 0) {
+        return {
+          success: true,
+          message: "post found successfully",
+          posts,
+          countries,
+        };
+      } else if (posts.length === 0 && countries.length === 0) {
+        return {
+          success: false,
+          message: "No post found",
+        };
+      }
+    } else {
+      return {
+        success: false,
+        message: "Key is required",
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
@@ -513,4 +557,5 @@ module.exports = {
   hanldeGetAllPosts,
   handleUpdatePost,
   hanldeCreatePost,
+  handleSearchPosts,
 };

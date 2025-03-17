@@ -12,6 +12,7 @@ const authorization = (req, res, next) => {
     "/api/v1/getCountryDetails",
     "/api/v1/getAllCategory",
     "/api/v1/getAllPosts",
+    "/api/v1/searchPosts",
   ];
 
   if (allowed_list.some((route) => req.path.startsWith(route))) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import Banner from "../../components/Banner";
 import Filter from "../../components/Filter";
@@ -11,7 +11,21 @@ import PartnerSystem from "./PartnerSystem";
 import Arward from "./Arward";
 import Events from "../../components/Events";
 import News from "../../components/News";
+import { getAllCategory, getAllPosts } from "../../utils/api";
 const HomePage = () => {
+  const [postData, setPostData] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllCategory();
+        setPostData(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <Banner />
@@ -25,14 +39,13 @@ const HomePage = () => {
           <Schoolarship style={{ margin: "0" }} />
         </div>
       </div>
-
       <ShowCase />
       <SuccessStory />
       <WhatOurClientsSay />
       <PartnerSystem />
       <Arward />
       <Events />
-      <News />
+      {postData && <News data={postData} />}
     </>
   );
 };

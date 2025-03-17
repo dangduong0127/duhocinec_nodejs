@@ -1,3 +1,5 @@
+@import "../../../styles/mixin";
+
 section.partner-system-section {
   display: flex;
   justify-content: center;
@@ -35,4 +37,16 @@ section.partner-system-section {
 
 #root > main > section.partner-system-section > div > div.ant-carousel {
   width: 70%;
+}
+
+@include responsive(mobile) {
+  section.partner-system-section .container {
+    display: block;
+  }
+  section.partner-system-section .container .title-header-section {
+    width: 100%;
+  }
+  #root > main > section.partner-system-section > div > div.ant-carousel {
+    width: 100%;
+  }
 }

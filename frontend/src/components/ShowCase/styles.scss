@@ -1,3 +1,5 @@
+@import "../../styles/mixin";
+
 .showcase-wrapper {
   display: flex;
   justify-content: center;
@@ -27,6 +29,16 @@
           }
         }
       }
+    }
+  }
+}
+
+@include responsive(mobile) {
+  .showcase-item {
+    max-width: 100vw;
+    .showcase-item__image {
+      width: 100%;
+      height: 100%;
     }
   }
 }
