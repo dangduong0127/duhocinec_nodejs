@@ -132,10 +132,11 @@
   }
 
   .header .header-container .header-main .header-inner {
-    display: block;
+    display: grid;
+    grid-template-columns: 200px 200px;
   }
   .header .header-container .header-main .header-inner .actions {
-    display: inline-block;
+    display: flex;
   }
 
   .header .header-container .header-main .header-inner .header-nav {

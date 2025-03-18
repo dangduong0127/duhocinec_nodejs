@@ -42,35 +42,42 @@ const getAllUsers = async (req, res) => {
 
 const createUserService = async (data) => {
   try {
-    //Check if user already exists
-    const existingUser = await User.findOne({ where: { email: data.email } });
-    if (existingUser) {
+    if (!data.email || !data.password || !data.username) {
       return {
         success: false,
-        message: "User already exists",
+        message: "Missing required fields",
       };
     } else {
-      //hash password
-      const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+      //Check if user already exists
+      const existingUser = await User.findOne({ where: { email: data.email } });
+      if (existingUser) {
+        return {
+          success: false,
+          message: "User already exists",
+        };
+      } else {
+        //hash password
+        const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
-      await User.create({
-        email: data.email,
-        password: hashedPassword,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        address: data.address,
-        gender: data.gender,
-        roleId: 2,
-        phoneNumber: data.phoneNumber,
-        image: data.image,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-      return {
-        success: true,
-        message: "User created successfully",
-        // data: result,
-      };
+        await User.create({
+          email: data.email,
+          password: hashedPassword,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.address,
+          gender: data.gender,
+          roleId: 2,
+          phoneNumber: data.phoneNumber,
+          image: data.image,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+        return {
+          success: true,
+          message: "User created successfully",
+          // data: result,
+        };
+      }
     }
   } catch (err) {
     console.log(err);
@@ -507,6 +514,13 @@ const handleSearchPosts = async (key) => {
         where: {
           title: { [Op.like]: `%${key}%` },
         },
+        include: [
+          {
+            model: Category,
+            as: "postsCategory",
+            attributes: ["name", "path"],
+          },
+        ],
       });
 
       const countries = await Country.findAll({
@@ -515,12 +529,20 @@ const handleSearchPosts = async (key) => {
         where: {
           title: { [Op.like]: `%${key}%` },
         },
+        include: [
+          {
+            model: Category,
+            as: "countriesCate",
+            attributes: ["name", "path"],
+          },
+        ],
       });
 
       if (posts.length > 0 || countries.length > 0) {
         return {
           success: true,
           message: "post found successfully",
+          keywords: key,
           posts,
           countries,
         };
@@ -528,12 +550,14 @@ const handleSearchPosts = async (key) => {
         return {
           success: false,
           message: "No post found",
+          keywords: key,
         };
       }
     } else {
       return {
         success: false,
         message: "Key is required",
+        keywords: key,
       };
     }
   } catch (err) {

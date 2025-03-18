@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./styles.scss";
 import { searchPosts } from "../../utils/api";
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
 const SearchPosts = () => {
-  const [data, setData] = useState(null);
   const navigate = useNavigate();
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -12,7 +11,6 @@ const SearchPosts = () => {
     try {
       const key = e.target.searchInput.value;
       const response = await searchPosts(key);
-      setData(response.data);
       navigate("/search-results", { state: response.data });
     } catch (err) {
       notification.error({

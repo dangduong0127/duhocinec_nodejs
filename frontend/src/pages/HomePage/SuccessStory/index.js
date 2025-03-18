@@ -37,14 +37,14 @@ const SuccessStory = () => {
                 <div className="success-story-col-item">
                   <div className="image-box">
                     <img
-                      src="https://duhocinec.com/wp-content/uploads/2024/10/22-09-20-dai-hoc-quan-ly-singapore-smu-dang-cap-cua-mot-thuong-hieu-giao-duc.jpg"
+                      src="https://duhocinec.com/wp-content/uploads/2024/10/190723-hoc-sinh-inec-nhan-hoc-bong-jcus.jpg"
                       alt="success-story-image"
                     />
                   </div>
                   <div className="success-story-txtbox">
                     <h5>
-                      Sinh viên INEC nối dài danh sách học bổng thạc sĩ Đại học
-                      SMU Singapore
+                      Chúc mừng học sinh INEC đạt học bổng đến 50% của ĐH JCU
+                      Singapore
                     </h5>
                   </div>
                 </div>
@@ -54,14 +54,14 @@ const SuccessStory = () => {
                 <div className="success-story-col-item">
                   <div className="image-box">
                     <img
-                      src="https://duhocinec.com/wp-content/uploads/2024/10/22-09-20-dai-hoc-quan-ly-singapore-smu-dang-cap-cua-mot-thuong-hieu-giao-duc.jpg"
+                      src="https://duhocinec.com/wp-content/uploads/2024/10/nguyen-hoang-kim-thy-hoc-bong-100-khoa-diploma-hoc-vien-sim-singapore.jpg"
                       alt="success-story-image"
                     />
                   </div>
                   <div className="success-story-txtbox">
                     <h5>
-                      Sinh viên INEC nối dài danh sách học bổng thạc sĩ Đại học
-                      SMU Singapore
+                      Học bổng Singapore 100% từ Học viện SIM lại về tay sinh
+                      viên INEC!
                     </h5>
                   </div>
                 </div>

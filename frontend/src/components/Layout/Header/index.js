@@ -180,9 +180,9 @@ const Header = () => {
               </div>
 
               <div className="actions">
-                <Link to="/url" className="findCourse btn-blue-border">
+                {/* <Link to="/url" className="findCourse btn-blue-border">
                   Tìm kiếm khoá học
-                </Link>
+                </Link> */}
 
                 <Menu
                   mode="horizontal"

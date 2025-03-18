@@ -12,6 +12,7 @@ import Arward from "./Arward";
 import Events from "../../components/Events";
 import News from "../../components/News";
 import { getAllCategory, getAllPosts } from "../../utils/api";
+import Chatbot from "../../components/Chatbot";
 const HomePage = () => {
   const [postData, setPostData] = useState(null);
   useEffect(() => {
@@ -46,6 +47,8 @@ const HomePage = () => {
       <Arward />
       <Events />
       {postData && <News data={postData} />}
+
+      <Chatbot />
     </>
   );
 };

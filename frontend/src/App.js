@@ -1,4 +1,4 @@
-// import logo from "./logo.svg";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/Global.scss";
 import HomePage from "./pages/HomePage";
@@ -160,7 +160,7 @@ function App() {
               categories.map((item) => {
                 if (item.postsCategory.length > 0) {
                   return (
-                    <>
+                    <React.Fragment key={`category-${item.id}`}>
                       <Route
                         key={`${item.id}-category`}
                         path={item.path}
@@ -183,7 +183,7 @@ function App() {
                           />
                         );
                       })}
-                    </>
+                    </React.Fragment>
                   );
                 } else {
                   return (

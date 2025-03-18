@@ -70,7 +70,7 @@ const WhatOurClientsSay = () => {
                   onClick={() => setIsModalOpen(true)}
                 >
                   <img
-                    src="https://img.youtube.com/vi/DE2CgfUppus/0.jpg"
+                    src="https://img.youtube.com/vi/kFOR8MAyyyA/0.jpg"
                     alt="wocs-thumbnail"
                   />
                   <div className="wpvl_auto_thumb_play">
@@ -84,8 +84,8 @@ const WhatOurClientsSay = () => {
                 <div className="wocs-txtbox">
                   <p>
                     <strong>
-                      INEC Alumni Stories #3: Nguyễn Thị Hiền Tâm: Chọn công ty
-                      du học Úc
+                      Du học Bỉ - Vũ Thùy Dương: Làm hồ sơ với INEC, em không có
+                      bất kỳ lo lắng nào
                     </strong>
                   </p>
                 </div>

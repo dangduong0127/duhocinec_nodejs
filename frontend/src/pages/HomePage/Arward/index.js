@@ -35,14 +35,14 @@ const Arward = () => {
               <div className="single-award-item">
                 <div className="award-imgbox">
                   <img
-                    src="https://duhocinec.com/wp-content/uploads/2024/09/inec-doi-tac-uu-tu-kaplan-01.jpg"
+                    src="https://duhocinec.com/wp-content/uploads/2024/09/Outstanding-Agent-La-Trobe-001.jpg"
                     alt="award"
                   />
                 </div>
                 <div className="award-txtbox">
                   <h5>
-                    INEC được vinh danh “Đối tác ưu tú” của Viện Giáo dục Đại
-                    học Kaplan
+                    INEC nhận giải thưởng “Outstanding Agent” từ Đại học La
+                    Trobe
                   </h5>
                 </div>
               </div>
@@ -52,14 +52,31 @@ const Arward = () => {
               <div className="single-award-item">
                 <div className="award-imgbox">
                   <img
-                    src="https://duhocinec.com/wp-content/uploads/2024/09/inec-doi-tac-uu-tu-kaplan-01.jpg"
+                    src="https://duhocinec.com/wp-content/uploads/2024/09/doi-tac-cua-nam-curtin-singapore-01.jpg"
                     alt="award"
                   />
                 </div>
                 <div className="award-txtbox">
                   <h5>
-                    INEC được vinh danh “Đối tác ưu tú” của Viện Giáo dục Đại
-                    học Kaplan
+                    INEC – Đối tác tuyển sinh xuất sắc của Đại học Curtin
+                    Singapore năm 2022
+                  </h5>
+                </div>
+              </div>
+            </Link>
+
+            <Link to>
+              <div className="single-award-item">
+                <div className="award-imgbox">
+                  <img
+                    src="https://duhocinec.com/wp-content/uploads/2024/09/top-agent-cua-curtin-singapore-10-nam-01.jpg"
+                    alt="award"
+                  />
+                </div>
+                <div className="award-txtbox">
+                  <h5>
+                    INEC – Đối tác tuyển sinh hoạt động hiệu quả nhất trong 10
+                    năm qua của Curtin Singapore
                   </h5>
                 </div>
               </div>
@@ -71,14 +88,14 @@ const Arward = () => {
               <div className="single-award-item">
                 <div className="award-imgbox">
                   <img
-                    src="https://duhocinec.com/wp-content/uploads/2024/09/inec-doi-tac-uu-tu-kaplan-01.jpg"
+                    src="https://duhocinec.com/wp-content/uploads/2024/09/301122-inec-best-partnership-jcus-2.jpg"
                     alt="award"
                   />
                 </div>
                 <div className="award-txtbox">
                   <h5>
-                    INEC được vinh danh “Đối tác ưu tú” của Viện Giáo dục Đại
-                    học Kaplan
+                    INEC – Đối tác tuyển sinh xuất sắc nhất của Đại học James
+                    Cook Singapore 2022
                   </h5>
                 </div>
               </div>

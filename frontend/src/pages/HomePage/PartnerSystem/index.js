@@ -26,7 +26,7 @@ const PartnerSystem = () => {
             <Link className="ps-nav-item">
               <div className="single-imgbox">
                 <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
+                  src="https://duhocinec.com/wp-content/uploads/2024/10/apu-university-logo.png"
                   alt="partner"
                 />
               </div>
@@ -35,7 +35,7 @@ const PartnerSystem = () => {
             <Link className="ps-nav-item">
               <div className="single-imgbox">
                 <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
+                  src="https://duhocinec.com/wp-content/uploads/2024/12/241224-du-hoc-anh-Keele-University-01.jpg"
                   alt="partner"
                 />
               </div>
@@ -53,7 +53,25 @@ const PartnerSystem = () => {
             <Link className="ps-nav-item">
               <div className="single-imgbox">
                 <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
+                  src="https://duhocinec.com/wp-content/uploads/2024/11/du-hoc-dai-hoc-navitas.jpg"
+                  alt="partner"
+                />
+              </div>
+            </Link>
+
+            <Link className="ps-nav-item">
+              <div className="single-imgbox">
+                <img
+                  src="https://duhocinec.com/wp-content/uploads/2024/11/du-hoc-dai-hoc-deakin-uc.jpg"
+                  alt="partner"
+                />
+              </div>
+            </Link>
+
+            <Link className="ps-nav-item">
+              <div className="single-imgbox">
+                <img
+                  src="https://duhocinec.com/wp-content/uploads/2024/11/du-hoc-dai-hoc-ontariotech-canada.jpg"
                   alt="partner"
                 />
               </div>
@@ -71,7 +89,7 @@ const PartnerSystem = () => {
             <Link className="ps-nav-item">
               <div className="single-imgbox">
                 <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
+                  src="https://duhocinec.com/wp-content/uploads/2024/10/university-of-waikato-college-logo.png"
                   alt="partner"
                 />
               </div>
@@ -80,7 +98,7 @@ const PartnerSystem = () => {
             <Link className="ps-nav-item">
               <div className="single-imgbox">
                 <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
+                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-canada-cao-dang-george-brown-0612.jpg"
                   alt="partner"
                 />
               </div>
@@ -89,7 +107,7 @@ const PartnerSystem = () => {
             <Link className="ps-nav-item">
               <div className="single-imgbox">
                 <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
+                  src="https://duhocinec.com/wp-content/uploads/2024/11/Seneca-logo.png"
                   alt="partner"
                 />
               </div>
@@ -98,25 +116,7 @@ const PartnerSystem = () => {
             <Link className="ps-nav-item">
               <div className="single-imgbox">
                 <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
-                  alt="partner"
-                />
-              </div>
-            </Link>
-
-            <Link className="ps-nav-item">
-              <div className="single-imgbox">
-                <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
-                  alt="partner"
-                />
-              </div>
-            </Link>
-
-            <Link className="ps-nav-item">
-              <div className="single-imgbox">
-                <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/12/du-hoc-thuy-dien-dai-hoc-Boras-0512.png"
+                  src="https://duhocinec.com/wp-content/uploads/2024/12/181224-du-hoc-anh-dai-hoc-Anglia-Ruskin.jpg"
                   alt="partner"
                 />
               </div>

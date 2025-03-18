@@ -22,7 +22,6 @@ const Register = () => {
     bullet: null,
   });
   const [current, setCurrent] = useState(1);
-  // const [data, setData] = useState([]);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -108,21 +107,6 @@ const Register = () => {
     elementsRef.current.progressCheck[num].classList.remove("active");
     elementsRef.current.bullet[num].classList.remove("active");
   };
-  //Call api from the server
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `${process.env.REACT_APP_SERVER_BASE_URL}api/v1/getallusers`
-  //       );
-  //       console.log(res.data);
-  //       setData(res.data);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
 
   //handle submit
   const handleBtnSubmitForm = () => {
@@ -163,7 +147,9 @@ const Register = () => {
 
     //validate form
     const validate = () => {
-      if (formData.firstName === "") {
+      let regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+      if (!formData.firstName) {
         alert("Please enter your first name!");
         slidePage.current.style.marginLeft = "0%";
         handleRemoveActiveClass(0);
@@ -172,7 +158,7 @@ const Register = () => {
         handleRemoveActiveClass(3);
         setCurrent(1);
         return false;
-      } else if (formData.lastName === "") {
+      } else if (!formData.lastName) {
         alert("Please enter your last name!");
         slidePage.current.style.marginLeft = "0%";
         handleRemoveActiveClass(0);
@@ -181,8 +167,8 @@ const Register = () => {
         handleRemoveActiveClass(3);
         setCurrent(1);
         return false;
-      } else if (formData.email === "") {
-        alert("Please enter your email!");
+      } else if (!formData.email) {
+        alert("Please enter valid email!");
         slidePage.current.style.marginLeft = "-25%";
         handleAddActiveClass(0);
         handleRemoveActiveClass(1);
@@ -190,7 +176,16 @@ const Register = () => {
         handleRemoveActiveClass(3);
         setCurrent(2);
         return false;
-      } else if (formData.phoneNumber === "") {
+      } else if (!regexEmail.test(formData.email)) {
+        alert("Please enter a valid email address!");
+        slidePage.current.style.marginLeft = "-25%";
+        handleAddActiveClass(0);
+        handleRemoveActiveClass(1);
+        handleRemoveActiveClass(2);
+        handleRemoveActiveClass(3);
+        setCurrent(2);
+        return false;
+      } else if (!formData.phoneNumber) {
         alert("Please enter your number phone!");
         slidePage.current.style.marginLeft = "-25%";
         handleAddActiveClass(0);
@@ -199,7 +194,15 @@ const Register = () => {
         handleRemoveActiveClass(3);
         setCurrent(2);
         return false;
-      } else if (formData.dob === "") {
+      } else if (!vnf_regex.test(formData.phoneNumber)) {
+        alert("Please enter valid number phone!");
+        slidePage.current.style.marginLeft = "-25%";
+        handleAddActiveClass(0);
+        handleRemoveActiveClass(1);
+        handleRemoveActiveClass(2);
+        handleRemoveActiveClass(3);
+        setCurrent(2);
+      } else if (!formData.dob) {
         alert("Please enter your date of birth!");
         slidePage.current.style.marginLeft = "-50%";
         handleAddActiveClass(0);
@@ -208,8 +211,12 @@ const Register = () => {
         handleRemoveActiveClass(3);
         setCurrent(3);
         return false;
-      } else if (formData.password === "") {
+      } else if (!formData.password) {
         alert("Please enter your password!");
+        handleRemoveActiveClass(3);
+        return false;
+      } else if (formData.password !== formData.re_password) {
+        alert("Your password is not match");
         handleRemoveActiveClass(3);
         return false;
       }

@@ -1,5 +1,20 @@
+@import "../../styles/variables";
 .search-results-wrapper {
   display: flex;
   justify-content: center;
   padding: 40px 0px;
+  .nav-item {
+    display: flex;
+    height: 200px;
+    gap: 20px;
+    margin-bottom: 10px;
+    img {
+      width: 250px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    &:hover {
+      color: $primary-color;
+    }
+  }
 }
