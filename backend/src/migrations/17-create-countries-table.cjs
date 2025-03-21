@@ -22,6 +22,11 @@ module.exports = {
       content: {
         type: Sequelize.TEXT,
       },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       author: {
         type: Sequelize.INTEGER,
         references: {
@@ -30,11 +35,7 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      slug: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
+
       category_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -51,6 +52,10 @@ module.exports = {
         onDelete: "CASCADE",
       },
       createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },

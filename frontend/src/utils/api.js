@@ -78,6 +78,21 @@ const searchPosts = (data) => {
   return axios.get(URL_API, data);
 };
 
+const getAllCourses = () => {
+  const URL_API = "/api/v1/getAllCourses";
+  return axios.get(URL_API);
+};
+
+const updateCourse = (data) => {
+  const URL_API = "/api/v1/updateCourse";
+  return axios.put(URL_API, data);
+};
+
+const createCourse = (data) => {
+  const URL_API = "/api/v1/createCourse";
+  return axios.post(URL_API, data);
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -95,4 +110,7 @@ export {
   updatePost,
   createPost,
   searchPosts,
+  getAllCourses,
+  updateCourse,
+  createCourse,
 };

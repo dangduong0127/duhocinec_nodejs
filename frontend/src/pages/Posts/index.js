@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.scss";
 // import { Link } from "react-router-dom";
 import BreadcrumbCustom from "../../components/Breadcrumb";
-
+import SearchPost from "../../components/SearchPost";
+import { getAllCountries } from "../../utils/api";
+import { Link } from "react-router-dom";
 const Posts = ({ category, postDetails }) => {
+  const [categories, setCategories] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getAllCountries();
+        if (res.status === 200) {
+          setCategories(res.data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+  console.log(postDetails);
   window.scrollTo({
     top: 0,
     behavior: "smooth",
@@ -33,9 +51,9 @@ const Posts = ({ category, postDetails }) => {
                 </div>
               </header>
 
-              <div className="featured-image">
+              {/* <div className="featured-image">
                 <img src="/placeholder-image.jpg" alt="Pathway là gì?" />
-              </div>
+              </div> */}
 
               <div
                 className="content"
@@ -87,10 +105,11 @@ const Posts = ({ category, postDetails }) => {
               {/* Search widget */}
               <div className="widget search-widget">
                 <h3>Tìm kiếm</h3>
-                <div className="search-form">
+                <SearchPost />
+                {/* <div className="search-form">
                   <input type="text" placeholder="Tìm kiếm..." />
                   <button>🔍</button>
-                </div>
+                </div> */}
               </div>
 
               {/* Contact form widget */}
@@ -141,24 +160,19 @@ const Posts = ({ category, postDetails }) => {
               <div className="widget categories-widget">
                 <h3>Danh mục</h3>
                 <ul>
-                  <li>
-                    <a href="#">Du học Mỹ</a>
-                  </li>
-                  <li>
-                    <a href="#">Du học Anh</a>
-                  </li>
-                  <li>
-                    <a href="#">Du học Úc</a>
-                  </li>
-                  <li>
-                    <a href="#">Du học Canada</a>
-                  </li>
-                  <li>
-                    <a href="#">Học bổng du học</a>
-                  </li>
-                  <li>
-                    <a href="#">Kinh nghiệm du học</a>
-                  </li>
+                  {loading ? (
+                    <div>loading...</div>
+                  ) : (
+                    categories.map((item) => {
+                      return (
+                        <li key={item.id}>
+                          <Link to={`/quoc-gia${item.slug}`} state={item.id}>
+                            {item.title}
+                          </Link>
+                        </li>
+                      );
+                    })
+                  )}
                 </ul>
               </div>
 

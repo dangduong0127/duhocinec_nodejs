@@ -19,6 +19,7 @@ import Posts from "./pages/Posts";
 import Loading from "./components/Loading";
 import Category from "./pages/Category";
 import SearchResults from "./pages/SearchResult";
+import IntroduceINEC from "./pages/IntroduceINEC";
 function App() {
   const { auth, setAuth, appLoading, setAppLoading } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
@@ -101,14 +102,6 @@ function App() {
               }
             />
             <Route
-              path="/khoa-hoc"
-              element={
-                <Layout>
-                  <Courses />
-                </Layout>
-              }
-            />
-            <Route
               path="/truong"
               element={<Layout>Đây là trang trường</Layout>}
             />
@@ -185,6 +178,33 @@ function App() {
                       })}
                     </React.Fragment>
                   );
+                } else if (item.coursesCate.length > 0) {
+                  return (
+                    <React.Fragment key={`category-${item.id}`}>
+                      <Route
+                        key={`${item.id}-category`}
+                        path={item.path}
+                        element={
+                          <Layout>
+                            <Category data={item} />
+                          </Layout>
+                        }
+                      />
+                      {item.coursesCate.map((post) => {
+                        return (
+                          <Route
+                            key={`${item.id}-${post.id}`}
+                            path={`${item.path}${post.slug}`}
+                            element={
+                              <Layout>
+                                <Posts category={item} postDetails={post} />
+                              </Layout>
+                            }
+                          />
+                        );
+                      })}
+                    </React.Fragment>
+                  );
                 } else {
                   return (
                     <Route
@@ -200,7 +220,14 @@ function App() {
                 }
               })}
 
-            <Route path="/gioi-thieu-ve-inec" element={<Layout></Layout>} />
+            <Route
+              path="/gioi-thieu-ve-inec"
+              element={
+                <Layout>
+                  <IntroduceINEC />
+                </Layout>
+              }
+            />
 
             <Route
               path="/search-results"

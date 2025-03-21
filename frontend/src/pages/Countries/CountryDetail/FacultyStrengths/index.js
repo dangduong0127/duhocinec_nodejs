@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const FacultyStrengths = () => {
   return (
-    <div className="country-faculty-strengths">
+    <div id="faculties-strength" className="country-faculty-strengths">
       <TitleCountryDetails
         title="Các ngành đào tạo thế mạnh"
         icon={<IconCertificate size="40" color="red" />}

@@ -18,6 +18,9 @@ const {
   updatePost,
   createPost,
   searchPosts,
+  getAllCourses,
+  updateCourse,
+  createCourse,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -50,5 +53,8 @@ router.put("/api/v1/updateCountry", UpdateCountry);
 router.get("/api/v1/getCountryDetails", getCountryDetails);
 router.post("/api/uploadimage", handleUploadImage);
 router.get("/api/v1/searchPosts", searchPosts);
+router.get("/api/v1/getAllCourses", getAllCourses);
+router.put("/api/v1/updateCourse", updateCourse);
+router.post("/api/v1/createCourse", createCourse);
 
 module.exports = router;

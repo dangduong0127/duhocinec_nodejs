@@ -35,7 +35,7 @@ const CountryLearnMore = ({ data }) => {
   ];
 
   return (
-    <div className="country-learn-more">
+    <div id="study-aboard-experience" className="country-learn-more">
       <TitleCountryDetails
         title={`Kinh nghiệm ${data.title}`}
         icon={<IconContact size="40" color="red" />}

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const CountryVisa = ({ data }) => {
   return (
-    <div className="country-visa">
+    <div id="visa" className="country-visa">
       <TitleCountryDetails
         title={`Visa ${data.title}`}
         icon={<IconNews size={40} color="red" />}

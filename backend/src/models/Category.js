@@ -14,6 +14,11 @@ module.exports = (sequelize) => {
         foreignKey: "category_id",
         as: "countriesCate",
       });
+
+      Category.hasMany(models.Course, {
+        foreignKey: "category_id",
+        as: "coursesCate",
+      });
     }
   }
 

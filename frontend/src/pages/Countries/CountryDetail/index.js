@@ -156,7 +156,7 @@ const CountryDetail = () => {
                 </button>
               </div>
               {/* <!-- cost estimate study abroad -->  */}
-              <div id="cost_es_container">
+              <div>
                 <div id="cost-est-study-abroad">
                   <TitleCountryDetails
                     title={`Dự toán chi phí ${countryData.title}`}
@@ -608,7 +608,7 @@ const CountryDetail = () => {
               <CountryVisa data={countryData} />
               <Feedback data={countryData} />
 
-              <div className="news-post">
+              <div id="news" className="news-post">
                 <TitleCountryDetails
                   title="Tin tức"
                   icon={<IconNews size="40" color="red" />}

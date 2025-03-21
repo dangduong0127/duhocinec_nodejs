@@ -21,8 +21,9 @@ const SearchResults = () => {
     <div className="search-results-wrapper">
       <div className="container">
         <h1>
-          {data.posts.length + data.countries.length} Kết quả tìm kiếm cho từ
-          khoá: <span style={{ color: "red" }}>"{data.keywords}"</span>
+          {data.posts.length + data.countries.length + data.courses.length} Kết
+          quả tìm kiếm cho từ khoá:{" "}
+          <span style={{ color: "red" }}>"{data.keywords}"</span>
         </h1>
         {data.posts.map((item) => {
           return (
@@ -46,6 +47,31 @@ const SearchResults = () => {
           );
         })}
         {data.countries.map((item) => {
+          return (
+            <Link
+              key={item.id}
+              className="nav-item"
+              to={`/quoc-gia${item.slug}`}
+              state={item.id}
+            >
+              <img
+                className="post-thumbnail"
+                src={
+                  item.thumbnail
+                    ? getImageUrl(item.thumbnail)
+                    : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+                }
+                alt={item.title}
+              />
+              <div className="post-content">
+                <h3 className="title">{item.title}</h3>
+                <p className="excerpt">{item.excerpt}</p>
+              </div>
+            </Link>
+          );
+        })}
+
+        {data.courses.map((item) => {
           return (
             <Link
               key={item.id}

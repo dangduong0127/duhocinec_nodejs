@@ -2,8 +2,18 @@ const db = require("../models");
 const { Op } = require("sequelize");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { User, SubMenu, Role, Token, Menu, Country, PostMeta, Category, Post } =
-  db;
+const {
+  User,
+  SubMenu,
+  Role,
+  Token,
+  Menu,
+  Country,
+  PostMeta,
+  Category,
+  Post,
+  Course,
+} = db;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -412,10 +422,20 @@ const handleGetAllCategory = async () => {
       raw: false,
       nest: true,
       attributes: ["id", "name", "path", "position"],
-      include: {
-        model: Post,
-        as: "postsCategory",
-      },
+      include: [
+        {
+          model: Post,
+          as: "postsCategory",
+        },
+        {
+          model: Course,
+          as: "coursesCate",
+        },
+        {
+          model: Country,
+          as: "countriesCate",
+        },
+      ],
     });
 
     return categories;
@@ -538,15 +558,35 @@ const handleSearchPosts = async (key) => {
         ],
       });
 
-      if (posts.length > 0 || countries.length > 0) {
+      const courses = await Course.findAll({
+        raw: false,
+        nest: true,
+        where: {
+          title: { [Op.like]: `%${key}%` },
+        },
+        include: [
+          {
+            model: Category,
+            as: "coursesCate",
+            attributes: ["name", "path"],
+          },
+        ],
+      });
+
+      if (posts.length > 0 || countries.length > 0 || courses.length > 0) {
         return {
           success: true,
           message: "post found successfully",
           keywords: key,
           posts,
           countries,
+          courses,
         };
-      } else if (posts.length === 0 && countries.length === 0) {
+      } else if (
+        posts.length === 0 &&
+        countries.length === 0 &&
+        courses.length === 0
+      ) {
         return {
           success: false,
           message: "No post found",
@@ -558,6 +598,97 @@ const handleSearchPosts = async (key) => {
         success: false,
         message: "Key is required",
         keywords: key,
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleGetAllCourses = async () => {
+  try {
+    const courses = await Course.findAll({
+      raw: false,
+      nest: true,
+      include: [
+        {
+          model: Category,
+          as: "coursesCate",
+        },
+        {
+          model: User,
+          as: "authorCourse",
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+    });
+
+    return courses;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleUpdateCourse = async (data) => {
+  try {
+    const course = await Course.findOne({
+      raw: false,
+      where: { id: data.id },
+    });
+
+    if (!course) {
+      return {
+        success: false,
+        message: "Course not found",
+      };
+    }
+    course.title = data.title;
+    course.excerpt = data.excerpt;
+    course.content = data.content;
+    course.price = data.price;
+    course.stock = data.stock;
+    course.thumbnail = data.thumbnail;
+    course.slug = data.slug;
+
+    await course.save();
+    return {
+      success: true,
+      message: "Course updated successfully",
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      success: false,
+      message: "An error occurred while updating the country",
+    };
+  }
+};
+
+const hanldeCreateCourse = async (data) => {
+  try {
+    if (data) {
+      await Course.create({
+        // author: data.author,
+        category_id: 30,
+        slug: data.slug,
+        title: data.title,
+        content: data.content,
+        thumbnail: data.thumbnail,
+        excerpt: data.excerpt,
+        price: data.price,
+        stock: data.stock,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      return {
+        success: true,
+        message: "Course created successfully",
+      };
+    } else {
+      return {
+        success: false,
+        message: "Data is required",
       };
     }
   } catch (err) {
@@ -582,4 +713,7 @@ module.exports = {
   handleUpdatePost,
   hanldeCreatePost,
   handleSearchPosts,
+  handleGetAllCourses,
+  handleUpdateCourse,
+  hanldeCreateCourse,
 };

@@ -9,7 +9,7 @@ const Feedback = ({ data }) => {
   const [isOpenModal, setIsModalOpen] = useState(false);
 
   return (
-    <div className="feedback-section">
+    <div id="reviews" className="feedback-section">
       <TitleCountryDetails
         title={`Khách hàng nói gì về ${data.title}`}
         icon={<IconFlag size="40" color="red" />}

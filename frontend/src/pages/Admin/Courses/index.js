@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Button, Checkbox, Table } from "antd";
-import { getAllPosts } from "../../../utils/api";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import EditPost from "./Edit";
-import CreatePost from "./Create";
+import { Button, Checkbox, Table } from "antd";
+import { getAllCourses } from "../../../utils/api";
+import Editor from "./Edit";
+import Create from "./Create";
 
-const Posts = () => {
+const Courses = () => {
+  const [courseData, setCourseData] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [postData, setPostData] = useState(null);
-  const [selectedCreatePost, setSelectedCreatePost] = useState(false);
-
+  const [selectedCreator, setSelectedCreator] = useState(false);
   const columns = [
     {
       title: (
@@ -81,40 +80,38 @@ const Posts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getAllPosts();
-        setPostData(res.data);
-      } catch (e) {
-        console.log(e);
+        const result = await getAllCourses();
+        setCourseData(result.data);
+      } catch (err) {
+        console.log(err);
       }
     };
     fetchData();
-  }, [selectedPost]);
+  }, []);
 
-  const dataSource = postData?.map((item, index) => {
+  const courses = courseData?.map((item) => {
     return {
       ...item,
-      key: index,
-      slug: item.slug,
-      status: item.post_status,
-      // fullName: item.author_inf.firstName + " " + item.author_inf.lastName,
     };
   });
 
-  return selectedCreatePost ? (
-    <CreatePost onBack={() => setSelectedCreatePost(false)} />
+  return selectedCreator ? (
+    <Create onBack={() => setSelectedCreator(false)} />
   ) : selectedPost ? (
-    <EditPost
+    <Editor
+      data={courseData.find((item) => item.id === selectedPost)}
       onBack={() => setSelectedPost(null)}
-      data={postData.find((item) => item.id === selectedPost)}
     />
   ) : (
-    <>
-      <Button type="primary" onClick={() => setSelectedCreatePost(true)}>
-        Create Post
-      </Button>
-      <Table columns={columns} dataSource={dataSource} />
-    </>
+    courseData && (
+      <>
+        <Button type="primary" onClick={() => setSelectedCreator(true)}>
+          Create Course
+        </Button>
+        <Table columns={columns} dataSource={courses}></Table>
+      </>
+    )
   );
 };
 
-export default Posts;
+export default Courses;

@@ -1,100 +1,63 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Upload, Card, Row, Col, message } from "antd";
+import {
+  Button,
+  Form,
+  Col,
+  Row,
+  Card,
+  Upload,
+  Input,
+  Select,
+  message,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { uploadImage, updateCountry } from "../../../../utils/api";
-import RenderHTML from "../../../../utils/renderHTML";
-
+import JoditEditor from "jodit-react";
+import { uploadImage, updateCourse } from "../../../../utils/api";
 const { TextArea } = Input;
-const CountryEdit = ({ onBack, data }) => {
+const Editor = ({ data, onBack }) => {
+  const [previewImage, setPreviewImage] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     id: data.id,
     title: data.title,
-    excerpt: data.excerpt,
     content: data.content,
+    excerpt: data.excerpt,
+    price: data.price,
     slug: data.slug,
+    stock: data.stock,
     thumbnail: data.thumbnail,
-    postMeta: data.postMeta,
+    author: data.authorCourse.firstName + " " + data.authorCourse.lastName,
   });
 
-  const [previewImage, setPreviewImage] = useState(null); // Lưu ảnh tạm thời
-  const [selectedFile, setSelectedFile] = useState(null); // Lưu file trước khi upload
-  const [loading, setLoading] = useState(false);
-
-  const fullName = data.users.firstName + " " + data.users.lastName;
-
-  // Xử lý thay đổi input form
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleOnChangeTextEditor = (id, value) => {
-    const updatePostMeta = formData.postMeta.map((item) => {
-      if (item.id === id) {
-        let fieldValue = JSON.parse(item.field_value);
-        fieldValue.value = value;
-        console.log(fieldValue);
-        return { ...item, field_value: JSON.stringify(fieldValue) };
-      }
-      return item;
-    });
-
-    setFormData({
-      ...formData,
-      postMeta: updatePostMeta,
+    const { value, name } = e.target;
+    setFormData((item) => {
+      return {
+        ...item,
+        [name]: value,
+      };
     });
   };
 
-  const handleChangeCustomFields = (e) => {
-    const { id, value } = e.target;
-    // Cập nhật giá trị field_value trong postMeta
-    const updatedPostMeta = formData.postMeta.map((item) => {
-      if (item.id === parseInt(id)) {
-        // Kiểm tra id có trùng với id trong postMeta không
-        // Parse field_value từ JSON, cập nhật giá trị và stringify lại
-        let fieldValue = item.field_value
-          .replace(/(\w+):/g, '"$1":')
-          .replace(/'/g, '"');
-
-        fieldValue = JSON.parse(fieldValue);
-
-        fieldValue.value = value;
-
-        // Cập nhật lại item trong postMeta với field_value mới
-        return { ...item, field_value: JSON.stringify(fieldValue) };
-      }
-      return item;
-    });
-
-    setFormData({
-      ...formData,
-      postMeta: updatedPostMeta,
+  const handleOnChangeTextEditor = (e) => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        content: e,
+      };
     });
   };
 
-  const handleInputFile = async (fileImage) => {
-    try {
-      // console.log(selectedFile, id, value);
-      // let uploadedImageUrl = formData.thumbnail; // Mặc định giữ nguyên ảnh cũ
-      // Nếu có ảnh mới, thực hiện upload lên server
-      if (fileImage) {
-        const formDataUpload = new FormData();
-        formDataUpload.append("image", fileImage); // Key theo API
-        const response = await uploadImage(fileImage);
-        console.log(response);
-        // if (response.status === 200) {
-        //   // uploadedImageUrl = `${response.data.file.path}`;
-        //   setFormData({ ...formData, thumbnail: uploadedImageUrl });
-        //   setLoading(true);
-        // } else {
-        //   message.error("Tải ảnh lên thất bại!");
-        // }
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  const hanldeOnChangeSelection = (e) => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        stock: e,
+      };
+    });
   };
 
-  // Xử lý chọn ảnh để preview
   const handlePreviewImage = ({ file }) => {
     const imageUrl = URL.createObjectURL(file);
     setPreviewImage(imageUrl);
@@ -119,7 +82,7 @@ const CountryEdit = ({ onBack, data }) => {
           message.error("Tải ảnh lên thất bại!");
         }
       }
-      updateCountry({ ...formData, thumbnail: uploadedImageUrl })
+      updateCourse({ ...formData, thumbnail: uploadedImageUrl })
         .then(() => {
           message.success("Cập nhật bài viết thành công!");
           setLoading(false);
@@ -152,35 +115,13 @@ const CountryEdit = ({ onBack, data }) => {
                 onChange={handleChange}
               />
             </Form.Item>
-            {/* Custome Fields */}
-            {formData.postMeta.map((value) => {
-              return (
-                <Form.Item key={value.id} label={value.field_name}>
-                  {JSON.parse(value.field_value).tag === "input" ? (
-                    <RenderHTML
-                      fields={value}
-                      change={handleChangeCustomFields}
-                    />
-                  ) : JSON.parse(value.field_value).tag === "file" ? (
-                    <RenderHTML fields={value} change={handleInputFile} />
-                  ) : (
-                    <RenderHTML
-                      fields={value}
-                      change={handleOnChangeTextEditor}
-                    />
-                  )}
-                </Form.Item>
-              );
-            })}
-
-            {/* <Form.Item label="Nội dung">
+            <Form.Item label="Nội dung">
               <JoditEditor
+                name="content"
                 value={formData.content}
-                rows={6}
-                config={{ toolbarButtonSize: "medium" }}
                 onChange={handleOnChangeTextEditor}
               />
-            </Form.Item> */}
+            </Form.Item>
           </Form>
         </Card>
       </Col>
@@ -196,8 +137,24 @@ const CountryEdit = ({ onBack, data }) => {
                 onChange={handleChange}
               />
             </Form.Item>
+            <Form.Item label="Giá">
+              <Input
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+              />
+            </Form.Item>
+            <Form.Item label="Tình trạng kho">
+              <Select
+                defaultValue={formData.stock}
+                onChange={hanldeOnChangeSelection}
+              >
+                <Select.Option value={1}>Còn hàng</Select.Option>
+                <Select.Option value={0}>Hết hàng</Select.Option>
+              </Select>
+            </Form.Item>
             <p>
-              <strong>Tác giả:</strong> {fullName}
+              <strong>Tác giả:</strong> {formData.author}
             </p>
             <p>
               <strong>Ngày tạo:</strong>{" "}
@@ -267,4 +224,4 @@ const CountryEdit = ({ onBack, data }) => {
   );
 };
 
-export default CountryEdit;
+export default Editor;

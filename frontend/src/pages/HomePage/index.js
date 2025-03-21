@@ -13,13 +13,16 @@ import Events from "../../components/Events";
 import News from "../../components/News";
 import { getAllCategory, getAllPosts } from "../../utils/api";
 import Chatbot from "../../components/Chatbot";
+import Loading from "../../components/Loading";
 const HomePage = () => {
   const [postData, setPostData] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAllCategory();
         setPostData(response.data);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -27,7 +30,9 @@ const HomePage = () => {
     fetchData();
   }, []);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <Banner />
       <Filter />

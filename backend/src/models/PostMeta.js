@@ -9,6 +9,11 @@ module.exports = (sequelize) => {
         foreignKey: "id",
         as: "postMeta",
       });
+
+      PostMeta.belongsTo(models.Course, {
+        foreignKey: "id",
+        as: "postMetaCourse",
+      });
     }
   }
 

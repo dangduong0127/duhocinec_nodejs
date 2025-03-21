@@ -13,6 +13,7 @@ import Countries from "./Countries";
 import LayoutPage from "../../components/Layout/index.js";
 import Posts from "./Posts/index.js";
 import Categories from "./Categories/index.js";
+import Courses from "./Courses/index.js";
 const { Header, Content, Footer, Sider } = Layout;
 
 // const items = [
@@ -46,6 +47,8 @@ const Admin = () => {
         return <Posts />;
       case "4":
         return <Countries />;
+      case "6":
+        return <Courses />;
       default:
         return <div>Default</div>;
     }

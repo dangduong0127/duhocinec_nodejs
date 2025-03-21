@@ -16,16 +16,14 @@ module.exports = {
       excerpt: {
         type: Sequelize.STRING,
       },
+      price: {
+        type: Sequelize.DECIMAL(15, 2),
+      },
       thumbnail: {
         type: Sequelize.STRING,
       },
       content: {
         type: Sequelize.TEXT,
-      },
-      slug: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
       },
       author: {
         type: Sequelize.INTEGER,
@@ -35,12 +33,22 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      stock: {
+        type: Sequelize.INTEGER,
+      },
+
       category_id: {
         type: Sequelize.INTEGER,
         references: {
           model: "Categories",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       levels_id: {
         type: Sequelize.INTEGER,
@@ -59,6 +67,10 @@ module.exports = {
         onDelete: "CASCADE",
       },
       createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },

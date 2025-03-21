@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Input, Select } from "antd";
+import { Input, Select, Upload, Button, Card } from "antd";
 import JoditEditor from "jodit-react";
+import { UploadOutlined } from "@ant-design/icons";
 // import DOMPurify from "dompurify";
 const RenderHTML = ({ fields, change }) => {
-  // const data = JSON.parse(fields.field_value.replace(/(\w+):/g, '"$1":'));
+  const [previewImage, setPreviewImage] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const data = JSON.parse(fields.field_value);
   const [value, setValue] = useState(data.value || "");
   const handleChange = (e) => {
@@ -14,6 +16,17 @@ const RenderHTML = ({ fields, change }) => {
   const handleChangeTxtEditor = (id, value) => {
     change(id, value);
   };
+
+  const handleInputFile = ({ file }) => {
+    const imgUrlTemp = URL.createObjectURL(file);
+    setPreviewImage(imgUrlTemp);
+    setSelectedFile(file);
+    change(selectedFile);
+  };
+
+  // const handleUploadImage = (e) => {
+  //   change(e);
+  // };
 
   return (
     <>
@@ -50,7 +63,35 @@ const RenderHTML = ({ fields, change }) => {
           value={data.value}
           onChange={(value) => handleChangeTxtEditor(fields.id, value)}
         />
-      ) : null}
+      ) : data.tag === "file" ? (
+        <Card>
+          <Upload
+            showUploadList={false}
+            beforeUpload={(file) => {
+              handleInputFile({ file });
+              return false;
+            }}
+          >
+            <Button icon={<UploadOutlined />}>Upload</Button>
+          </Upload>
+
+          {previewImage && (
+            <img
+              src={previewImage}
+              alt="thumbnail preview"
+              style={{
+                width: "200px",
+                maxHeight: "150px",
+                objectFit: "fill",
+                overflowY: "auto",
+                marginLeft: 10,
+                borderRadius: 4,
+              }}
+            />
+          )}
+        </Card>
+      ) : //
+      null}
     </>
   );
 };
