@@ -11,8 +11,7 @@ import PartnerSystem from "./PartnerSystem";
 import Arward from "./Arward";
 import Events from "../../components/Events";
 import News from "../../components/News";
-import { getAllCategory, getAllPosts } from "../../utils/api";
-import Chatbot from "../../components/Chatbot";
+import { getAllCategory } from "../../utils/api";
 import Loading from "../../components/Loading";
 const HomePage = () => {
   const [postData, setPostData] = useState(null);
@@ -52,8 +51,6 @@ const HomePage = () => {
       <Arward />
       <Events />
       {postData && <News data={postData} />}
-
-      <Chatbot />
     </>
   );
 };

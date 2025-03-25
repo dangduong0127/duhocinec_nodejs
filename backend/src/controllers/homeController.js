@@ -26,6 +26,8 @@ const {
   handleGetAllCourses,
   handleUpdateCourse,
   hanldeCreateCourse,
+  handleGetCourseToCart,
+  handleCreateOrder,
 } = require("../services/userService");
 
 const handleUploadImage = (req, res, next) => {
@@ -189,6 +191,16 @@ const createCourse = async (req, res) => {
   return res.status(200).json(response);
 };
 
+const getCourseToCart = async (req, res) => {
+  const response = await handleGetCourseToCart(req.body);
+  return res.status(200).json(response);
+};
+
+const createOrder = async (req, res) => {
+  const response = await handleCreateOrder(req);
+  return res.status(200).json(response);
+};
+
 module.exports = {
   getHomePage,
   getMenus,
@@ -211,4 +223,6 @@ module.exports = {
   getAllCourses,
   updateCourse,
   createCourse,
+  getCourseToCart,
+  createOrder,
 };

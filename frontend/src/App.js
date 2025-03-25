@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/Global.scss";
 import HomePage from "./pages/HomePage";
-import Courses from "./pages/Courses";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/404page";
@@ -20,6 +19,8 @@ import Loading from "./components/Loading";
 import Category from "./pages/Category";
 import SearchResults from "./pages/SearchResult";
 import IntroduceINEC from "./pages/IntroduceINEC";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 function App() {
   const { auth, setAuth, appLoading, setAppLoading } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
@@ -234,6 +235,24 @@ function App() {
               element={
                 <Layout>
                   <SearchResults />
+                </Layout>
+              }
+            />
+
+            <Route
+              path="/cart"
+              element={
+                <Layout>
+                  <Cart />
+                </Layout>
+              }
+            />
+
+            <Route
+              path="/checkout"
+              element={
+                <Layout>
+                  <Checkout />
                 </Layout>
               }
             />

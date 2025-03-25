@@ -43,6 +43,9 @@ const Header = () => {
       key: "dashboard",
       children: auth.isAuthenticated
         ? [
+            {
+              label: <Link to="/cart">Giỏ hàng</Link>,
+            },
             auth.user.roleId === 1
               ? {
                   label: <Link to="/admin">Dashboard</Link>,
@@ -188,7 +191,7 @@ const Header = () => {
                   mode="horizontal"
                   selectedKeys="none"
                   items={items}
-                  style={{ fontSize: "18px" }}
+                  style={{ fontSize: "18px", zIndex: "9999999999999999999999" }}
                 />
 
                 <div className="multi-lang">

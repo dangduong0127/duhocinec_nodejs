@@ -8,8 +8,7 @@ import {
   getClient,
   Configuration,
 } from '@botpress/webchat';
-import getImageUrl from "../../utils/getImage"
-const clientId = "4147f552-ebe2-493c-af5a-563a1f25a51c";
+const clientId = process.env.CHATBOT_CLIENT_ID;
 const configuration: Configuration = {
     botName: "Chuyên viên tư vấn INEC",
     color: '#0c65d8',

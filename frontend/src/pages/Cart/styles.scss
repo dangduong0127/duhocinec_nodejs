@@ -1,0 +1,15 @@
+section.cart-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  .thumbnail-product {
+    width: 100px;
+    border-radius: 10px;
+  }
+}

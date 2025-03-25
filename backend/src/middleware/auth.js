@@ -22,7 +22,12 @@ const authorization = (req, res, next) => {
   // Đến đây nghĩa là route cần xác thực, tiếp tục kiểm tra token
   let token = req.cookies ? req.cookies.access_token : undefined;
 
-  if (req.url === "/api/v1/getAccountInfo" || req.url === "/api/v1/logout") {
+  if (
+    req.url === "/api/v1/getAccountInfo" ||
+    req.url === "/api/v1/logout" ||
+    req.url === "/api/v1/getCourseToCart" ||
+    req.url === "/api/v1/createOrder"
+  ) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = {

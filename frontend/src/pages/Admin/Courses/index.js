@@ -87,7 +87,7 @@ const Courses = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [selectedPost]);
 
   const courses = courseData?.map((item) => {
     return {

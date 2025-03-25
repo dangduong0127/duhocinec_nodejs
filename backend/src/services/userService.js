@@ -13,6 +13,8 @@ const {
   Category,
   Post,
   Course,
+  Order,
+  OrderDetail,
 } = db;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -696,6 +698,94 @@ const hanldeCreateCourse = async (data) => {
   }
 };
 
+const handleGetCourseToCart = async (data) => {
+  try {
+    if (data.length > 0) {
+      const courses = await Course.findAll({
+        raw: false,
+        nest: true,
+        where: {
+          id: data.map((item) => item.id),
+        },
+      });
+      return {
+        success: true,
+        message: "Courses fetched successfully",
+        courses,
+      };
+    } else {
+      return {
+        success: false,
+        message: "cart is empty",
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleCreateOrder = async (data) => {
+  try {
+    let totalAmout = data.body.reduce((total, item) => {
+      return total + parseFloat(item.price);
+    }, 0);
+    // Kiểm tra xem có đơn hàng nào của user đang pending không
+    const idCourse = data.body.map((item) => item.id);
+
+    const checkOrder = await Order.findOne({
+      raw: false,
+      nest: true,
+      where: {
+        user_id: data.user.userId,
+        status: "pending",
+      },
+      include: [
+        {
+          model: OrderDetail,
+          as: "orderDetails",
+          where: {
+            course_id: {
+              [Op.in]: idCourse,
+            },
+          },
+        },
+      ],
+      // logging: console.log,
+    });
+
+    if (!checkOrder) {
+      const createOrder = await Order.create({
+        user_id: data.user.userId,
+        status: "pending",
+        total_amount: totalAmout,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      for (const item of data.body) {
+        await OrderDetail.create({
+          order_id: createOrder.dataValues.id,
+          course_id: item.id,
+          quantity: 1,
+          price: item.price,
+        });
+      }
+
+      return {
+        success: true,
+        message: "Order created successfully",
+      };
+    } else {
+      return {
+        success: false,
+        message: "You have already placed an order",
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
@@ -716,4 +806,6 @@ module.exports = {
   handleGetAllCourses,
   handleUpdateCourse,
   hanldeCreateCourse,
+  handleGetCourseToCart,
+  handleCreateOrder,
 };

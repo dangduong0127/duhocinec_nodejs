@@ -21,6 +21,8 @@ const {
   getAllCourses,
   updateCourse,
   createCourse,
+  getCourseToCart,
+  createOrder,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -56,5 +58,7 @@ router.get("/api/v1/searchPosts", searchPosts);
 router.get("/api/v1/getAllCourses", getAllCourses);
 router.put("/api/v1/updateCourse", updateCourse);
 router.post("/api/v1/createCourse", createCourse);
+router.post("/api/v1/getCourseToCart", getCourseToCart);
+router.post("/api/v1/createOrder", createOrder);
 
 module.exports = router;

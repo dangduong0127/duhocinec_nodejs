@@ -93,6 +93,16 @@ const createCourse = (data) => {
   return axios.post(URL_API, data);
 };
 
+const getCourseToCart = (data) => {
+  const URL_API = "/api/v1/getCourseToCart";
+  return axios.post(URL_API, data);
+};
+
+const createOrder = (data) => {
+  const URL_API = "/api/v1/createOrder";
+  return axios.post(URL_API, data);
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -113,4 +123,6 @@ export {
   getAllCourses,
   updateCourse,
   createCourse,
+  getCourseToCart,
+  createOrder,
 };
