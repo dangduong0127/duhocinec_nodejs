@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../../hooks/Context/cart.context";
-import { getCourseToCart, createOrder } from "../../utils/api";
+import {
+  getCourseToCart,
+  createOrder,
+  deleteProduct,
+  createPaymentLink,
+  getPaymentInfo,
+} from "../../utils/api";
 import {
   Layout,
   Breadcrumb,
@@ -17,6 +23,7 @@ import { CreditCardOutlined, DeleteOutlined } from "@ant-design/icons";
 import getImageUrl from "../../utils/getImage";
 import "./styles.scss";
 import { Link, useNavigate } from "react-router-dom";
+import randomString from "../../utils/randomString";
 const Cart = () => {
   const [cartData, setCartData] = useState(null);
   const { cart, setCart } = useCart();
@@ -76,7 +83,7 @@ const Cart = () => {
             title="Are you sure you want to delete"
             okText="Yes"
             cancelText="No"
-            onConfirm={() => hanldeDelete(record.key)}
+            onConfirm={() => hanldeDelete([{ id: record.key }])}
           >
             <Button>Delete</Button>
           </Popconfirm>
@@ -87,9 +94,20 @@ const Cart = () => {
 
   const hanldeDelete = (id) => {
     if (id) {
-      const deleted = cart.filter((item) => item.id !== id);
-
-      setCart(deleted);
+      const callAPIDel = async () => {
+        try {
+          const res = await deleteProduct(id);
+          if (res.data.success) {
+            const deleted = cart.filter(
+              (item1) => !res.data.del.some((item2) => item1.id === item2.id)
+            );
+            setCart(deleted);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      callAPIDel();
     }
   };
 
@@ -98,6 +116,7 @@ const Cart = () => {
       try {
         const result = await getCourseToCart(cart);
         setCartData(result.data);
+        // await getPaymentInfo("65");
       } catch (e) {
         console.log(e);
       }
@@ -105,22 +124,45 @@ const Cart = () => {
     fetchData();
   }, [cart]);
 
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       try {
+  //         const result = await getAllCart();
+  //         console.log(result);
+  //       } catch (e) {
+  //         console.log(e);
+  //       }
+  //     };
+  //     fetchData();
+  //   });
+
   const handleCreateOrder = async () => {
     try {
       const result = await createOrder(cartData.courses, totalPrice);
       const response = result.data;
-
+      console.log("Created order: " + response);
       if (response.success) {
-        setCart([]);
+        const payment = await createPaymentLink(
+          cartData.courses,
+          response.order_id
+        );
+        let checkoutUrl = payment.data.checkoutUrl;
+        // navigate("/checkout", { state: { orderId: response.order_id } });
+        window.location.href = checkoutUrl;
+
+        setCartData(cartData.courses);
         notification.success({
           message: "Tạo đơn hàng thành công",
           description: "Hãy tiến hành thanh toán",
         });
-        navigate("/checkout");
       } else {
-        const courses = cartData.courses.map((item) => item.title);
+        // const courses = cartData.courses.filter(
+        //   (item1) =>
+        //     !response.courses.some((item2) => item2.course_id === item1.id)
+        // );
         notification.error({
-          message: `Khoá học ${courses.join(", ")} bạn đã đăng ký rồi!!`,
+          //   message: `Khoá học ${ courses.map((item) => item.title)} bạn đã đăng ký rồi!!`,
+          message: "error",
         });
       }
     } catch (e) {
@@ -153,7 +195,11 @@ const Cart = () => {
               <br></br>
               <Row justify="end">
                 <Col>
-                  <Button type="default" danger>
+                  <Button
+                    type="default"
+                    danger
+                    onClick={() => hanldeDelete(cart)}
+                  >
                     <DeleteOutlined />
                     &nbsp;
                     <span>Delete Cart</span>
@@ -191,7 +237,16 @@ const Cart = () => {
             </Layout>
           </div>
         ) : (
-          "Null"
+          <div style={{ textAlign: "center" }}>
+            <img
+              src="https://cdni.iconscout.com/illustration/free/thumb/free-empty-cart-illustration-download-in-svg-png-gif-file-formats--is-explore-box-states-pack-design-development-illustrations-3385483.png?f=webp"
+              alt="cart-empty"
+            />
+            <h1>Chưa có sản phẩm nào trong giỏ hàng</h1>
+            <Link to="/khoa-hoc">
+              <Button type="primary">Tiếp tục mua hàng</Button>
+            </Link>
+          </div>
         )}
       </div>
     </section>

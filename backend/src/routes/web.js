@@ -23,6 +23,12 @@ const {
   createCourse,
   getCourseToCart,
   createOrder,
+  getAllCart,
+  deleteProduct,
+  createPaymentLink,
+  getPaymentInfo,
+  cancelOrder,
+  webhookPayOS,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -60,5 +66,15 @@ router.put("/api/v1/updateCourse", updateCourse);
 router.post("/api/v1/createCourse", createCourse);
 router.post("/api/v1/getCourseToCart", getCourseToCart);
 router.post("/api/v1/createOrder", createOrder);
+router.get("/api/v1/getAllCart", getAllCart);
+router.delete("/api/v1/deleteProduct", deleteProduct);
+
+// payment api
+router.post("/api/v2/order/create", createPaymentLink);
+router.get("/api/v2/order/getPaymentInfo", getPaymentInfo);
+router.post("/api/v2/order/cancelOrder", cancelOrder);
+
+// https://d8f8-118-70-15-19.ngrok-free.app/api/v2/payment/webhook
+router.post("/api/v2/payment/webhook", webhookPayOS);
 
 module.exports = router;

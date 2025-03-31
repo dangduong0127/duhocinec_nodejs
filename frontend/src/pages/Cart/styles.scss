@@ -2,6 +2,10 @@ section.cart-wrapper {
   display: flex;
   justify-content: center;
   padding: 40px 0;
+
+  .container {
+    z-index: 2;
+  }
 }
 
 .product-item {

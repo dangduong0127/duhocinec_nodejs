@@ -13,6 +13,8 @@ const authorization = (req, res, next) => {
     "/api/v1/getAllCategory",
     "/api/v1/getAllPosts",
     "/api/v1/searchPosts",
+    "/api/v2/order/getPaymentInfo",
+    "/api/v2/payment/webhook",
   ];
 
   if (allowed_list.some((route) => req.path.startsWith(route))) {
@@ -26,7 +28,12 @@ const authorization = (req, res, next) => {
     req.url === "/api/v1/getAccountInfo" ||
     req.url === "/api/v1/logout" ||
     req.url === "/api/v1/getCourseToCart" ||
-    req.url === "/api/v1/createOrder"
+    req.url === "/api/v1/createOrder" ||
+    req.url === "/api/v1/getAllCart" ||
+    req.url === "/api/v2/order/create" ||
+    req.url === "/api/v1/deleteProduct" ||
+    req.url === "/api/v2/order/cancelOrder" ||
+    req.url === "/"
   ) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);

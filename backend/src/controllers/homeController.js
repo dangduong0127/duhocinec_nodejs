@@ -28,6 +28,12 @@ const {
   hanldeCreateCourse,
   handleGetCourseToCart,
   handleCreateOrder,
+  handleGetAllCart,
+  handleDeleteProduct,
+  hanldeCreatePaymentLink,
+  handleGetPaymentInfo,
+  handleCancelOrder,
+  handleWebhookPayOS,
 } = require("../services/userService");
 
 const handleUploadImage = (req, res, next) => {
@@ -201,6 +207,39 @@ const createOrder = async (req, res) => {
   return res.status(200).json(response);
 };
 
+const getAllCart = async (req, res) => {
+  const response = await handleGetAllCart(req.user.userId);
+  return res.status(200).json(response);
+};
+
+const deleteProduct = async (req, res) => {
+  const response = await handleDeleteProduct(req);
+  return res.status(200).json(response);
+};
+
+const createPaymentLink = async (req, res) => {
+  const response = await hanldeCreatePaymentLink(req.body, req.user.userId);
+  return res.status(200).json(response);
+  // return res.redirect(303, response.checkoutUrl);
+};
+
+const getPaymentInfo = async (req, res) => {
+  const response = await handleGetPaymentInfo(req.query.orderId);
+  return res.status(200).json(response);
+  // return res.redirect(303, response.checkoutUrl);
+};
+
+const cancelOrder = async (req, res) => {
+  const response = await handleCancelOrder(req.query);
+  return res.status(200).json(response);
+  // return res.redirect(303, response.checkoutUrl);
+};
+
+const webhookPayOS = async (req, res) => {
+  const response = await handleWebhookPayOS(req.body);
+  return res.status(200).json(response);
+};
+
 module.exports = {
   getHomePage,
   getMenus,
@@ -225,4 +264,10 @@ module.exports = {
   createCourse,
   getCourseToCart,
   createOrder,
+  getAllCart,
+  deleteProduct,
+  createPaymentLink,
+  getPaymentInfo,
+  cancelOrder,
+  webhookPayOS,
 };

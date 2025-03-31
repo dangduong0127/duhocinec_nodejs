@@ -11,8 +11,9 @@ import PartnerSystem from "./PartnerSystem";
 import Arward from "./Arward";
 import Events from "../../components/Events";
 import News from "../../components/News";
-import { getAllCategory } from "../../utils/api";
+import { getAllCategory, getPaymentInfo } from "../../utils/api";
 import Loading from "../../components/Loading";
+// import { getAccountInfo } from "../../../../backend/src/controllers/homeController";
 const HomePage = () => {
   const [postData, setPostData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,6 +27,17 @@ const HomePage = () => {
         console.log(err);
       }
     };
+
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const paymentId = urlParams.get("id");
+    // console.log("paymentID: ", paymentId);
+    // if (paymentId) {
+    //   getPaymentInfo(paymentId)
+    //     .then((e) => console.log(e))
+    //     .catch((error) => {
+    //       console.error("Có lỗi xảy ra:", error);
+    //     });
+    // }
     fetchData();
   }, []);
 

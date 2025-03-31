@@ -31,7 +31,9 @@ const Chatbot = () => {
     setIsWebchatOpen((prevState) => !prevState);
   };
 
-  return <> <div className="chatBot-wrapper">
+  return <> <div className="chatBot-wrapper" style={{
+            zIndex: isWebchatOpen ? '31' : '0',
+          }}>
       <WebchatProvider client={client} configuration={configuration}>
         
         <div

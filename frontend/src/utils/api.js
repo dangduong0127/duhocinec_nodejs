@@ -103,6 +103,26 @@ const createOrder = (data) => {
   return axios.post(URL_API, data);
 };
 
+const getAllCart = () => {
+  const URL_API = "/api/v1/getAllCart";
+  return axios.get(URL_API);
+};
+
+const deleteProduct = (data) => {
+  const URL_API = "/api/v1/deleteProduct";
+  return axios.delete(URL_API, { data });
+};
+
+const createPaymentLink = (items, orderCode) => {
+  const URL_API = "/api/v2/order/create";
+  return axios.post(URL_API, { data: items, orderCode: orderCode });
+};
+
+const getPaymentInfo = (id) => {
+  const URL_API = "/api/v2/order/getPaymentInfo";
+  return axios.get(URL_API, { params: { orderId: id } });
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -125,4 +145,8 @@ export {
   createCourse,
   getCourseToCart,
   createOrder,
+  getAllCart,
+  deleteProduct,
+  createPaymentLink,
+  getPaymentInfo,
 };

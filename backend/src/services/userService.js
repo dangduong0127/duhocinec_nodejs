@@ -18,6 +18,12 @@ const {
 } = db;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const PayOS = require("@payos/node");
+const payos = new PayOS(
+  process.env.YOUR_PAYOS_CLIENT_ID,
+  process.env.YOUR_PAYOS_API_KEY,
+  process.env.YOUR_PAYOS_CHECKSUM_KEY
+);
 
 const getAllUsers = async (req, res) => {
   try {
@@ -732,7 +738,28 @@ const handleCreateOrder = async (data) => {
     // Kiểm tra xem có đơn hàng nào của user đang pending không
     const idCourse = data.body.map((item) => item.id);
 
-    const checkOrder = await Order.findOne({
+    const checkOrder = await Order.findAll({
+      raw: false,
+      nest: true,
+      where: {
+        user_id: data.user.userId,
+        status: "completed",
+      },
+      include: [
+        {
+          model: OrderDetail,
+          as: "orderDetails",
+          where: {
+            course_id: {
+              [Op.in]: idCourse,
+            },
+          },
+        },
+      ],
+      // logging: console.log,
+    });
+
+    const checkPendingOrder = await Order.findAll({
       raw: false,
       nest: true,
       where: {
@@ -750,10 +777,39 @@ const handleCreateOrder = async (data) => {
           },
         },
       ],
-      // logging: console.log,
     });
-
-    if (!checkOrder) {
+    // console.log(checkPendingOrder);
+    if (checkPendingOrder.length > 0) {
+      const orderDetailIds = [];
+      checkPendingOrder[0].dataValues.orderDetails.forEach((orderDetail) => {
+        orderDetailIds.push({ course_id: orderDetail.course_id });
+      });
+      const orderID = checkPendingOrder[0].dataValues.id;
+      const uniqueCourse = data.body.filter(
+        (item1) => !orderDetailIds.some((item2) => item2.course_id === item1.id)
+      );
+      if (uniqueCourse.length > 0) {
+        for (const item of uniqueCourse) {
+          await OrderDetail.create({
+            order_id: orderID,
+            course_id: item.id,
+            quantity: 1,
+            price: item.price,
+          });
+        }
+        return {
+          success: true,
+          message: "Order created successfully",
+          order_id: orderID,
+        };
+      } else {
+        return {
+          success: true,
+          message: "All courses in cart have been ordered",
+          order_id: orderID,
+        };
+      }
+    } else {
       const createOrder = await Order.create({
         user_id: data.user.userId,
         status: "pending",
@@ -761,7 +817,6 @@ const handleCreateOrder = async (data) => {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-
       for (const item of data.body) {
         await OrderDetail.create({
           order_id: createOrder.dataValues.id,
@@ -772,17 +827,248 @@ const handleCreateOrder = async (data) => {
       }
 
       return {
+        courses: data.body,
         success: true,
         message: "Order created successfully",
+        order_id: createOrder.dataValues.id,
       };
+    }
+
+    // if (checkOrder.length === 0) {
+    //   const createOrder = await Order.create({
+    //     user_id: data.user.userId,
+    //     status: "pending",
+    //     total_amount: totalAmout,
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //   });
+
+    //   for (const item of data.body) {
+    //     await OrderDetail.create({
+    //       order_id: createOrder.dataValues.id,
+    //       course_id: item.id,
+    //       quantity: 1,
+    //       price: item.price,
+    //     });
+    //   }
+
+    //   return {
+    //     success: true,
+    //     message: "Order created successfully",
+    //   };
+    // } else {
+    //   return {
+    //     success: false,
+    //     message: "You have already placed an order",
+    //     courses: checkOrder[0]?.dataValues?.orderDetails,
+    //   };
+    // }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleGetAllCart = async (userId) => {
+  try {
+    if (userId) {
+      const orders = await Order.findAll({
+        raw: false,
+        nest: true,
+        where: {
+          user_id: userId,
+          status: "pending",
+        },
+        include: [
+          {
+            model: OrderDetail,
+            as: "orderDetails",
+          },
+        ],
+      });
+
+      if (orders) {
+        return {
+          success: true,
+          message: "Cart fetched successfully",
+          cart: orders,
+        };
+      } else {
+        return {
+          success: false,
+          message: "Cart is empty",
+          cart: [],
+        };
+      }
     } else {
       return {
         success: false,
-        message: "You have already placed an order",
+        message: "User not found",
       };
     }
   } catch (err) {
     console.log(err);
+  }
+};
+
+const handleDeleteProduct = async (data) => {
+  const userID = data.user.userId; // Sử dụng `const` hoặc `let` để khai báo biến
+  const dataBody = data.body;
+  // console.log(dataBody);
+
+  // console.log(checkOrder);
+  await OrderDetail.destroy({
+    where: {
+      course_id: {
+        [Op.in]: dataBody.map((item) => item.id),
+      },
+    },
+    include: [
+      {
+        model: Order,
+        where: {
+          user_id: userID,
+        },
+      },
+    ],
+  });
+
+  const checkOrder = await Order.findAll({
+    raw: false,
+    nest: true,
+    where: {
+      user_id: userID,
+    },
+    include: [
+      {
+        model: OrderDetail,
+        as: "orderDetails",
+      },
+    ],
+  });
+  if (checkOrder.length > 0) {
+    if (checkOrder[0].dataValues.orderDetails.length === 0) {
+      await Order.destroy({
+        where: {
+          id: checkOrder[0].dataValues.id,
+        },
+      });
+    }
+  }
+
+  return {
+    success: true,
+    message: "Course(s) deleted successfully",
+    del: dataBody,
+  };
+
+  // if (dataBody.course_ids && dataBody.course_ids.length > 0) {
+  //   try {
+  //     // Xử lý khi có ít nhất một course_id trong mảng
+  //     const deleteProduct = await OrderDetail.destroy({
+  //       where: {
+  //         course_id: {
+  //           [Op.in]: dataBody.course_ids.id, // Xử lý nhiều course_ids
+  //         },
+  //       },
+  //       include: [
+  //         {
+  //           model: Order,
+  //           where: {
+  //             user_id: userID,
+  //           },
+  //         },
+  //       ],
+  //     });
+
+  //     if (deleteProduct) {
+  //       return {
+  //         success: true,
+  //         message: "Course(s) deleted successfully",
+  //       };
+  //     } else {
+  //       return {
+  //         success: false,
+  //         message: "No courses found to delete",
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     return {
+  //       success: false,
+  //       message: "Error deleting course(s)",
+  //     };
+  //   }
+  // } else {
+  //   return {
+  //     success: false,
+  //     message: "No course_ids provided",
+  //   };
+  // }
+};
+
+const hanldeCreatePaymentLink = async ({ data, orderCode }, userID) => {
+  try {
+    let totalAmout = data.reduce((total, item) => {
+      return total + parseFloat(item.price);
+    }, 0);
+
+    const requestData = {
+      orderCode: orderCode,
+      amount: totalAmout,
+      description: "Thanh toan don hang",
+      items: data.map((item) => {
+        return {
+          name: item.title,
+          quantity: 1,
+          price: parseFloat(item.price),
+        };
+      }),
+      cancelUrl: process.env.DOMAIN_ALLOWED,
+      returnUrl: process.env.DOMAIN_ALLOWED,
+    };
+    const paymentLinkData = await payos.createPaymentLink(requestData);
+    return paymentLinkData;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleGetPaymentInfo = async (id) => {
+  const result = await payos.getPaymentLinkInformation(id);
+  if (result.status === "PAID") {
+    const order = await Order.findOne({
+      raw: false,
+      where: {
+        id: result.orderCode,
+      },
+    });
+
+    order.status = "completed";
+    await order.save();
+  }
+  return result;
+};
+
+const handleCancelOrder = async (orderID) => {
+  const cancellationReason = "reason";
+
+  const result = await payos.cancelPaymentLink(orderID, cancellationReason);
+  return result;
+};
+
+const handleWebhookPayOS = async (data) => {
+  const paymentData = await payos.verifyPaymentWebhookData(data); // Xác minh dữ liệu từ webhook
+  console.log(paymentData);
+  if (paymentData.desc === "success" && paymentData.code === "00") {
+    const order = await Order.findOne({
+      raw: false,
+      where: {
+        id: paymentData.orderCode,
+      },
+    });
+
+    order.status = "completed";
+    await order.save();
   }
 };
 
@@ -808,4 +1094,10 @@ module.exports = {
   hanldeCreateCourse,
   handleGetCourseToCart,
   handleCreateOrder,
+  handleGetAllCart,
+  handleDeleteProduct,
+  hanldeCreatePaymentLink,
+  handleGetPaymentInfo,
+  handleCancelOrder,
+  handleWebhookPayOS,
 };
