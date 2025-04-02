@@ -6,7 +6,7 @@ const Loading = () => {
     <div className="loading-wrapper">
       <div className="loading-inner">
         <img
-          src="http://localhost:1988/uploads/sticky-logo-inec.png"
+          src={`${process.env.REACT_APP_SERVER_BASE_URL}uploads/sticky-logo-inec.png`}
           alt="logo"
         />
         <div className="loading"></div>

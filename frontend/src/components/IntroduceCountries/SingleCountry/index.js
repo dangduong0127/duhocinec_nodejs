@@ -10,7 +10,7 @@ const SingleCountry = ({ data }) => {
             width: "300px",
             height: "170px",
           }}
-          src={`http://localhost:1988/${data.thumbnail}`}
+          src={`${process.env.REACT_APP_SERVER_BASE_URL}${data.thumbnail}`}
           alt={data.title}
         />
         <h3 className="country-name">{data.title}</h3>
