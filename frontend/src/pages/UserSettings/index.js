@@ -111,7 +111,7 @@ const UserSettings = () => {
                   {imageUrlTemp === null ? (
                     <Avatar
                       className="avatar-user"
-                      src={`http://localhost:1988/${userData.image}`}
+                      src={`${process.env.REACT_APP_SERVER_BASE_URL}${userData.image}`}
                       // src={imageUrlTemp}
                     >
                       <span className="upload">Upload image</span>
