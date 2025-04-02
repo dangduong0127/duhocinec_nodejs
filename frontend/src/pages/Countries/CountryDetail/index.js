@@ -16,7 +16,7 @@ import "./styles.scss";
 import Sidebar from "../../../components/Sidebar";
 import Schoolarship from "../../../components/Scholarship";
 import TitleCountryDetails from "../TitleCountryDetails";
-// import { DownOutlined } from "@ant-design/icons";
+import { GlobalOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import CountryLearnMore from "./CountryLearnmore";
@@ -121,11 +121,12 @@ const CountryDetail = () => {
 
             <div className="country-detail-wrapper">
               <div className="country">
-                <img
-                  src="https://duhocinec.com/wp-content/uploads/2024/10/canada-01.png"
+                {/* <img
+                  src="https://cdn-icons-png.flaticon.com/512/3016/3016558.png"
                   className="country-flag"
                   alt="flag"
-                />
+                /> */}
+                <GlobalOutlined style={{ color: "rgb(255, 0, 0)" }} />
                 <h1 className="country-name">
                   {countryData.title || "Title page"}
                 </h1>

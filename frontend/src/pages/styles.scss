@@ -31,6 +31,22 @@
         color: $primary-color;
       }
     }
+
+    .category {
+      width: 300px;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      img {
+        width: 100%;
+        height: 200px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      &:hover {
+        color: $primary-color;
+      }
+    }
   }
 }
 

@@ -32,26 +32,23 @@ const HomePage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const paymentId = urlParams.get("id");
-
-    getAllCart()
-      .then((e) => {
-        if (e.data.cart.length > 0) {
-          e.data.cart.forEach((item) => {
-            getPaymentInfo(item.id)
-              .then((e) => {
-                console.log(e);
-              })
-              .catch((error) => {
-                console.error("Có lỗi xảy ra:", error);
-              });
-          });
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   getAllCart()
+  //     .then((e) => {
+  //       if (e.data.cart.length > 0) {
+  //         e.data.cart.forEach((item) => {
+  //           getPaymentInfo(item.id)
+  //             .then((e) => {
+  //               console.log(e);
+  //             })
+  //             .catch((error) => {
+  //               console.error("Có lỗi xảy ra:", error);
+  //             });
+  //         });
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return loading ? (
     <Loading />

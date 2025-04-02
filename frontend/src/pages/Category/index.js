@@ -35,7 +35,7 @@ const Category = ({ data }) => {
               <Link
                 key={index}
                 to={`${data.path}${category.slug}`}
-                className="category-item"
+                className="category"
               >
                 <img
                   src={
@@ -55,7 +55,7 @@ const Category = ({ data }) => {
               <Link
                 key={index}
                 to={`${category.slug}`}
-                className="category-item"
+                className="category"
                 state={category.id}
               >
                 <img
