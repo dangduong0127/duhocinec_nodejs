@@ -239,7 +239,7 @@ const handleUpdateUser = async (data) => {
         (user.address = data.address),
         (user.gender = data.gender),
         (user.phoneNumber = data.phoneNumber),
-        (user.image = data.image),
+        (user.image = data.image || user.image),
         (user.roleId = data.roleId);
       user.updatedAt = new Date();
       await user.save();

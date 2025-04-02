@@ -6,7 +6,7 @@ import {
   updatedUser,
   logoutApi,
 } from "../../utils/api";
-import { Avatar, Input, Select, Button } from "antd";
+import { Avatar, Input, Select, Button, notification } from "antd";
 import Loading from "../../components/Loading";
 
 const UserSettings = () => {
@@ -54,23 +54,43 @@ const UserSettings = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("image", userData.image);
-
     try {
-      // Chờ tải ảnh lên xong
-      const resImage = await uploadImage(formData);
-      if (resImage.data) {
-        const updatedUserData = { ...userData, image: resImage.data.file.path };
-        setUserData(updatedUserData);
+      if (imageUrlTemp) {
+        const formData = new FormData();
+        formData.append("image", userData.image);
+        // Chờ tải ảnh lên xong
+        const resImage = await uploadImage(formData);
+        if (resImage.data) {
+          const updatedUserData = {
+            ...userData,
+            image: resImage.data.file.path,
+          };
+          setUserData(updatedUserData);
 
-        // Sau khi cập nhật ảnh, gọi API cập nhật người dùng
+          // Sau khi cập nhật ảnh, gọi API cập nhật người dùng
+          await updatedUser(updatedUserData);
+          setRefresh(true);
+          notification.success({
+            message: "Cập nhật thành công",
+          });
+        }
+      } else {
+        console.log("update without image");
+        const updatedUserData = {
+          ...userData,
+        };
+        setUserData(updatedUserData);
         await updatedUser(updatedUserData);
         setRefresh(true);
+        notification.success({
+          message: "Cập nhật thành công",
+        });
       }
     } catch (error) {
       console.error("Lỗi trong quá trình cập nhật:", error);
+      notification.error({
+        message: "Lỗi trong quá trình cập nhật",
+      });
     }
   };
 
