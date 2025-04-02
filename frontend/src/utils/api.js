@@ -123,6 +123,26 @@ const getPaymentInfo = (id) => {
   return axios.get(URL_API, { params: { orderId: id } });
 };
 
+const cancelOrder = (id, reason) => {
+  const URL_API = "/api/v2/order/cancelOrder";
+  return axios.post(URL_API, { data: { orderID: id, reasonCancel: reason } });
+};
+
+const webhookPayOS = (data) => {
+  const URL_API = "/api/v2/payment/webhook";
+  return axios.post(URL_API, data);
+};
+
+const getAllOrders = () => {
+  const URL_API = "/api/v1/getAllOrders";
+  return axios.get(URL_API);
+};
+
+const getOrderForUser = () => {
+  const URL_API = "/api/v1/getOrderForUser";
+  return axios.get(URL_API);
+};
+
 export {
   createUserApi,
   checkLoginApi,
@@ -149,4 +169,8 @@ export {
   deleteProduct,
   createPaymentLink,
   getPaymentInfo,
+  webhookPayOS,
+  getAllOrders,
+  getOrderForUser,
+  cancelOrder,
 };

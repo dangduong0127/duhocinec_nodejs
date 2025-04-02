@@ -34,6 +34,8 @@ const {
   handleGetPaymentInfo,
   handleCancelOrder,
   handleWebhookPayOS,
+  handleGetAllOrders,
+  handleGetOrderForUser,
 } = require("../services/userService");
 
 const handleUploadImage = (req, res, next) => {
@@ -230,13 +232,22 @@ const getPaymentInfo = async (req, res) => {
 };
 
 const cancelOrder = async (req, res) => {
-  const response = await handleCancelOrder(req.query);
+  const response = await handleCancelOrder(req.body.data);
   return res.status(200).json(response);
-  // return res.redirect(303, response.checkoutUrl);
 };
 
 const webhookPayOS = async (req, res) => {
   const response = await handleWebhookPayOS(req.body);
+  return res.status(200).json(response);
+};
+
+const getAllOrders = async (req, res) => {
+  const response = await handleGetAllOrders();
+  return res.status(200).json(response);
+};
+
+const getOrderForUser = async (req, res) => {
+  const response = await handleGetOrderForUser(req.user.userId);
   return res.status(200).json(response);
 };
 
@@ -270,4 +281,6 @@ module.exports = {
   getPaymentInfo,
   cancelOrder,
   webhookPayOS,
+  getAllOrders,
+  getOrderForUser,
 };

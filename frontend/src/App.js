@@ -21,6 +21,7 @@ import SearchResults from "./pages/SearchResult";
 import IntroduceINEC from "./pages/IntroduceINEC";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
 function App() {
   const { auth, setAuth, appLoading, setAppLoading } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
@@ -253,6 +254,15 @@ function App() {
               element={
                 <Layout>
                   <Checkout />
+                </Layout>
+              }
+            />
+
+            <Route
+              path="/orders"
+              element={
+                <Layout>
+                  <Orders />
                 </Layout>
               }
             />

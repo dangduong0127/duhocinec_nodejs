@@ -8,7 +8,7 @@ import {
   getClient,
   Configuration,
 } from '@botpress/webchat';
-const clientId = process.env.CHATBOT_CLIENT_ID;
+const clientId = process.env.REACT_APP_CHATBOT_CLIENT_ID;
 const configuration: Configuration = {
     botName: "Chuyên viên tư vấn INEC",
     color: '#0c65d8',

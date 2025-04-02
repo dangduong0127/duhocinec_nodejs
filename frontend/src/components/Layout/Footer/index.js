@@ -142,7 +142,7 @@ const Footer = () => {
       {/* Copyright */}
       <div className="absolute-footer">
         <div className="container">
-          <p>© 2024 INEC. All rights reserved.</p>
+          <p>© 2025 INEC. All rights reserved.</p>
         </div>
       </div>
     </footer>

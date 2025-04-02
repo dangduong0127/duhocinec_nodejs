@@ -18,6 +18,7 @@ const BreadcrumbCustom = ({ breadcrumb, titlePost }) => {
             }
           : {},
       ]}
+      style={{ marginBottom: "40px", fontSize: "18px" }}
     />
   );
 };

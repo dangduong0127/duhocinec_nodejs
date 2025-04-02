@@ -11,12 +11,13 @@ import PartnerSystem from "./PartnerSystem";
 import Arward from "./Arward";
 import Events from "../../components/Events";
 import News from "../../components/News";
-import { getAllCategory, getPaymentInfo } from "../../utils/api";
+import { getAllCategory, getPaymentInfo, getAllCart } from "../../utils/api";
 import Loading from "../../components/Loading";
-// import { getAccountInfo } from "../../../../backend/src/controllers/homeController";
+import { useCart } from "../../hooks/Context/cart.context";
 const HomePage = () => {
   const [postData, setPostData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { cart } = useCart();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,17 +29,28 @@ const HomePage = () => {
       }
     };
 
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     // const urlParams = new URLSearchParams(window.location.search);
     // const paymentId = urlParams.get("id");
-    // console.log("paymentID: ", paymentId);
-    // if (paymentId) {
-    //   getPaymentInfo(paymentId)
-    //     .then((e) => console.log(e))
-    //     .catch((error) => {
-    //       console.error("Có lỗi xảy ra:", error);
-    //     });
-    // }
-    fetchData();
+
+    getAllCart()
+      .then((e) => {
+        if (e.data.cart.length > 0) {
+          e.data.cart.forEach((item) => {
+            getPaymentInfo(item.id)
+              .then((e) => {
+                console.log(e);
+              })
+              .catch((error) => {
+                console.error("Có lỗi xảy ra:", error);
+              });
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return loading ? (
@@ -46,7 +58,7 @@ const HomePage = () => {
   ) : (
     <>
       <Banner />
-      <Filter />
+      {/* <Filter /> */}
       <IntroduceContries />
       <div
         className="scholarship-wrapper"

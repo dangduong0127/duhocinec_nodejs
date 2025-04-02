@@ -4,7 +4,14 @@ import "./styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { DownOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  LogoutOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
+  AppstoreOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 import Socials from "./Socials";
 import { Menu, Avatar, Select, Button } from "antd";
 // import { UserOutlined } from "@ant-design/icons";
@@ -29,30 +36,44 @@ const Header = () => {
             <Avatar src={auth.user.avatar} size={40} />
           </Link>
         ) : (
-          <span
-          // style={{
-          //   fontSize: "15px",
-          //   display: "flex",
-          //   gap: "5px",
-          // }}
-          >
-            {/* <UserOutlined /> */}
-            Account
-          </span>
+          <span>Account</span>
         ),
       key: "dashboard",
       children: auth.isAuthenticated
         ? [
             {
-              label: <Link to="/cart">Giỏ hàng</Link>,
+              label: (
+                <Link to="/orders">
+                  <ShoppingOutlined />
+                  <span>Đơn hàng</span>
+                </Link>
+              ),
+            },
+            {
+              label: (
+                <Link to="/cart">
+                  <ShoppingCartOutlined />
+                  <span>Giỏ hàng</span>
+                </Link>
+              ),
             },
             auth.user.roleId === 1
               ? {
-                  label: <Link to="/admin">Dashboard</Link>,
+                  label: (
+                    <Link to="/admin">
+                      <AppstoreOutlined />
+                      <span>Dashboard</span>
+                    </Link>
+                  ),
                   key: "admin-dashboard",
                 }
               : {
-                  label: <Link to="/account">Account Settings</Link>,
+                  label: (
+                    <Link to="/account">
+                      <EditOutlined />
+                      <span>Account Settings</span>
+                    </Link>
+                  ),
                   key: "account-settings",
                 },
             {
@@ -65,6 +86,7 @@ const Header = () => {
                     onClick={() => logout(setAuth, navigate)}
                   >
                     Đăng xuất
+                    <LogoutOutlined />
                   </Button>
                 </>
               ),

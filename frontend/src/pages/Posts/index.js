@@ -23,7 +23,7 @@ const Posts = ({ category, postDetails }) => {
     };
     fetchData();
   }, []);
-  console.log(postDetails);
+  // console.log(postDetails);
   window.scrollTo({
     top: 0,
     behavior: "smooth",

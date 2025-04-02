@@ -12,6 +12,11 @@ module.exports = (sequelize) => {
       User.hasMany(models.Country, { foreignKey: "author", as: "users" });
 
       User.hasMany(models.Course, { foreignKey: "author", as: "authorCourse" });
+
+      User.hasMany(models.Order, {
+        foreignKey: "user_id",
+        as: "authorOrder",
+      });
     }
   }
 

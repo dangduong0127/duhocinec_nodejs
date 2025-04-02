@@ -93,6 +93,8 @@
 }
 
 .absolute-footer {
+  display: flex;
+  justify-content: center;
   text-align: center;
   padding: 10px;
   background: #111;

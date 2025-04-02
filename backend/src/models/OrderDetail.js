@@ -9,6 +9,11 @@ module.exports = (sequelize) => {
         foreignKey: "order_id",
         as: "orderDetails",
       });
+
+      OrderDetail.belongsTo(models.Course, {
+        foreignKey: "course_id",
+        as: "courseDetails",
+      });
     }
   }
 

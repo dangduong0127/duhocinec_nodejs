@@ -27,6 +27,7 @@ import randomString from "../../utils/randomString";
 const Cart = () => {
   const [cartData, setCartData] = useState(null);
   const { cart, setCart } = useCart();
+  const [paymentUrl, setPaymentUrl] = useState(null);
   const navigate = useNavigate();
 
   const columns = [
@@ -34,7 +35,7 @@ const Cart = () => {
       title: "STT",
       dataIndex: "itemId",
       key: "itemId",
-      render: (text) => <span>{text}</span>,
+      render: (text) => <span>{text + 1}</span>,
     },
 
     {
@@ -112,11 +113,16 @@ const Cart = () => {
   };
 
   useEffect(() => {
+    if (paymentUrl) {
+      window.location.href = paymentUrl;
+    }
+  }, [paymentUrl]);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getCourseToCart(cart);
         setCartData(result.data);
-        // await getPaymentInfo("65");
       } catch (e) {
         console.log(e);
       }
@@ -140,21 +146,30 @@ const Cart = () => {
     try {
       const result = await createOrder(cartData.courses, totalPrice);
       const response = result.data;
-      console.log("Created order: " + response);
-      if (response.success) {
-        const payment = await createPaymentLink(
-          cartData.courses,
-          response.order_id
-        );
-        let checkoutUrl = payment.data.checkoutUrl;
-        // navigate("/checkout", { state: { orderId: response.order_id } });
-        window.location.href = checkoutUrl;
+      // console.log("Created order: " + JSON.stringify(response));
 
-        setCartData(cartData.courses);
-        notification.success({
-          message: "Tạo đơn hàng thành công",
-          description: "Hãy tiến hành thanh toán",
-        });
+      if (response.success) {
+        if (response.errCode === "00") {
+          const res = await getPaymentInfo(response.order_id);
+          if (res.data && res.data.urlPayment) {
+            setPaymentUrl(res.data.urlPayment);
+          } else {
+            console.error("URL thanh toán không tồn tại trong dữ liệu trả về");
+          }
+        } else {
+          const payment = await createPaymentLink(
+            cartData.courses,
+            response.order_id
+          );
+          let checkoutUrl = payment.data.checkoutUrl;
+          // navigate("/checkout", { state: { orderId: response.order_id } });
+          window.location.href = checkoutUrl;
+          setCartData(cartData.courses);
+          notification.success({
+            message: "Tạo đơn hàng thành công",
+            description: "Hãy tiến hành thanh toán",
+          });
+        }
       } else {
         // const courses = cartData.courses.filter(
         //   (item1) =>
@@ -225,6 +240,7 @@ const Cart = () => {
                     })}
                     precision={2}
                   />
+
                   <Button
                     style={{ marginTop: 16 }}
                     type="primary"

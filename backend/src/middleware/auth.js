@@ -33,7 +33,7 @@ const authorization = (req, res, next) => {
     req.url === "/api/v2/order/create" ||
     req.url === "/api/v1/deleteProduct" ||
     req.url === "/api/v2/order/cancelOrder" ||
-    req.url === "/"
+    req.url === "/api/v1/getOrderForUser"
   ) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);

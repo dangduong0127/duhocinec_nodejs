@@ -804,6 +804,7 @@ const handleCreateOrder = async (data) => {
         };
       } else {
         return {
+          errCode: "00",
           success: true,
           message: "All courses in cart have been ordered",
           order_id: orderID,
@@ -1035,23 +1036,28 @@ const hanldeCreatePaymentLink = async ({ data, orderCode }, userID) => {
 
 const handleGetPaymentInfo = async (id) => {
   const result = await payos.getPaymentLinkInformation(id);
+  const order = await Order.findOne({
+    raw: false,
+    where: {
+      id: result.orderCode,
+    },
+  });
   if (result.status === "PAID") {
-    const order = await Order.findOne({
-      raw: false,
-      where: {
-        id: result.orderCode,
-      },
-    });
-
     order.status = "completed";
     await order.save();
+  } else if (result.status === "CANCELLED") {
+    order.status = "cancelled";
+    await order.save();
+  } else if (result.status === "PENDING") {
+    return {
+      urlPayment: `https://pay.payos.vn/web/` + result.id,
+    };
   }
   return result;
 };
 
-const handleCancelOrder = async (orderID) => {
-  const cancellationReason = "reason";
-
+const handleCancelOrder = async ({ orderID, reasonCancel }) => {
+  const cancellationReason = reasonCancel;
   const result = await payos.cancelPaymentLink(orderID, cancellationReason);
   return result;
 };
@@ -1069,6 +1075,93 @@ const handleWebhookPayOS = async (data) => {
 
     order.status = "completed";
     await order.save();
+  }
+};
+
+const handleGetAllOrders = async (userID) => {
+  try {
+    const orders = await Order.findAll({
+      raw: false,
+      nest: true,
+      include: [
+        {
+          model: OrderDetail,
+          as: "orderDetails",
+          include: {
+            model: Course,
+            as: "courseDetails",
+          },
+        },
+        {
+          model: User,
+          as: "authorOrder",
+          attributes: ["firstName", "lastName", "email", "phoneNumber"],
+        },
+      ],
+    });
+
+    if (orders.length > 0) {
+      return {
+        success: true,
+        message: "Orders fetched successfully",
+        orders: orders,
+      };
+    } else {
+      return {
+        success: false,
+        message: "No orders found",
+      };
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const handleGetOrderForUser = async (userID) => {
+  try {
+    if (userID) {
+      const orders = await Order.findAll({
+        raw: false,
+        nest: true,
+        where: {
+          user_id: userID,
+        },
+        include: [
+          {
+            model: OrderDetail,
+            as: "orderDetails",
+            include: {
+              model: Course,
+              as: "courseDetails",
+            },
+          },
+          {
+            model: User,
+            as: "authorOrder",
+            attributes: ["firstName", "lastName", "email", "phoneNumber"],
+          },
+        ],
+      });
+      if (orders.length > 0) {
+        return {
+          success: true,
+          message: "Orders fetched successfully",
+          orders: orders,
+        };
+      } else {
+        return {
+          success: false,
+          message: "No orders found",
+        };
+      }
+    } else {
+      return {
+        success: false,
+        message: "User not found",
+      };
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
 
@@ -1100,4 +1193,6 @@ module.exports = {
   handleGetPaymentInfo,
   handleCancelOrder,
   handleWebhookPayOS,
+  handleGetAllOrders,
+  handleGetOrderForUser,
 };

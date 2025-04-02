@@ -3,7 +3,13 @@ import User from "./Users";
 import {
   UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  ShoppingCartOutlined,
+  PushpinOutlined,
+  BookOutlined,
+  FileOutlined,
+  GlobalOutlined,
+  HomeOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +20,7 @@ import LayoutPage from "../../components/Layout/index.js";
 import Posts from "./Posts/index.js";
 import Categories from "./Categories/index.js";
 import Courses from "./Courses/index.js";
+import Orders from "./Orders/index.js";
 const { Header, Content, Footer, Sider } = Layout;
 
 // const items = [
@@ -49,6 +56,8 @@ const Admin = () => {
         return <Countries />;
       case "6":
         return <Courses />;
+      case "8":
+        return <Orders />;
       default:
         return <div>Default</div>;
     }
@@ -85,33 +94,38 @@ const Admin = () => {
             },
             {
               key: "2",
-              icon: <VideoCameraOutlined />,
+              icon: <PushpinOutlined />,
               label: "Categories",
             },
             {
               key: "3",
-              icon: <UploadOutlined />,
+              icon: <FileOutlined />,
               label: "Posts",
             },
             {
               key: "4",
-              icon: <UploadOutlined />,
+              icon: <GlobalOutlined />,
               label: "Countries",
             },
             {
               key: "5",
-              icon: <UploadOutlined />,
+              icon: <HomeOutlined />,
               label: "Schools",
             },
             {
               key: "6",
-              icon: <UploadOutlined />,
+              icon: <BookOutlined />,
               label: "Courses",
             },
             {
               key: "7",
               icon: <UploadOutlined />,
               label: "Scholarships",
+            },
+            {
+              key: "8",
+              icon: <ShoppingCartOutlined />,
+              label: "Orders",
             },
           ]}
         />
@@ -127,7 +141,7 @@ const Admin = () => {
             type="primary"
             danger
           >
-            Logout
+            Logout <LogoutOutlined />
           </Button>
         </li>
       </Sider>

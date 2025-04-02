@@ -29,6 +29,8 @@ const {
   getPaymentInfo,
   cancelOrder,
   webhookPayOS,
+  getAllOrders,
+  getOrderForUser,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -68,13 +70,13 @@ router.post("/api/v1/getCourseToCart", getCourseToCart);
 router.post("/api/v1/createOrder", createOrder);
 router.get("/api/v1/getAllCart", getAllCart);
 router.delete("/api/v1/deleteProduct", deleteProduct);
+router.get("/api/v1/getAllOrders", getAllOrders);
+router.get("/api/v1/getOrderForUser", getOrderForUser);
 
 // payment api
 router.post("/api/v2/order/create", createPaymentLink);
 router.get("/api/v2/order/getPaymentInfo", getPaymentInfo);
 router.post("/api/v2/order/cancelOrder", cancelOrder);
-
-// https://d8f8-118-70-15-19.ngrok-free.app/api/v2/payment/webhook
 router.post("/api/v2/payment/webhook", webhookPayOS);
 
 module.exports = router;

@@ -17,6 +17,11 @@ module.exports = (sequelize) => {
         foreignKey: "post_id",
         as: "postMetaCourse",
       });
+
+      Course.hasMany(models.OrderDetail, {
+        foreignKey: "course_id",
+        as: "courseDetails",
+      });
     }
   }
 
