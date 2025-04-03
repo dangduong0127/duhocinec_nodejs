@@ -51,10 +51,11 @@ const Category = ({ data }) => {
             );
           })}
           {countriesCate?.map((category, index) => {
+            const slug = `/quoc-gia${category.slug}`;
             return (
               <Link
                 key={index}
-                to={`${category.slug}`}
+                to={slug}
                 className="category"
                 state={category.id}
               >
@@ -72,7 +73,6 @@ const Category = ({ data }) => {
               </Link>
             );
           })}
-
           {coursesCate?.map((category, index) => {
             const isInCart = cart.some((item) => item.id === category.id);
             return (
