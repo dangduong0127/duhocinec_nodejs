@@ -56,6 +56,9 @@ body {
   }
 
   // Breadcrumb
+  @media only screen and (min-width: 768px) {
+    margin: 20px 0px 10px 0px;
+  }
   .breadcrumb {
     margin-bottom: 1.5rem;
     font-size: 0.875rem;
@@ -70,7 +73,7 @@ body {
 
   // Main layout
   .main-layout {
-    @include flex(row, space-between, flex-start, wrap);
+    @include flex(row, space-between, flex-start);
     gap: 2rem;
 
     @media (max-width: 1024px) {

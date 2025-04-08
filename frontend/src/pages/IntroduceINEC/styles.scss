@@ -1,3 +1,5 @@
+@import "../../styles/mixin";
+
 div.Introduce-wrapper {
   section {
     display: flex;
@@ -99,5 +101,11 @@ div.Introduce-wrapper {
       border: 0;
       border-radius: 10px;
     }
+  }
+}
+
+@include responsive(mobile) {
+  div.Introduce-wrapper .fist-section .container {
+    grid-template-columns: 20px auto;
   }
 }

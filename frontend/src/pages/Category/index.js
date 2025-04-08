@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles.scss";
+import "./styles.scss";
 import BreadcrumbCustom from "../../components/Breadcrumb";
 import { Link } from "react-router-dom";
 import getImageUrl from "../../utils/getImage";
