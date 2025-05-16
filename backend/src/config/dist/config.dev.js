@@ -1,4 +1,7 @@
+"use strict";
+
 require("dotenv").config();
+
 module.exports = {
   development: {
     username: process.env.DB_USER,
@@ -6,9 +9,11 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: "mysql",
-    query: { raw: true },
+    query: {
+      raw: true
+    },
     logging: false,
-    timezone: "+07:00",
+    timezone: "+07:00"
   },
   test: {
     username: "root",
@@ -16,7 +21,7 @@ module.exports = {
     database: "duhocinec",
     host: "127.0.0.1",
     dialect: "mysql",
-    timezone: "+07:00",
+    timezone: "+07:00"
   },
   production: {
     username: process.env.DB_USER,
@@ -24,8 +29,10 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: "mysql",
-    query: { raw: true },
+    query: {
+      raw: true
+    },
     logging: false,
-    timezone: "+07:00",
-  },
+    timezone: "+07:00"
+  }
 };

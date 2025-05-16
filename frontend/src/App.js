@@ -22,6 +22,7 @@ import IntroduceINEC from "./pages/IntroduceINEC";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
+import Schools from "./pages/Schools";
 function App() {
   const { auth, setAuth, appLoading, setAppLoading } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
@@ -105,7 +106,11 @@ function App() {
             />
             <Route
               path="/truong"
-              element={<Layout>Đây là trang trường</Layout>}
+              element={
+                <Layout>
+                  <Schools />
+                </Layout>
+              }
             />
 
             <Route path="/admin" element={<Admin />} />
