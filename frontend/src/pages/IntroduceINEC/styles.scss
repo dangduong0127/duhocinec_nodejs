@@ -27,6 +27,88 @@ div.Introduce-wrapper {
       }
     }
   }
+
+  .thrid-section {
+    background-color: rgb(56, 56, 56);
+    color: #fff;
+    .thrid-wrapper {
+      width: 100%;
+      .title {
+        text-align: center;
+        font-size: 28px;
+        line-height: 1.4;
+        font-weight: 600;
+        h2 {
+          margin: 0 15px;
+        }
+      }
+
+      .thrid-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 40px;
+        gap: 40px;
+        padding: 40px 0;
+        .thrid-container-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .thrid-image {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          .thrid-content {
+            text-align: center;
+            strong {
+              font-size: 30px;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .fourth-inner {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    .four-left,
+    .four-right {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      .col-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 50%;
+        .col-inner {
+          img {
+            width: 100%;
+            border-radius: 10px;
+          }
+        }
+      }
+
+      .col-right {
+        width: 50%;
+
+        .col-inner {
+          img {
+            width: 100%;
+            border-radius: 10px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .values-container {
@@ -107,5 +189,11 @@ div.Introduce-wrapper {
 @include responsive(mobile) {
   div.Introduce-wrapper .fist-section .container {
     grid-template-columns: 20px auto;
+  }
+
+  .thrid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    flex-wrap: wrap;
   }
 }
