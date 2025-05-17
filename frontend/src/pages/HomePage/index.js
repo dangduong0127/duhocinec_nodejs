@@ -18,37 +18,26 @@ const HomePage = () => {
   const [postData, setPostData] = useState(null);
   const [loading, setLoading] = useState(true);
   const { cart } = useCart();
+
+  const fetchData = async () => {
+    try {
+      const response = await getAllCategory();
+      setPostData(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getAllCategory();
-        setPostData(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     fetchData();
-  }, []);
 
-  // useEffect(() => {
-  //   getAllCart()
-  //     .then((e) => {
-  //       if (e.data.cart.length > 0) {
-  //         e.data.cart.forEach((item) => {
-  //           getPaymentInfo(item.id)
-  //             .then((e) => {
-  //               console.log(e);
-  //             })
-  //             .catch((error) => {
-  //               console.error("Có lỗi xảy ra:", error);
-  //             });
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+    if (!localStorage.getItem("visited")) {
+      localStorage.setItem("visited", "true");
+    } else {
+      console.log("Chào mừng trở lại!");
+    }
+  }, []);
 
   return loading ? (
     <Loading />

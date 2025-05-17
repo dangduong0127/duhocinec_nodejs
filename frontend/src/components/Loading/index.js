@@ -10,6 +10,9 @@ const Loading = () => {
           alt="logo"
         />
         <div className="loading"></div>
+        {!localStorage.getItem("visited") ? (
+          <p>Lần đầu tải trang sẽ hơi chậm, vui lòng chờ đợi giây lát!</p>
+        ) : null}
       </div>
     </div>
   );
