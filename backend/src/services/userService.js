@@ -1165,6 +1165,34 @@ const handleGetOrderForUser = async (userID) => {
   }
 };
 
+const handlePagination = async (req) => {
+  try {
+    const page = Math.max(1, parseInt(req.page) || 1);
+    const limit = Math.max(1, parseInt(req.limit) || 10);
+    const offset = (page - 1) * limit;
+
+    const { count, rows: courses } = await Course.findAndCountAll({
+      offset,
+      limit,
+      order: [["createdAt", "DESC"]],
+    });
+
+    const totalPages = Math.ceil(count / limit);
+
+    return {
+      page,
+      limit,
+      totalItems: count,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      items: courses,
+    };
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllUsers,
   handleGetMenues,
@@ -1195,4 +1223,5 @@ module.exports = {
   handleWebhookPayOS,
   handleGetAllOrders,
   handleGetOrderForUser,
+  handlePagination,
 };

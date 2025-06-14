@@ -36,6 +36,7 @@ const {
   handleWebhookPayOS,
   handleGetAllOrders,
   handleGetOrderForUser,
+  handlePagination,
 } = require("../services/userService");
 
 const handleUploadImage = (req, res, next) => {
@@ -251,6 +252,11 @@ const getOrderForUser = async (req, res) => {
   return res.status(200).json(response);
 };
 
+const paginationController = async (req, res) => {
+  const response = await handlePagination(req.query);
+  return res.status(200).json(response);
+};
+
 module.exports = {
   getHomePage,
   getMenus,
@@ -283,4 +289,5 @@ module.exports = {
   webhookPayOS,
   getAllOrders,
   getOrderForUser,
+  paginationController,
 };

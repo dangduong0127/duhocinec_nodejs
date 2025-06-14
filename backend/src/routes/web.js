@@ -31,6 +31,7 @@ const {
   webhookPayOS,
   getAllOrders,
   getOrderForUser,
+  paginationController,
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
@@ -78,5 +79,8 @@ router.post("/api/v2/order/create", createPaymentLink);
 router.get("/api/v2/order/getPaymentInfo", getPaymentInfo);
 router.post("/api/v2/order/cancelOrder", cancelOrder);
 router.post("/api/v2/payment/webhook", webhookPayOS);
+
+//pagination
+router.get("/api/v2/pagination", paginationController);
 
 module.exports = router;
