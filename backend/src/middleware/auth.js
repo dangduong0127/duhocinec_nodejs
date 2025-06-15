@@ -16,6 +16,7 @@ const authorization = (req, res, next) => {
     "/api/v2/order/getPaymentInfo",
     "/api/v2/payment/webhook",
     "/api/v2/pagination",
+    "/api/v1/keep-alive",
   ];
 
   if (allowed_list.some((route) => req.path.startsWith(route))) {

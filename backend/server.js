@@ -8,6 +8,8 @@ const dotenv = require("dotenv");
 const path = require("path");
 const router = require("./src/routes/web");
 const cookieParser = require("cookie-parser");
+const cron = require("node-cron");
+const axios = require("axios");
 // import sequelize from "./src/config/connectDB.js";
 // import User from "./src/models/User.js";
 // const __dirname = path.resolve();
@@ -23,6 +25,18 @@ app.use(
     credentials: true, // Cho phép gửi cookie qua request
   })
 );
+
+// Ping backend mỗi 14 phút để giữ không cho backend trên render bị sleep
+cron.schedule("*/14 * * * *", async () => {
+  try {
+    const response = await axios.get(
+      "https://duhocinec-backend.onrender.com/api/v1/getallmenus"
+    );
+    console.log(`Cron job ping thành công! Status: ${response.status}`);
+  } catch (error) {
+    console.error(`Lỗi cron job ping: ${error.message}`);
+  }
+});
 
 //config req.body
 app.use(express.json()); //for json
