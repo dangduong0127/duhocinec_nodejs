@@ -2,6 +2,10 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const authorization = (req, res, next) => {
+  if (req.path.startsWith("/api-docs") || req.path.startsWith("/swagger-ui")) {
+    return next();
+  }
+
   const allowed_list = [
     "/api/v1/login",
     "/api/v1/register",
@@ -23,44 +27,32 @@ const authorization = (req, res, next) => {
     return next();
   }
 
-  // Đến đây nghĩa là route cần xác thực, tiếp tục kiểm tra token
-  let token = req.cookies ? req.cookies.access_token : undefined;
+  // ---- VERIFY TOKEN ----
+  let token = req.cookies?.access_token;
 
-  if (
-    req.url === "/api/v1/getAccountInfo" ||
-    req.url === "/api/v1/logout" ||
-    req.url === "/api/v1/getCourseToCart" ||
-    req.url === "/api/v1/createOrder" ||
-    req.url === "/api/v1/getAllCart" ||
-    req.url === "/api/v2/order/create" ||
-    req.url === "/api/v1/deleteProduct" ||
-    req.url === "/api/v2/order/cancelOrder" ||
-    req.url === "/api/v1/getOrderForUser" ||
-    req.url === "/api/v1/updateUsers"
-  ) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = {
-        userId: decoded.userId,
-        roleId: decoded.roleId,
-      };
-      return next();
-    } catch (err) {
-      return res.status(401).json({
-        message: "Your token is expired or Invalid",
-      });
-    }
+  if (!token) {
+    return res.status(401).json({ message: "Token not found" });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // console.log(decoded);
     req.user = {
       userId: decoded.userId,
       roleId: decoded.roleId,
     };
 
-    if (req.user.roleId !== 1) {
+    // Admin only
+    const adminRoutes = [
+      "/api/v1/updateUsers",
+      "/api/v1/deleteUser",
+      "/api/v1/updatePost",
+      "/api/v1/updateCourse",
+    ];
+
+    if (
+      adminRoutes.some((route) => req.path.startsWith(route)) &&
+      req.user.roleId !== 1
+    ) {
       return res.status(403).json({
         message: "You don't have permission to access this resource",
       });
@@ -69,7 +61,7 @@ const authorization = (req, res, next) => {
     next();
   } catch (err) {
     return res.status(401).json({
-      message: "Your token is expired or Invalid",
+      message: "Your token is expired or invalid",
     });
   }
 };

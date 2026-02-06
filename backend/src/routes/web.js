@@ -35,27 +35,67 @@ const {
 } = require("../controllers/homeController.js");
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
-const formidable = require("formidable");
-const path = require("path");
 
-// Apply middleware for all routers getting
+// router.get("/", getHomePage);
+
 router.all("*", authorization);
 
-router.get("/", getHomePage);
 router.get("/test", (req, res) => {
   res.send("This is a test route");
 });
 //api
 router.get("/api/v1/getallmenus", getMenus);
+
+/**
+ * @swagger
+ * /api/v1/getallusers:
+ *   get:
+ *     summary: Lấy danh sách người dùng
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Thành công
+ */
 router.get("/api/v1/getallusers", getAllUsersData);
+
 router.post("/api/v1/register", createUser);
 router.post("/api/v1/login", getLogin);
 router.post("/api/v1/logout", logout);
+/**
+ * @swagger
+ * /api/v1/getAccountInfo:
+ *  get:
+ *      summary: Lấy thông tin tài khoản
+ *      tags: [User]
+ */
 router.get("/api/v1/getAccountInfo", getAccountInfo);
 router.put("/api/v1/updateUsers", updateUsers);
 router.delete("/api/v1/deleteUser", deleteUser);
+/**
+ * @swagger
+ * /api/v1/getAllCountries:
+ *  get:
+ *      summary: Lấy thông tin quốc gia
+ *      tags: [Default]
+ */
 router.get("/api/v1/getAllCountries", getAllCountries);
+/**
+ * @swagger
+ * /api/v1/getAllCategory:
+ *  get:
+ *      summary: Lấy thông tin danh mục
+ *      tags: [Default]
+ */
 router.get("/api/v1/getAllCategory", getAllCategory);
+/**
+ * @swagger
+ * /api/v1/getAllPosts:
+ *  get:
+ *      summary: Lấy thông tin bài viết
+ *      tags: [Default]
+ */
 router.get("/api/v1/getAllPosts", getAllPosts);
 
 router.post("/api/v1/createPost", createPost);

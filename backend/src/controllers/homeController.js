@@ -1,8 +1,3 @@
-// import { Sequelize } from "sequelize";
-// import User from "../models/User.js";
-// const User = require("../models/User.js");
-// const { Sequelize } = require("sequelize");
-// const sequelize = require("../config/database");
 const fs = require("fs");
 const path = require("path");
 const formidable = require("formidable");
